@@ -1,0 +1,23 @@
+{
+    "name": "morphp/medas-core",
+    "description": "Medas core",
+    "authors": [
+        {
+            "name": "Patrick Morpey",
+            "email": "patrick@morphp.nl"
+        }
+    ],
+    "type": "library",
+    "require": {
+        "symfony/string": "^5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Medas\\Core\\": "src/",
+            "Medas\\Test\\": "tests/"
+        }
+    }
+}
