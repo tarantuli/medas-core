@@ -111,7 +111,7 @@ class Str extends UnicodeString
 
     public function truncateToCharLength(int $maxCharLength): self
     {
-        if (mb_str_split($this->string) > $maxCharLength) {
+        if (count(mb_str_split($this->string)) > $maxCharLength) {
             $this->string = mb_substr($this->string, 0, $maxCharLength - 1) . '…';
         }
 
