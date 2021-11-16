@@ -9,11 +9,18 @@
     ],
     "type": "library",
     "require": {
-        "symfony/string": "^5.3"
+        "symfony/string": "^5.3",
+        "morphp/medas-service-manager": "@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../service-manager"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Medas\\Core\\": "src/",
