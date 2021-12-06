@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-// https://misc.flogisoft.com/bash/tip_colors_and_formatting
 use Medas\ServiceManager\Attributes\Service;
 
+// https://misc.flogisoft.com/bash/tip_colors_and_formatting
 #[Service]
 class Cli
 {
