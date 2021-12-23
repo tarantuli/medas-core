@@ -58,7 +58,7 @@ class Str extends UnicodeString
             $argument = sprintf('resource:%s(%u)', get_resource_type($argument), (int) $argument);
         }
 
-        return new self($argument);
+        return new self((string) $argument);
 
     }
 
