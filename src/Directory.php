@@ -23,4 +23,12 @@ class Directory
             $pattern
         );
     }
+
+    public static function loadPhpFiles(string $directory): void
+    {
+        foreach (self::recursiveFindByExtension($directory, 'php') as $fileName) {
+            require_once $fileName;
+        }
+
+    }
 }
