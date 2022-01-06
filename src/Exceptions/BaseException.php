@@ -16,8 +16,9 @@ abstract class BaseException extends \Exception
     public function __construct(...$arguments)
     {
         $this->arguments = $arguments;
+
         foreach ($arguments as &$argument) {
-            $argument = Str::fromVariable($argument)->truncateToCharLength(255);
+            $argument = Str::fromVariable($argument)->truncateToCharLength(1000);
         }
 
         $message = vsprintf($this->pattern(), $arguments);
