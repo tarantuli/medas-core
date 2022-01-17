@@ -6,6 +6,15 @@ namespace Medas\Core;
 
 class Identifier
 {
+    public static function fromCamelCase(string $camelCase): self
+    {
+        $identifier = mb_strtolower(
+            preg_replace('/(.)(\p{Lu})/', '$1 $2', $camelCase)
+        );
+
+        return new self($identifier);
+    }
+
     private array $words;
 
     public function __construct(string $identifier)
