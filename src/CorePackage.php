@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+use Medas\ServiceManager\AsSingleton;
 use Medas\ServiceManager\BasePackage;
 
 class CorePackage extends BasePackage
 {
+    use AsSingleton;
+
     public function dependencies(): array
     {
         return [];
