@@ -69,8 +69,10 @@ class Str extends UnicodeString
         $firstValue = true;
         $vars = get_object_vars($argument);
 
-        if (method_exists($argument, 'id')) {
-            $vars['id'] = $argument->id();
+        $class = new \ReflectionClass($argument);
+
+        if ($class->hasProperty('id')) {
+            $vars['id'] = $class->getProperty('id')->getValue($argument);
         }
 
         foreach ($vars as $key => $value) {
