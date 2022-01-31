@@ -72,7 +72,14 @@ class Str extends UnicodeString
         $class = new \ReflectionClass($argument);
 
         if ($class->hasProperty('id')) {
-            $vars['id'] = $class->getProperty('id')->getValue($argument);
+            $property = $class->getProperty('id');
+
+            if ($property->isInitialized($argument)) {
+                $vars['id'] = $property->getValue($argument);
+            }
+            else {
+                $vars['id'] = '[uninitialized]';
+            }
         }
 
         foreach ($vars as $key => $value) {
