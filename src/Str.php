@@ -11,7 +11,7 @@ class Str extends UnicodeString
     public static function fromArray(array $argument): string
     {
         if (count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)) >= 25) {
-            return '[... snipped ...]';
+            return '�';
         }
 
         $retval = '[';
@@ -39,7 +39,10 @@ class Str extends UnicodeString
 
     public static function fromVariable(mixed $argument): self
     {
-        if (is_array($argument)) {
+        if (is_string($argument) && $argument !== '�') {
+            $argument = '"' . $argument . '"';
+        }
+        elseif (is_array($argument)) {
             $argument = self::fromArray($argument);
         }
         elseif (is_object($argument)) {
@@ -78,7 +81,7 @@ class Str extends UnicodeString
                 $vars['id'] = $property->getValue($argument);
             }
             else {
-                $vars['id'] = '[uninitialized]';
+                $vars['id'] = '�';
             }
         }
 
