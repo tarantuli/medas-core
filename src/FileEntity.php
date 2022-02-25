@@ -6,8 +6,6 @@ namespace Medas\Core;
 
 interface FileEntity
 {
-    public function id(): mixed;
-
     public function setContent(string $content): self;
 
     public function setName(?string $name): self;
