@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Medas\Core;
+
+class BaseArrayCollection implements \ArrayAccess, \Iterator
+{
+    private int $index;
+
+    /** @noinspection PhpPropertyCanBeReadonlyInspection */
+    public function __construct(
+        private array $data,
+    )
+    {
+    }
+
+    public function offsetExists(mixed $offset): bool
+    {
+        return array_key_exists($offset, $this->data);
+    }
+
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->data[$offset];
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->data[$offset] = $value;
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        unset($this->data[$offset]);
+    }
+
+    public function current(): mixed
+    {
+        return $this->data[$this->index];
+    }
+
+    public function next(): void
+    {
+        ++$this->index;
+    }
+
+    public function key(): int
+    {
+        return $this->index;
+    }
+
+    public function valid(): bool
+    {
+        return array_key_exists($this->index, $this->data);
+    }
+
+    public function rewind(): void
+    {
+        $this->index = 0;
+    }
+}
