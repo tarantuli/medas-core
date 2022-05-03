@@ -15,6 +15,11 @@ class BaseArrayCollection implements \ArrayAccess, \Iterator
     {
     }
 
+    public function data(): array
+    {
+        return $this->data;
+    }
+
     public function offsetExists(mixed $offset): bool
     {
         return array_key_exists($offset, $this->data);
