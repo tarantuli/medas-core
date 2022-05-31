@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-class BaseArrayCollection implements \ArrayAccess, \Iterator
+class BaseArrayCollection implements Collection
 {
     private int $index;
 
