@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Medas\Core;
+namespace Medas\Core\Collections;
 
 class BaseArrayCollection implements Collection
 {
     private int $index;
 
-    /** @noinspection PhpPropertyCanBeReadonlyInspection */
     public function __construct(
         private array $data,
     )

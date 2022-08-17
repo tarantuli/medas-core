@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Medas\Test;
+namespace Medas\Test\Collections;
 
-use Medas\Core\ArrayCollection;
+use Medas\Core\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class ArrayCollectionTest extends TestCase
