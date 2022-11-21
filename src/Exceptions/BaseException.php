@@ -8,8 +8,6 @@ use Medas\Core\Str;
 
 abstract class BaseException extends \Exception
 {
-    abstract public function pattern(): string;
-
     private ?\Exception $previous = null;
     private array $arguments;
 
@@ -18,13 +16,20 @@ abstract class BaseException extends \Exception
         $this->arguments = $arguments;
 
         foreach ($arguments as &$argument) {
-            $argument = Str::fromVariable($argument)->truncateToCharLength(1000);
+            try {
+                $argument = Str::fromVariable($argument)->truncateToCharLength(1000);
+            }
+            catch (\Exception) {
+                $argument = '�';
+            }
         }
 
         $message = vsprintf($this->pattern(), $arguments);
 
         parent::__construct($message, 1, $this->previous);
     }
+
+    abstract public function pattern(): string;
 
     public function arguments(): array
     {
