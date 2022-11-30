@@ -8,7 +8,7 @@ use Medas\Core\Str;
 
 abstract class BaseException extends \Exception
 {
-    private ?\Exception $previous = null;
+    private \Exception|null $previous = null;
     private array $arguments;
 
     public function __construct(...$arguments)

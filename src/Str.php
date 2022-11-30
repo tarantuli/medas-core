@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-use Symfony\Component\String\UnicodeString;
-
-class Str extends UnicodeString
+class Str implements \Stringable
 {
     public static function fromArray(array $argument): string
     {
@@ -62,7 +60,6 @@ class Str extends UnicodeString
         }
 
         return new self((string) $argument);
-
     }
 
     public static function fromObject(object $argument): string
@@ -99,6 +96,18 @@ class Str extends UnicodeString
         $retval .= ')';
 
         return $retval;
+    }
+
+    private string $string;
+
+    public function __construct(string $string)
+    {
+        $this->string = $string;
+    }
+
+    public function __toString(): string
+    {
+        return $this->string;
     }
 
     public function truncateToByteLength(int $maxByteLength): self

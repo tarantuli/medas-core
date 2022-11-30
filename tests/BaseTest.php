@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\Test;
+namespace Medas\CoreTest;
 
 use PHPUnit\Framework\TestCase;
 

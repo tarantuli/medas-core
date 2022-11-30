@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Medas\Test\Collections;
+namespace Medas\CoreTest\Collections;
 
 use Medas\Core\Collections\ArrayCollection;
-use PHPUnit\Framework\TestCase;
+use Medas\CoreTest\BaseTest;
 
-class ArrayCollectionTest extends TestCase
+class ArrayCollectionTest extends BaseTest
 {
     public function testCreation(): ArrayCollection
     {
