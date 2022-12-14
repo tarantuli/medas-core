@@ -31,7 +31,9 @@ class BaseArrayCollection implements Collection
 
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->data[$offset] = $value;
+        $offset === null
+            ? $this->data[] = $value
+            : $this->data[$offset] = $value;
     }
 
     public function offsetUnset(mixed $offset): void
