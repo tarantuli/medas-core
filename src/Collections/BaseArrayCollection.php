@@ -63,4 +63,9 @@ class BaseArrayCollection implements Collection
     {
         $this->index = 0;
     }
+
+    public function count(): int
+    {
+        return count($this->data);
+    }
 }
