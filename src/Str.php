@@ -39,7 +39,7 @@ class Str implements \Stringable
     {
         if (is_string($argument) && $argument !== '�') {
             if ($quotesOnlyAroundWhitespace) {
-                if (preg_match('/\w/', $argument)) {
+                if (preg_match('/\s/', $argument)) {
                     $argument = '"' . $argument . '"';
                 }
             }
