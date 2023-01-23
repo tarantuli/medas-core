@@ -35,10 +35,17 @@ class Str implements \Stringable
         return $retval;
     }
 
-    public static function fromVariable(mixed $argument): self
+    public static function fromVariable(mixed $argument, bool $quotesOnlyAroundWhitespace = false): self
     {
         if (is_string($argument) && $argument !== '�') {
-            $argument = '"' . $argument . '"';
+            if ($quotesOnlyAroundWhitespace) {
+                if (preg_match('/\w/', $argument)) {
+                    $argument = '"' . $argument . '"';
+                }
+            }
+            else {
+                $argument = '"' . $argument . '"';
+            }
         }
         elseif (is_array($argument)) {
             $argument = self::fromArray($argument);

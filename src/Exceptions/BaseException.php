@@ -17,7 +17,8 @@ abstract class BaseException extends \Exception
 
         foreach ($arguments as &$argument) {
             try {
-                $argument = Str::fromVariable($argument)->truncateToCharLength(1000);
+                $argument = Str::fromVariable($argument, true)
+                    ->truncateToCharLength(1000);
             }
             catch (\Exception) {
                 $argument = '�';
