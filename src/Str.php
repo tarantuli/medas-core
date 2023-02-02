@@ -9,6 +9,7 @@ class Str implements \Stringable
     public static function forceUtf8(string $string): string
     {
         $result = '';
+
         foreach (mb_str_split($string) as $char) {
             if (mb_check_encoding($char, 'UTF-8')) {
                 $result .= $char;
