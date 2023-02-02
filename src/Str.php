@@ -6,6 +6,21 @@ namespace Medas\Core;
 
 class Str implements \Stringable
 {
+    public static function forceUtf8(string $string): string
+    {
+        $result = '';
+        foreach (mb_str_split($string) as $char) {
+            if (mb_check_encoding($char, 'UTF-8')) {
+                $result .= $char;
+            }
+            else {
+                $result .= '▪' . str_pad(dechex(ord($char)), 2, '0', STR_PAD_LEFT);
+            }
+        }
+
+        return $result;
+    }
+
     public static function fromArray(array $argument): string
     {
         if (count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)) >= 25) {
