@@ -121,6 +121,16 @@ class Str implements \Stringable
         return $retval;
     }
 
+    public static function startsWithCi(string $haystack, string $needle): bool
+    {
+        return strncasecmp($haystack, $needle, strlen($needle)) === 0;
+    }
+
+    public static function endsWithCi(string $haystack, string $needle): bool
+    {
+        return $needle === '' || strcasecmp($needle, substr($haystack, -strlen($needle))) === 0;
+    }
+
     private string $string;
 
     public function __construct(string $string)
