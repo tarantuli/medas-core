@@ -101,13 +101,6 @@ class CaseSensitiveString implements \Stringable
         return $this->string === $needle;
     }
 
-    public function regexpReplace(string $pattern, string $replace): int
-    {
-        $this->string = preg_replace($pattern, $replace, $this->string, -1, $count);
-
-        return $count;
-    }
-
     public function regexMatch(string $pattern, int $flags = 0, int $offset = 0): array|null
     {
         $matched = preg_match($pattern, $this->string, $match, $flags, $offset);
