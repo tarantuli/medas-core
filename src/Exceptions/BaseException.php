@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Exceptions;
 
-use Medas\Core\Str;
+use Medas\Core\CaseSensitiveString;
 
 abstract class BaseException extends \Exception
 {
@@ -17,7 +17,7 @@ abstract class BaseException extends \Exception
 
         foreach ($arguments as &$argument) {
             try {
-                $argument = Str::fromVariable($argument, true)
+                $argument = CaseSensitiveString::fromVariable($argument, true, true)
                     ->truncateToCharLength(1000);
             }
             catch (\Exception) {
