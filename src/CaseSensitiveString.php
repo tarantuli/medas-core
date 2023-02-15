@@ -121,4 +121,11 @@ class CaseSensitiveString implements \Stringable
 
         return $matched ? $matches : [];
     }
+
+    public function regexReplace(string $pattern, string $replacement, int $limit = -1): int
+    {
+        $this->string = preg_replace($pattern, $replacement, $this->string, $limit, $count);
+
+        return $count;
+    }
 }
