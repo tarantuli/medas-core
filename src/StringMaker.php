@@ -77,7 +77,7 @@ class StringMaker
         }
 
         if ($forceUtf8) {
-            $string = self::forceUtf8($string);
+            $string = self::forceUtf8((string) $string);
         }
 
         return $string;
