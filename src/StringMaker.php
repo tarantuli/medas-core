@@ -47,7 +47,7 @@ class StringMaker
     ): string
     {
         if (is_string($argument)) {
-            if ($argument === '�' || ($quotesOnlyAroundWhitespace && preg_match('/\s/', $argument))) {
+            if ($argument === '�' || ($quotesOnlyAroundWhitespace && !preg_match('/\s/', $argument))) {
                 $string = $argument;
             }
             else {
