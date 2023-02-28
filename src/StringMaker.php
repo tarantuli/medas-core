@@ -73,11 +73,11 @@ class StringMaker
             $string = sprintf('resource:%s(%u)', get_resource_type($argument), (int) $argument);
         }
         else {
-            $string = $argument;
+            $string = (string) $argument;
         }
 
         if ($forceUtf8) {
-            $string = self::forceUtf8((string) $string);
+            $string = self::forceUtf8($string);
         }
 
         return $string;
