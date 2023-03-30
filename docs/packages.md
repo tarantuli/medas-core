@@ -66,7 +66,7 @@ TODO
 
 TODO
 
-### [medas-file-manager](https://github.com/tarantuli/medas-file-manager)
+### [medas-file-system](https://github.com/tarantuli/medas-file-system)
 
 TODO
 
@@ -74,7 +74,7 @@ TODO
 
 TODO
 
-### [medas-ramseu-uuid-bridge](https://github.com/tarantuli/medas-ramseu-uuid-bridge)
+### [medas-ramsey-uuid-bridge](https://github.com/tarantuli/medas-ramsey-uuid-bridge)
 
 TODO
 
