@@ -6,6 +6,10 @@ goals in mind:
 - To practice applying certain patterns, styles and practices
 - To organize my own code
 
+## Links
+
+- [Packages](docs/packages.md)
+
 ## Usability
 
 I would not recommend using these packages yourself at this moment. Most of them only implement the features I've needed
@@ -39,5 +43,5 @@ The amount of "magic" should be as low as possible:
 
 ### In general
 
-- Use regular expressions only when it's necessary or vastly more optimal than parsing or deconstructing the string in question
-
+- Use regular expressions only when it's necessary or vastly more optimal than parsing or deconstructing the string in
+  question
