@@ -2,11 +2,11 @@
 
 ## Services
 
-### [medas-service-manager](https://github.com/tarantuli/medas-service-manager)
+### [medas-service-manager](https://github.com/tarantuli/medas-service-manager) ✓
 
 TODO
 
-### [medas-cache](https://github.com/tarantuli/medas-cache)
+### [medas-cache](https://github.com/tarantuli/medas-cache) ✓
 
 TODO
 
@@ -16,11 +16,11 @@ TODO
 
 ## Configuration
 
-### [medas-config-manager](https://github.com/tarantuli/medas-config-manager)
+### [medas-config-manager](https://github.com/tarantuli/medas-config-manager) ✓
 
 TODO
 
-### [medas-config-options](https://github.com/tarantuli/medas-config-options)
+### [medas-config-options](https://github.com/tarantuli/medas-config-options) ✓
 
 TODO
 
@@ -66,7 +66,7 @@ TODO
 
 TODO
 
-### [medas-file-system](https://github.com/tarantuli/medas-file-system)
+### [medas-file-system](https://github.com/tarantuli/medas-file-system) ✓
 
 TODO
 
