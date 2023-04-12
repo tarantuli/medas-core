@@ -80,7 +80,6 @@ class Identifier
         }
 
         return $snakeCase;
-
     }
 
     public function toKebabCase(bool $toLowerCase = true, bool $maintainCase = false, bool $toUpperCase = false): string
