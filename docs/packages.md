@@ -26,29 +26,29 @@ TODO
 
 ## Console
 
-### [medas-console](https://github.com/tarantuli/medas-console)
+### [medas-console](https://github.com/tarantuli/medas-console) ✓
 
 TODO
 
-### [medas-console-printer](https://github.com/tarantuli/medas-console-printer)
+### [medas-console-printer](https://github.com/tarantuli/medas-console-printer) ✓
 
 TODO
 
 ## Request handling
 
-### [medas-routing](https://github.com/tarantuli/medas-routing)
+### [medas-routing](https://github.com/tarantuli/medas-routing) ✓
 
 TODO
 
-### [medas-http-request-handler](https://github.com/tarantuli/medas-http-request-handler)
+### [medas-http-request-handler](https://github.com/tarantuli/medas-http-request-handler) ✓
 
 Contains request and response handlers and interfaces.
 
-### [medas-rest-request-handler](https://github.com/tarantuli/medas-rest-request-handler)
+### [medas-rest-request-handler](https://github.com/tarantuli/medas-rest-request-handler) ✓
 
 Contains REST request and response handlers and basic ID and GUID based routes.
 
-### [medas-html-templates](https://github.com/tarantuli/medas-html-templates)
+### [medas-html-templates](https://github.com/tarantuli/medas-html-templates) ✓
 
 TODO
 
@@ -62,7 +62,7 @@ TODO
 
 ## Data manipulation
 
-### [medas-typed-data-argument](https://github.com/tarantuli/medas-typed-data-argument)
+### [medas-typed-data-argument](https://github.com/tarantuli/medas-typed-data-argument) ✓
 
 TODO
 
@@ -70,17 +70,17 @@ TODO
 
 TODO
 
-### [medas-datetime-jumps](https://github.com/tarantuli/medas-datetime-jumps)
+### [medas-datetime-jumps](https://github.com/tarantuli/medas-datetime-jumps) ✓
 
 TODO
 
-### [medas-ramsey-uuid-bridge](https://github.com/tarantuli/medas-ramsey-uuid-bridge)
+### [medas-ramsey-uuid-bridge](https://github.com/tarantuli/medas-ramsey-uuid-bridge) ✓
 
 TODO
 
 ## Entities and storage
 
-### [medas-entity-manager](https://github.com/tarantuli/medas-entity-manager)
+### [medas-entity-manager](https://github.com/tarantuli/medas-entity-manager) ✓
 
 TODO
 
