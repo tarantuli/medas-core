@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Medas\Core;
+namespace Medas\Core\Interfaces;
 
 interface FileEntity
 {
     public function setContent(string $content): self;
 
-    public function setName(?string $name): self;
+    public function setName(string|null $name): self;
 
     public function name(): ?string;
 

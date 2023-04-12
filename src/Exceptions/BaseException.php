@@ -37,7 +37,7 @@ abstract class BaseException extends \Exception
         return $this->arguments;
     }
 
-    public function setPrevious(?\Exception $previous): self
+    public function setPrevious(\Exception|null $previous): self
     {
         $this->previous = $previous;
 

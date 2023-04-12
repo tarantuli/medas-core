@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
+use Medas\Core\Interfaces\Collection;
+
 class BaseArrayCollection implements Collection
 {
     private int $index;

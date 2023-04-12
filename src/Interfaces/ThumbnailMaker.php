@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Medas\Core;
+namespace Medas\Core\Interfaces;
 
 interface ThumbnailMaker
 {
