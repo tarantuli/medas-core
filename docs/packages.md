@@ -52,7 +52,7 @@ Contains REST request and response handlers and basic ID and GUID based routes.
 
 TODO
 
-### [medas-html-templates-http-request-handler-bridge](https://github.com/tarantuli/medas-html-templates-http-request-handler-bridge)
+### [medas-html-templates-http-request-handler-bridge](https://github.com/tarantuli/medas-html-templates-http-request-handler-bridge) ✓
 
 TODO
 
@@ -88,21 +88,21 @@ TODO
 
 TODO
 
-### [medas-storage-manager](https://github.com/tarantuli/medas-storage-manager)
+### [medas-storage-manager](https://github.com/tarantuli/medas-storage-manager) ✓
 
 TODO
 
-### [medas-pdo-storage](https://github.com/tarantuli/medas-pdo-storage)
+### [medas-pdo-storage](https://github.com/tarantuli/medas-pdo-storage) ✓
 
 TODO
 
 ## Backend
 
-### [medas-file-builder](https://github.com/tarantuli/medas-file-builder)
+### [medas-file-builder](https://github.com/tarantuli/medas-file-builder) ✓
 
 TODO
 
-### [medas-php-formatter](https://github.com/tarantuli/medas-php-formatter)
+### [medas-php-formatter](https://github.com/tarantuli/medas-php-formatter) ✓
 
 TODO
 
