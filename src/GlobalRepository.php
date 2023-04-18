@@ -6,10 +6,10 @@ namespace Medas\Core;
 
 class GlobalRepository
 {
-    private static Interfaces\ServiceManager $serviceManager;
-    private static Interfaces\ObjectInstantiator $objectInstantiator;
+    private static Interfaces\ServiceManager|null $serviceManager = null;
+    private static Interfaces\ObjectInstantiator|null $objectInstantiator = null;
 
-    public static function serviceManager(): Interfaces\ServiceManager
+    public static function serviceManager(): Interfaces\ServiceManager|null
     {
         return self::$serviceManager;
     }
@@ -19,7 +19,7 @@ class GlobalRepository
         self::$serviceManager = $serviceManager;
     }
 
-    public static function objectInstantiator(): Interfaces\ObjectInstantiator
+    public static function objectInstantiator(): Interfaces\ObjectInstantiator|null
     {
         return self::$objectInstantiator;
     }
