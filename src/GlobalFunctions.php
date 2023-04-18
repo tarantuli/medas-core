@@ -1,0 +1,63 @@
+<?php
+
+declare(strict_types=1);
+
+// This file should be in the global namespace
+
+use Medas\Core\GlobalRepository;
+use Medas\Core\Interfaces\{ConfigManager, ServiceManager};
+
+function config(string $path): mixed
+{
+    return GlobalRepository::serviceManager()
+        ->resolve(ConfigManager::class)
+        ->getValue($path);
+}
+
+function sm(): ServiceManager
+{
+    return GlobalRepository::serviceManager();
+}
+
+/**
+ * The return value  is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
+ */
+function service(string $type): object
+{
+    return GlobalRepository::serviceManager()
+        ->resolve($type);
+}
+
+/**
+ * The return value  is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
+ */
+function attribute(
+    string                                                                                                    $type,
+    ReflectionClassConstant|ReflectionClass|ReflectionFunctionAbstract|ReflectionParameter|ReflectionProperty $reflector
+): object|null
+{
+    if (!$attributes = $reflector->getAttributes($type, ReflectionAttribute::IS_INSTANCEOF)) {
+        return null;
+    }
+
+    return $attributes[0]->newInstance();
+}
+
+function propertyValue(object $object, string $propertyName): mixed
+{
+    return (new ReflectionClass($object))->getProperty($propertyName)->getValue($object);
+}
+
+/** @return ReflectionNamedType[] */
+function parameterTypes(ReflectionParameter|ReflectionProperty $parameter): array
+{
+    $type = $parameter->getType();
+
+    if (!$type) {
+        return [];
+    }
+
+    return $type instanceof ReflectionUnionType
+        ? $type->getTypes()
+        : [$type];
+}
