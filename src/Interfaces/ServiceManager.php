@@ -9,5 +9,5 @@ interface ServiceManager
     /**
      * The return value  is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
      */
-    public function resolve(string $class): object;
+    public function resolve(string $type): object;
 }
