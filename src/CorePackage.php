@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-use Medas\ServiceManager\{AsSingleton, BasePackage, ServiceConfig};
+use Medas\ServiceManager\{BasePackage, ServiceConfig};
 
 class CorePackage extends BasePackage
 {
