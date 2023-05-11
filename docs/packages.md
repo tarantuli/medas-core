@@ -44,7 +44,7 @@ TODO
 
 TODO
 
-### [medas-http-request-handler](https://github.com/tarantuli/medas-http-request-handler) ✓✓✓
+### [medas-http-request-handler](https://github.com/tarantuli/medas-http-request-handler)
 
 Contains request and response handlers and interfaces.
 
