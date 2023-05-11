@@ -96,62 +96,62 @@ TODO
 
 TODO
 
-### [medas-storage-manager](https://github.com/tarantuli/medas-storage-manager) ✓✓✓
+### [medas-storage-manager](https://github.com/tarantuli/medas-storage-manager)
 
 TODO
 
-### [medas-pdo-storage](https://github.com/tarantuli/medas-pdo-storage) ✓✓✓
+### [medas-pdo-storage](https://github.com/tarantuli/medas-pdo-storage)
 
 TODO
 
-### [medas-pdo-mysql](https://github.com/tarantuli/medas-pdo-mysql) ✓✓✓
+### [medas-pdo-mysql](https://github.com/tarantuli/medas-pdo-mysql)
 
 TODO
 
-### [medas-pdo-sqlite](https://github.com/tarantuli/medas-pdo-sqlite) ✓✓✓
+### [medas-pdo-sqlite](https://github.com/tarantuli/medas-pdo-sqlite)
 
 TODO
 
-### [medas-json-storage](https://github.com/tarantuli/medas-json-storage) ✓✓✓
+### [medas-json-storage](https://github.com/tarantuli/medas-json-storage)
 
 TODO
 
 ## Backend
 
-### [medas-file-builder](https://github.com/tarantuli/medas-file-builder) ✓✓✓
+### [medas-file-builder](https://github.com/tarantuli/medas-file-builder)
 
 TODO
 
-### [medas-php-tokenizer](https://github.com/tarantuli/medas-php-tokenizer) ✓✓✓
+### [medas-php-tokenizer](https://github.com/tarantuli/medas-php-tokenizer)
 
 TODO
 
-### [medas-php-class-analysis](https://github.com/tarantuli/medas-php-class-analysis) ✓✓✓
+### [medas-php-class-analysis](https://github.com/tarantuli/medas-php-class-analysis)
 
 TODO
 
-### [medas-php-formatter](https://github.com/tarantuli/medas-php-formatter) ✓✓✓
+### [medas-php-formatter](https://github.com/tarantuli/medas-php-formatter)
 
 TODO
 
-### [medas-json-ld-to-angular-interfaces](https://github.com/tarantuli/medas-json-ld-to-angular-interfaces) ✓✓✓
+### [medas-json-ld-to-angular-interfaces](https://github.com/tarantuli/medas-json-ld-to-angular-interfaces)
 
 TODO
 
 ## Media
 
-### [medas-image-manager](https://github.com/tarantuli/medas-image-manager) ✓✓✓
+### [medas-image-manager](https://github.com/tarantuli/medas-image-manager)
 
 TODO
 
-### [medas-id3-tag-reader](https://github.com/tarantuli/medas-id3-tag-reader) ✓✓✓
+### [medas-id3-tag-reader](https://github.com/tarantuli/medas-id3-tag-reader)
 
 TODO
 
-### [medas-card-pdf-maker](https://github.com/tarantuli/medas-card-pdf-maker) ✓✓✓
+### [medas-card-pdf-maker](https://github.com/tarantuli/medas-card-pdf-maker)
 
 TODO
 
-### [medas-markdown-to-pdf](https://github.com/tarantuli/medas-markdown-to-pdf) ✓✓✓
+### [medas-markdown-to-pdf](https://github.com/tarantuli/medas-markdown-to-pdf)
 
 TODO
