@@ -6,31 +6,42 @@ namespace Medas\Core\Collections;
 
 use Medas\Core\Interfaces\Collection;
 
-class BaseArrayCollection implements Collection
+/**
+ * @template T
+ */
+class GenericCollection implements Collection
 {
-    private int $index;
+    private int $index = 0;
 
     public function __construct(
-        private array $data,
+        /** @var array<int, T> */
+        private array $data = [],
     )
     {
     }
 
-    public function data(): array
-    {
-        return $this->data;
-    }
-
+    /**
+     * @param int $offset
+     */
     public function offsetExists(mixed $offset): bool
     {
         return array_key_exists($offset, $this->data);
     }
 
+    /**
+     * @param int $offset
+     *
+     * @return T
+     */
     public function offsetGet(mixed $offset): mixed
     {
         return $this->data[$offset];
     }
 
+    /**
+     * @param int $offset
+     * @param T   $value
+     */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         $offset === null
@@ -38,11 +49,15 @@ class BaseArrayCollection implements Collection
             : $this->data[$offset] = $value;
     }
 
+    /**
+     * @param int $offset
+     */
     public function offsetUnset(mixed $offset): void
     {
         unset($this->data[$offset]);
     }
 
+    /** @return T */
     public function current(): mixed
     {
         return $this->data[$this->index];
