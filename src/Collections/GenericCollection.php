@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Medas\Core\Collections;
 
 use Medas\Core\Interfaces\Collection;
+use Medas\Core\Interfaces\TracksChanges;
 
 /**
  * @template T
  */
-class GenericCollection implements Collection
+class GenericCollection implements Collection, TracksChanges
 {
     private int $index = 0;
+    private bool $hasChanged = false;
 
     public function __construct(
         /** @var array<int, T> */
@@ -44,9 +46,12 @@ class GenericCollection implements Collection
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $offset === null
-            ? $this->data[] = $value
-            : $this->data[$offset] = $value;
+        if ($offset === null
+            || !array_key_exists($offset, $this->data)
+            || $this->data[$offset] !== $value) {
+            $this->data[] = $value;
+            $this->hasChanged = true;
+        }
     }
 
     /**
@@ -54,7 +59,10 @@ class GenericCollection implements Collection
      */
     public function offsetUnset(mixed $offset): void
     {
-        unset($this->data[$offset]);
+        if (array_key_exists($offset, $this->data)) {
+            unset($this->data[$offset]);
+            $this->hasChanged = true;
+        }
     }
 
     /** @return T */
@@ -86,5 +94,15 @@ class GenericCollection implements Collection
     public function count(): int
     {
         return count($this->data);
+    }
+
+    public function resetChangeTracking(): void
+    {
+        $this->hasChanged = false;
+    }
+
+    public function hasChanged(): bool
+    {
+        return $this->hasChanged;
     }
 }
