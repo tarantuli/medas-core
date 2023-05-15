@@ -17,7 +17,7 @@ class GenericCollection implements Collection, TracksChanges
 
     public function __construct(
         /** @var array<int, T> */
-        private array $data = [],
+        protected array $data = [],
     )
     {
     }
