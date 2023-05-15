@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
+/**
+ * @template T
+ * @extends GenericCollection<T>
+ */
 class LazyGenericCollection extends GenericCollection
 {
     private bool $hasFetched = false;
@@ -23,30 +27,46 @@ class LazyGenericCollection extends GenericCollection
         }
     }
 
+    /**
+     * @param int $offset
+     */
     public function offsetExists(mixed $offset): bool
     {
         $this->check();
         return parent::offsetExists($offset);
     }
 
+    /**
+     * @param int $offset
+     *
+     * @return T
+     */
     public function offsetGet(mixed $offset): mixed
     {
         $this->check();
         return parent::offsetGet($offset);
     }
 
+    /**
+     * @param int $offset
+     * @param T   $value
+     */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->check();
         parent::offsetSet($offset, $value);
     }
 
+    /**
+     * @param int $offset
+     */
     public function offsetUnset(mixed $offset): void
     {
         $this->check();
         parent::offsetUnset($offset);
     }
 
+    /** @return T */
     public function current(): mixed
     {
         $this->check();
