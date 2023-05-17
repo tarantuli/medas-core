@@ -5,15 +5,20 @@ declare(strict_types=1);
 namespace Medas\Core\Collections;
 
 use Medas\Core\Interfaces\Collection;
+use Medas\Core\Interfaces\TracksAddsDeletions;
 use Medas\Core\Interfaces\TracksChanges;
 
 /**
  * @template T
  */
-class GenericCollection implements Collection, TracksChanges
+class GenericCollection implements Collection, TracksChanges, TracksAddsDeletions
 {
     private int $index = 0;
+
     private bool $hasChanged = false;
+
+    private array $additions = [];
+    private array $deletions = [];
 
     public function __construct(
         /** @var array<int, T> */
@@ -46,10 +51,27 @@ class GenericCollection implements Collection, TracksChanges
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        if ($offset === null
-            || !array_key_exists($offset, $this->data)
-            || $this->data[$offset] !== $value) {
+        if ($offset === null) {
+            // A new value, append to the end
             $this->data[] = $value;
+            $this->additions[] = $value;
+
+            $this->hasChanged = true;
+        }
+        elseif (!array_key_exists($offset, $this->data)) {
+            // A new value with a given offset, put there
+            $this->data[$offset] = $value;
+            $this->additions[] = $value;
+
+            $this->hasChanged = true;
+        }
+        elseif ($this->data[$offset] !== $value) {
+            // An existing value is overwritten
+            $this->deletions[] = $this->data[$offset];
+
+            $this->data[$offset] = $value;
+            $this->additions[] = $value;
+
             $this->hasChanged = true;
         }
     }
@@ -60,7 +82,10 @@ class GenericCollection implements Collection, TracksChanges
     public function offsetUnset(mixed $offset): void
     {
         if (array_key_exists($offset, $this->data)) {
+            $this->deletions[] = $this->data[$offset];
+
             unset($this->data[$offset]);
+
             $this->hasChanged = true;
         }
     }
@@ -99,10 +124,22 @@ class GenericCollection implements Collection, TracksChanges
     public function resetChangeTracking(): void
     {
         $this->hasChanged = false;
+        $this->additions = [];
+        $this->deletions = [];
     }
 
     public function hasChanged(): bool
     {
         return $this->hasChanged;
+    }
+
+    public function getAdditions(): array
+    {
+        return $this->additions;
+    }
+
+    public function getDeletions(): array
+    {
+        return $this->deletions;
     }
 }
