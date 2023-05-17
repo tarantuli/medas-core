@@ -23,6 +23,8 @@ class LazyGenericCollection extends GenericCollection
     {
         if (!$this->hasFetched) {
             $this->data = ($this->fetcher)();
+            $this->additions = array_values($this->data);
+
             $this->hasFetched = true;
         }
     }
@@ -83,5 +85,23 @@ class LazyGenericCollection extends GenericCollection
     {
         $this->check();
         return parent::count();
+    }
+
+    public function getAdditions(): array
+    {
+        $this->check();
+        return parent::getAdditions();
+    }
+
+    public function getDeletions(): array
+    {
+        $this->check();
+        return parent::getDeletions();
+    }
+
+    public function resetChangeTracking(): void
+    {
+        $this->check();
+        parent::resetChangeTracking();
     }
 }

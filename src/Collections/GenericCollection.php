@@ -17,14 +17,15 @@ class GenericCollection implements Collection, TracksChanges, TracksAddsDeletion
 
     private bool $hasChanged = false;
 
-    private array $additions = [];
-    private array $deletions = [];
+    protected array $additions = [];
+    protected array $deletions = [];
 
     public function __construct(
         /** @var array<int, T> */
         protected array $data = [],
     )
     {
+        $this->additions = array_values($this->data);
     }
 
     /**
