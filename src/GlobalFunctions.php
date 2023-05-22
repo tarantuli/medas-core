@@ -4,19 +4,30 @@ declare(strict_types=1);
 
 // This file should be in the global namespace
 
-use Medas\Core\GlobalRepository;
 use Medas\Core\Interfaces\{ConfigManager, ServiceManager};
+use Medas\Core\MedasRepository;
+
+function medas(bool $initialize = false): MedasRepository
+{
+    static $repository;
+
+    if ($initialize || !isset($repository)) {
+        $repository = new MedasRepository();
+    }
+
+    return $repository;
+}
 
 function config(string $path): mixed
 {
-    return GlobalRepository::serviceManager()
+    return medas()->serviceManager()
         ->resolve(ConfigManager::class)
         ->getValue($path);
 }
 
 function sm(): ServiceManager
 {
-    return GlobalRepository::serviceManager();
+    return medas()->serviceManager();
 }
 
 /**
@@ -24,7 +35,7 @@ function sm(): ServiceManager
  */
 function service(string $type): object
 {
-    return GlobalRepository::serviceManager()
+    return medas()->serviceManager()
         ->resolve($type);
 }
 
@@ -60,4 +71,10 @@ function parameterTypes(ReflectionParameter|ReflectionProperty $parameter): arra
     return $type instanceof ReflectionUnionType
         ? $type->getTypes()
         : [$type];
+}
+
+/** @return ReflectionNamedType[] */
+function propertyTypes(ReflectionParameter|ReflectionProperty $parameter): array
+{
+    return parameterTypes($parameter);
 }

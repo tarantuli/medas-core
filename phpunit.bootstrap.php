@@ -3,11 +3,14 @@
 declare(strict_types=1);
 
 use Medas\Core\CorePackage;
-use Medas\ServiceManager\ServiceManager;
+use Medas\ServiceManager\{ServiceConfig, ServiceManager};
 
 chdir(__DIR__);
 
-require_once 'vendor/autoload.php';
+new ServiceManager(function (): ServiceConfig {
+    $config = new ServiceConfig();
 
-ServiceManager::get()
-    ->addPackage(CorePackage::instance());
+    $config->addPackage(CorePackage::instance());
+
+    return $config;
+});
