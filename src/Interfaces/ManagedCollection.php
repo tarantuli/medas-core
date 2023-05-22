@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
-interface TracksAddsDeletions
+interface ManagedCollection extends Collection
 {
     public function getAdditions(): array;
 

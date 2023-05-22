@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
-use Medas\Core\Interfaces\Collection;
-use Medas\Core\Interfaces\TracksAddsDeletions;
+use Medas\Core\Interfaces\ManagedCollection;
 use Medas\Core\Interfaces\TracksChanges;
 
 /**
  * @template T
  */
-class GenericCollection implements Collection, TracksChanges, TracksAddsDeletions
+class GenericCollection implements TracksChanges, ManagedCollection
 {
     private int $index = 0;
 
