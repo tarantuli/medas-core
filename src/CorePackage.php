@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-use Medas\ServiceManager\{BasePackage, ServiceConfig};
+use Medas\ServiceManager\{BasePackage};
 
 class CorePackage extends BasePackage
 {
@@ -20,10 +20,8 @@ class CorePackage extends BasePackage
         return __DIR__;
     }
 
-    public function initialize(ServiceConfig $config): void
+    public function loadGlobalFunctions(): void
     {
         require_once __DIR__ . '/GlobalFunctions.php';
-
-        parent::initialize($config);
     }
 }
