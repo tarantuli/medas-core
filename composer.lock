@@ -166,12 +166,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-service-manager.git",
-                "reference": "8a18acfb261c03fef9865188de173128cab879af"
+                "reference": "c49bb4fdf84daa25ce0382355f84c21d7864fe3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-service-manager/zipball/8a18acfb261c03fef9865188de173128cab879af",
-                "reference": "8a18acfb261c03fef9865188de173128cab879af",
+                "url": "https://api.github.com/repos/tarantuli/medas-service-manager/zipball/c49bb4fdf84daa25ce0382355f84c21d7864fe3a",
+                "reference": "c49bb4fdf84daa25ce0382355f84c21d7864fe3a",
                 "shasum": ""
             },
             "require": {
@@ -206,7 +206,7 @@
                 "source": "https://github.com/tarantuli/medas-service-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-service-manager/issues"
             },
-            "time": "2023-05-02T08:11:33+00:00"
+            "time": "2023-05-22T10:41:32+00:00"
         },
         {
             "name": "myclabs/deep-copy",
