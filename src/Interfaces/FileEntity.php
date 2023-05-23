@@ -10,7 +10,7 @@ interface FileEntity
 
     public function setName(string|null $name): self;
 
-    public function name(): ?string;
+    public function name(): string|null;
 
     public function mimetype(): string;
 
