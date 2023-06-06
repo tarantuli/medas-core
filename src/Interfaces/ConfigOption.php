@@ -10,6 +10,9 @@ interface ConfigOption
 
     public function name(): string;
 
+    /**
+     * A single line describing what this option does. It should start with a capital and not end with a dot
+     */
     public function description(): string;
 
     public function hasDefault(): bool;
