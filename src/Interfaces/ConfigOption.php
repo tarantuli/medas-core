@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
-interface ConfigOption extends IsSingleton
+interface ConfigOption
 {
     public function group(): ConfigGroup;
 

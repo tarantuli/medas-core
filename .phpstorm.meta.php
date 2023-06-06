@@ -2,7 +2,7 @@
 
 namespace PHPSTORM_META {
 
-    use Medas\Core\Interfaces\{ObjectInstantiator, ServiceManager};
+    use Medas\Core\Interfaces\{ImplementorFinder, ObjectInstantiator, ServiceManager};
 
     override(ServiceManager::resolve(), map([
         '' => '@',
@@ -16,7 +16,11 @@ namespace PHPSTORM_META {
         '' => '@',
     ]));
 
+    override(ImplementorFinder::find(), map([
+        '' => '@[]',
+    ]));
     override(\attribute(), map([
+
         '' => '@',
     ]));
 }
