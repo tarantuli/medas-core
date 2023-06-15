@@ -6,7 +6,7 @@ namespace Medas\CoreTest;
 
 use Medas\Core\Identifier;
 
-class IdentifierFromTest extends BaseTest
+class IdentifierFromTest extends BaseTestClass
 {
     public function testFromCamelCase(): void
     {

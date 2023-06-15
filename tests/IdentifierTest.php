@@ -6,7 +6,7 @@ namespace Medas\CoreTest;
 
 use Medas\Core\Identifier;
 
-class IdentifierTest extends BaseTest
+class IdentifierTest extends BaseTestClass
 {
     public function testCreateFromString(): Identifier
     {

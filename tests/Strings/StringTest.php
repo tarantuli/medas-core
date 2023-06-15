@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Medas\CoreTest\Strings;
 
 use Medas\Core\{CaseInsensitiveString, CaseSensitiveString};
-use Medas\CoreTest\BaseTest;
+use Medas\CoreTest\BaseTestClass;
 
-class StringTest extends BaseTest
+class StringTest extends BaseTestClass
 {
     private const TEST_STRING = 'aaabbbccc';
 

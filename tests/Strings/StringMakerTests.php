@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Medas\CoreTest\Strings;
 
 use Medas\Core\{StringMaker, CaseSensitiveString};
-use Medas\CoreTest\BaseTest;
+use Medas\CoreTest\BaseTestClass;
 
-class StringMakerTests extends BaseTest
+class StringMakerTests extends BaseTestClass
 {
     public function testArray(): void
     {

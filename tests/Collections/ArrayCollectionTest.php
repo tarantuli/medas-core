@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Medas\CoreTest\Collections;
 
 use Medas\Core\Collections\ArrayCollection;
-use Medas\CoreTest\BaseTest;
+use Medas\CoreTest\BaseTestClass;
 
-class ArrayCollectionTest extends BaseTest
+class ArrayCollectionTest extends BaseTestClass
 {
     public function testCreation(): ArrayCollection
     {
