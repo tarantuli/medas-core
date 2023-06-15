@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
-use Medas\Core\Interfaces\ManagedCollection;
-use Medas\Core\Interfaces\TracksChanges;
+use Medas\Core\Interfaces\{ManagedCollection, SettableCollection, TracksChanges};
 
 /**
  * @template T
  */
-class GenericCollection implements TracksChanges, ManagedCollection
+class GenericCollection implements TracksChanges, ManagedCollection, SettableCollection
 {
     private int $index = 0;
 
@@ -25,6 +24,11 @@ class GenericCollection implements TracksChanges, ManagedCollection
     )
     {
         $this->additions = array_values($this->data);
+    }
+
+    public function setData(array $data): void
+    {
+        $this->data = $data;
     }
 
     /**

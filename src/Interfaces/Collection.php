@@ -6,5 +6,4 @@ namespace Medas\Core\Interfaces;
 
 interface Collection extends \ArrayAccess, \Iterator, \Countable
 {
-    public function __construct(array $data = []);
 }
