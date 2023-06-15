@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
+use Medas\Core\Interfaces\IsLazyLoaded;
+
 /**
  * @template T
  * @extends GenericCollection<T>
  */
-class LazyGenericCollection extends GenericCollection
+class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
 {
     private bool $hasFetched = false;
+    private \Closure $fetcher;
 
-    public function __construct(
-        private readonly \Closure $fetcher,
-    )
+    public function setLoader(\Closure $loader): void
     {
-        parent::__construct();
+        $this->fetcher = $loader;
     }
 
     private function check(): void
