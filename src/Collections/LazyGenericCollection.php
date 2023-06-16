@@ -15,6 +15,15 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     private bool $hasFetched = false;
     private \Closure $fetcher;
 
+    public function __construct(\Closure $loader = null)
+    {
+        if ($loader instanceof \Closure) {
+            $this->fetcher = $loader;
+        }
+
+        parent::__construct();
+    }
+
     public function setLoader(\Closure $loader): void
     {
         $this->fetcher = $loader;
