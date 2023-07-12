@@ -15,6 +15,13 @@ class Identifier
         return new self($identifier);
     }
 
+    public static function fromKebabCase(string $kebabCase): self
+    {
+        $identifier = str_replace('-', ' ', $kebabCase);
+
+        return new self($identifier);
+    }
+
     private array $words;
 
     public function __construct(string $identifier)
