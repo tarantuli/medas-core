@@ -6,6 +6,9 @@ namespace Medas\Core\Serializers;
 
 use Medas\Core\Interfaces\{Serializer, Type};
 
+/**
+ * A Serializer implementation that defers to PHP's internal serialize() and unserialize() methods.
+ */
 class PhpSerializer implements Serializer
 {
     public function serialize(mixed $value): string

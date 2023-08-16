@@ -31,7 +31,7 @@ function sm(): ServiceManager
 }
 
 /**
- * The return value  is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
+ * The return value is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
  */
 function service(string $type): object
 {
@@ -40,7 +40,7 @@ function service(string $type): object
 }
 
 /**
- * The return value  is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
+ * The return value is null or an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
  */
 function attribute(
     string                                                                                                    $type,
@@ -59,7 +59,12 @@ function propertyValue(object $object, string $propertyName): mixed
     return (new ReflectionClass($object))->getProperty($propertyName)->getValue($object);
 }
 
-/** @return ReflectionNamedType[] */
+/**
+ * This method returns the types declared on the given ReflectionParameter (or ReflectionProperty) as a normalized array
+ * of ReflectionNamedType instances.
+ *
+ * @return ReflectionNamedType[]
+ */
 function parameterTypes(ReflectionParameter|ReflectionProperty $parameter): array
 {
     $type = $parameter->getType();
@@ -73,7 +78,12 @@ function parameterTypes(ReflectionParameter|ReflectionProperty $parameter): arra
         : [$type];
 }
 
-/** @return ReflectionNamedType[] */
+/**
+ * This method returns the types declared on the given ReflectionProperty (or ReflectionParameter) as a normalized
+ * array of ReflectionNamedType instances.
+ *
+ * @return ReflectionNamedType[]
+ */
 function propertyTypes(ReflectionParameter|ReflectionProperty $parameter): array
 {
     return parameterTypes($parameter);
