@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * Classes that implement this interface keep track of changes to their values or content.
+ * A collection or object that keeps track of changes to its values or content.
  */
 interface TracksChanges
 {

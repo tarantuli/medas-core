@@ -7,6 +7,10 @@ declare(strict_types=1);
 use Medas\Core\Interfaces\{ConfigManager, ServiceManager};
 use Medas\Core\MedasRepository;
 
+/**
+ * This global function holds the reference to the active MedasRepository, which holds the active ServiceManager and
+ * ObjectInstantiator. Set $initialize to true to reset the repository to a new instance.
+ */
 function medas(bool $initialize = false): MedasRepository
 {
     static $repository;
@@ -18,6 +22,9 @@ function medas(bool $initialize = false): MedasRepository
     return $repository;
 }
 
+/**
+ * This global function calls the ConfigManager service and requests the config value for the given value.
+ */
 function config(string $path): mixed
 {
     return medas()->serviceManager()
@@ -25,12 +32,17 @@ function config(string $path): mixed
         ->getValue($path);
 }
 
+/**
+ * This global functions returns the active ServiceManager instance.
+ */
 function sm(): ServiceManager
 {
     return medas()->serviceManager();
 }
 
 /**
+ * This global function calls the active ServiceManager instance and asks it to resolve $type to its service instance.
+ *
  * The return value is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
  */
 function service(string $type): object
@@ -40,6 +52,9 @@ function service(string $type): object
 }
 
 /**
+ * This global function asks the given Reflector if it has an attribute that's of the given type. If so, it returns
+ * an instance of the attribute class.
+ *
  * The return value is null or an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
  */
 function attribute(
@@ -54,6 +69,9 @@ function attribute(
     return $attributes[0]->newInstance();
 }
 
+/**
+ * This global function returns the value of the given property of the given object using reflection.
+ */
 function propertyValue(object $object, string $propertyName): mixed
 {
     return (new ReflectionClass($object))->getProperty($propertyName)->getValue($object);

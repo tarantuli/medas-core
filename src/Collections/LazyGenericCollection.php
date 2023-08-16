@@ -24,7 +24,7 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
         parent::__construct();
     }
 
-    public function setLoader(\Closure $loader): void
+    public function setLoader(callable $loader): void
     {
         $this->fetcher = $loader;
     }

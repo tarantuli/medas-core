@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
+/**
+ * The service manager is responsible for finding and maintaining service classes and their instances.
+ *
+ * The default implementation is found in medas/service-manager.
+ */
 interface ServiceManager
 {
     /**
@@ -18,8 +23,8 @@ interface ServiceManager
     public function findImplementingClass(string $type): string|null;
 
     /**
-     * Binds the given object as the implementation for the given types. E.g. if resolve() is called with any of these
-     * types, $implementor will be resolved.
+     * Binds the given object as the implementation for the given types. That is, if resolve() is called with any of these
+     * types, $implementor will be returned.
      */
     public function bindImplementation(object $implementation, string ...$forTypes): self;
 }

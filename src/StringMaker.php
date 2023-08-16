@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Medas\Core;
 
 /**
- * This should not be a service and should not contain static properties.
- * Both requirements help with making this class as independent and low-level as possible,
- * so it can be used reliably in core processes like exception handling.
+ * This should not be a service and should not be instantiated to make this class as independent and low-level
+ * as possible, so it can be used reliably in core processes like exception handling.
  */
 class StringMaker
 {

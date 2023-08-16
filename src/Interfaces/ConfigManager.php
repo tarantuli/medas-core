@@ -4,11 +4,20 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
+/**
+ * Config managers should gather and cache configuration values from the environment.
+ *
+ * Example:
+ *
+ * - ConfigManager from medas/config-manager reads input from .yaml files in a given directory. It replaces values that
+ *   look like "$env(...)" with values from .env files in a given directory and the $_ENV variable. It caches all read
+ *   values.
+ */
 interface ConfigManager
 {
-    public function getValue(string $path): mixed;
-
+    /** @param string $path A dot separated name */
     public function hasValue(string $path): bool;
 
-    public function readEnv(string $filePath, string $name = null): self;
+    /** @param string $path A dot separated name */
+    public function getValue(string $path): mixed;
 }

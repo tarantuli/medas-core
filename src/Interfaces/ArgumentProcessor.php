@@ -8,13 +8,13 @@ namespace Medas\Core\Interfaces;
  * Argument processors are called after a parameter to a method has been resolved. It should apply necessary
  * post-processing to the value.
  *
- * Examples include:
+ * Examples:
  *
- * - A processor that deserializes input from REST requests, replacing datetime strings by \DateTime objects.
- *   [medas/rest-request-handler]
+ * - ArgumentDeserializer from medas/rest-request-handler is a processor that deserializes input from REST requests,
+ *   replacing datetime strings by \DateTime objects.
  *
- * - A processor that casts array values to instances of data objects, translating the array keys to object properties.
- *   [medas/typed-data-arguments]
+ * - TypedDataArgumentProcessor from medas/typed-data-arguments is a processor that casts array values to instances
+ *   of data objects, translating the array keys to object properties.
  *
  * Processors are applied in order of highest to lowest priority. Medas packages themselves have priorities lower than
  * zero.
