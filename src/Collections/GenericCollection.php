@@ -11,10 +11,9 @@ use Medas\Core\Interfaces\{ManagedCollection, SettableCollection, TracksChanges}
  */
 class GenericCollection implements TracksChanges, ManagedCollection, SettableCollection
 {
-    private int $index = 0;
+    protected int $index = 0;
 
-    private bool $hasChanged = false;
-
+    protected bool $hasChanged = false;
     protected array $additions = [];
     protected array $deletions = [];
 
