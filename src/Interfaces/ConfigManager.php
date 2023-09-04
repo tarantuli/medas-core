@@ -20,4 +20,11 @@ interface ConfigManager
 
     /** @param string $path A dot separated name */
     public function getValue(string $path): mixed;
+
+    /**
+     * This method should only be used during testing
+     *
+     * @param string $path A dot separated name
+     */
+    public function setValue(string $path, mixed $value): void;
 }
