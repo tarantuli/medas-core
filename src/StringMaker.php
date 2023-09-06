@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Medas\Core;
 
 /**
- * This should not be a service and should not be instantiated to make this class as independent and low-level
- * as possible, so it can be used reliably in core processes like exception handling.
+ * This class should not be a service; keep it as independent and low-level as possible, so it can be used reliably in
+ * core processes like exception handling.
  */
 class StringMaker
 {
-    public static function fromArray(array $argument): string
+    use AsSingleton;
+
+    public function fromArray(array $argument): string
     {
         if (count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)) >= 25) {
             return '�';
@@ -39,7 +41,7 @@ class StringMaker
         return $retval;
     }
 
-    public static function fromVariable(
+    public function fromVariable(
         mixed $argument,
         bool  $quotesOnlyAroundWhitespace = false,
         bool  $forceUtf8 = false,
@@ -82,7 +84,7 @@ class StringMaker
         return $string;
     }
 
-    public static function fromObject(object $argument): string
+    public function fromObject(object $argument): string
     {
         $retval = get_class($argument);
         $retval .= '(';
@@ -118,7 +120,7 @@ class StringMaker
         return $retval;
     }
 
-    public static function forceUtf8(string $string): string
+    public function forceUtf8(string $string): string
     {
         $result = '';
 

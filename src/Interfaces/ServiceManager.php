@@ -23,8 +23,8 @@ interface ServiceManager
     public function findImplementingClass(string $type): string|null;
 
     /**
-     * Binds the given object as the implementation for the given types. That is, if resolve() is called with any of these
-     * types, $implementor will be returned.
+     * Binds the given object as the implementation for the given types. That is, if resolve() is called with any of
+     * these types, $implementor will be returned.
      */
     public function bindImplementation(object $implementation, string ...$forTypes): self;
 }
