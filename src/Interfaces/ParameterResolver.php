@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
+use Medas\Core\ParameterResolverResult;
+
 /**
  * Parameter resolvers are called to resolve the value of a method parameter.
  *
@@ -27,7 +29,5 @@ interface ParameterResolver
 {
     public function priority(): int;
 
-    public function handle(\ReflectionParameter|\ReflectionProperty $parameter): bool;
-
-    public function result(): mixed;
+    public function handle(\ReflectionParameter|\ReflectionProperty $parameter): ParameterResolverResult;
 }
