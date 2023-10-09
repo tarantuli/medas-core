@@ -27,11 +27,11 @@ class StringMaker
             }
 
             if ((string) $key !== (string) $counter) {
-                $retval .= self::fromVariable($key);
+                $retval .= $this->fromVariable($key);
                 $retval .= ': ';
             }
 
-            $retval .= self::fromVariable($value);
+            $retval .= $this->fromVariable($value);
 
             ++$counter;
         }
@@ -48,7 +48,7 @@ class StringMaker
     ): string
     {
         if (is_string($argument)) {
-            if ($argument === '�' || ($quotesOnlyAroundWhitespace && !preg_match('/\s/', $argument))) {
+            if ($argument === '�' || ($quotesOnlyAroundWhitespace && !preg_match('/\s/u', $argument))) {
                 $string = $argument;
             }
             else {
@@ -56,10 +56,10 @@ class StringMaker
             }
         }
         elseif (is_array($argument)) {
-            $string = self::fromArray($argument);
+            $string = $this->fromArray($argument);
         }
         elseif (is_object($argument)) {
-            $string = self::fromObject($argument);
+            $string = $this->fromObject($argument);
         }
         elseif (null === $argument) {
             $string = 'NULL';
@@ -78,7 +78,7 @@ class StringMaker
         }
 
         if ($forceUtf8) {
-            $string = self::forceUtf8($string);
+            $string = $this->forceUtf8($string);
         }
 
         return $string;
@@ -109,9 +109,9 @@ class StringMaker
                 $retval .= ', ';
             }
 
-            $retval .= self::fromVariable($key);
+            $retval .= $this->fromVariable($key);
             $retval .= ': ';
-            $retval .= self::fromVariable($value);
+            $retval .= $this->fromVariable($value);
             $firstValue = false;
         }
 
