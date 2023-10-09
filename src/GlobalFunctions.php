@@ -77,13 +77,21 @@ function propertyValue(object $object, string $propertyName): mixed
     return (new ReflectionClass($object))->getProperty($propertyName)->getValue($object);
 }
 
+/*
+ * Don't combine the next two functions or try to consolidate the content into one function, and call it
+ * from the function.
+ *
+ * The parameter signature should be tight, so users are not seduced to use the wrong method, leading
+ * to unclear code (e.g. $parameterTypes = propertyTypes($parameter)).
+ */
+
 /**
- * This method returns the types declared on the given ReflectionParameter (or ReflectionProperty) as a normalized array
+ * This method returns the types declared on the given ReflectionParameter as a normalized array
  * of ReflectionNamedType instances.
  *
  * @return ReflectionNamedType[]
  */
-function parameterTypes(ReflectionParameter|ReflectionProperty $parameter): array
+function parameterTypes(ReflectionParameter $parameter): array
 {
     $type = $parameter->getType();
 
@@ -97,12 +105,20 @@ function parameterTypes(ReflectionParameter|ReflectionProperty $parameter): arra
 }
 
 /**
- * This method returns the types declared on the given ReflectionProperty (or ReflectionParameter) as a normalized
+ * This method returns the types declared on the given ReflectionProperty as a normalized
  * array of ReflectionNamedType instances.
  *
  * @return ReflectionNamedType[]
  */
-function propertyTypes(ReflectionParameter|ReflectionProperty $parameter): array
+function propertyTypes(ReflectionProperty $parameter): array
 {
-    return parameterTypes($parameter);
+    $type = $parameter->getType();
+
+    if (!$type) {
+        return [];
+    }
+
+    return $type instanceof ReflectionUnionType
+        ? $type->getTypes()
+        : [$type];
 }
