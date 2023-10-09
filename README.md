@@ -22,6 +22,7 @@ so far, and nothing else.
 Classes should aim to be either:
 
 - Singleton services that do one thing, and one thing only
+  - They should be readonly if possible
 - Dumb data objects that do nothing by themselves
 
 Other reasonable class types are:
@@ -37,7 +38,7 @@ The packages should be independent of each other, mostly by using interface para
 The amount of "magic" should be as low as possible:
 
 - Require names and labels to be given by the user, instead of deriving them from context and class names
-- Use default options that can be listed easily, instead of using values that can only be found by browsing the code or
+- Use configurable options with reasonable defaults that can be listed easily, instead of using values that can only be found by browsing the code or
   reading the documentation
 - Use typed options instead of compound strings or arrays
 
