@@ -4,28 +4,18 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
-use Medas\Core\Interfaces\{ManagedCollection, SettableCollection, TracksChanges};
+use Medas\Core\Interfaces\Collection;
 
 /** @template T */
-class GenericCollection implements TracksChanges, ManagedCollection, SettableCollection
+class BasicCollection implements Collection
 {
     protected int $index = 0;
-
-    protected bool $hasChanged = false;
-    protected array $additions = [];
-    protected array $deletions = [];
 
     public function __construct(
         /** @var array<int, T> */
         protected array $data = [],
     )
     {
-        $this->additions = array_values($this->data);
-    }
-
-    public function setData(array $data): void
-    {
-        $this->data = $data;
     }
 
     /**
@@ -55,25 +45,14 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
         if ($offset === null) {
             // A new value, append to the end
             $this->data[] = $value;
-            $this->additions[] = $value;
-
-            $this->hasChanged = true;
         }
         elseif (!array_key_exists($offset, $this->data)) {
             // A new value with a given offset, put there
             $this->data[$offset] = $value;
-            $this->additions[] = $value;
-
-            $this->hasChanged = true;
         }
         elseif ($this->data[$offset] !== $value) {
             // An existing value is overwritten
-            $this->deletions[] = $this->data[$offset];
-
             $this->data[$offset] = $value;
-            $this->additions[] = $value;
-
-            $this->hasChanged = true;
         }
     }
 
@@ -83,11 +62,7 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
     public function offsetUnset(mixed $offset): void
     {
         if (array_key_exists($offset, $this->data)) {
-            $this->deletions[] = $this->data[$offset];
-
             unset($this->data[$offset]);
-
-            $this->hasChanged = true;
         }
     }
 
@@ -120,27 +95,5 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
     public function count(): int
     {
         return count($this->data);
-    }
-
-    public function resetChangeTracking(): void
-    {
-        $this->hasChanged = false;
-        $this->additions = [];
-        $this->deletions = [];
-    }
-
-    public function hasChanged(): bool
-    {
-        return $this->hasChanged;
-    }
-
-    public function getAdditions(): array
-    {
-        return $this->additions;
-    }
-
-    public function getDeletions(): array
-    {
-        return $this->deletions;
     }
 }
