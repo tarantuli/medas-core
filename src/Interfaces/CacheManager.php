@@ -18,6 +18,9 @@ interface CacheManager
 {
     public function get(string $name = 'default'): Cache;
 
+    /** @return Cache[] */
+    public function getAll(): array;
+
     public function register(Cache $cache, string $name = 'default'): void;
 
     public function clearAll(): void;
