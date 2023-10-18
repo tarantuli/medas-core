@@ -3,7 +3,7 @@
 namespace PHPSTORM_META {
 
     use Medas\Core\Interfaces\{ImplementorFinder, ObjectInstantiator, ServiceManager};
-    use Medas\Core\SingletonManager;
+    use Medas\Core\SingletonStore;
 
     override(ServiceManager::resolve(), map([
         '' => '@',
@@ -25,7 +25,7 @@ namespace PHPSTORM_META {
         '' => '@',
     ]));
 
-    override(SingletonManager::get(), map([
+    override(SingletonStore::get(), map([
         '' => '@',
     ]));
 }

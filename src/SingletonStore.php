@@ -7,23 +7,22 @@ namespace Medas\Core;
 /**
  * Prefer to use a ServiceManager implementation or apply AsSingleton to get a singleton instance of a class.
  *
- * This manager should be used when you want to have singleton instances of readonly data object, which don't fit
+ * This store should be used when you want to have singleton instances of readonly data object, which don't fit
  * service characteristics, nor cannot be used with AsSingleton (due to the readonly nature).
  */
-#[Attributes\Service]
-class SingletonManager
+class SingletonStore
 {
-    private array $objects = [];
+    private static array $objects = [];
 
     /**
      * The return value is an object of type $class. This is specified in PhpStorm in .phpstorm.meta.php
      */
-    public function get(string $class): object
+    public static function get(string $class): object
     {
-        if (!isset($this->objects[$class])) {
-            $this->objects[$class] = new $class();
+        if (!isset(static::$objects[$class])) {
+            static::$objects[$class] = new $class();
         }
 
-        return $this->objects[$class];
+        return static::$objects[$class];
     }
 }
