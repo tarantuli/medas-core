@@ -8,9 +8,7 @@ class Identifier
 {
     public static function fromCamelCase(string $camelCase): self
     {
-        $identifier = mb_strtolower(
-            preg_replace('/(.)(\p{Lu})/', '$1 $2', $camelCase)
-        );
+        $identifier = mb_strtolower(preg_replace('/(.)(\p{Lu})/', '$1 $2', $camelCase));
 
         return new self($identifier);
     }
@@ -36,8 +34,7 @@ class Identifier
 
     private function capitalize(string $word): string
     {
-        return mb_strtoupper(mb_substr($word, 0, 1))
-            . mb_substr($word, 1);
+        return mb_strtoupper(mb_substr($word, 0, 1)) . mb_substr($word, 1);
     }
 
     public function toCamelCase(string $prefix = null): string
@@ -49,6 +46,7 @@ class Identifier
         }
 
         $string = '';
+
         foreach ($words as $i => $word) {
             if ($i === 0) {
                 $string .= mb_strtolower($word);
@@ -63,16 +61,24 @@ class Identifier
 
     private function capitalizeThenLower(string $word): string
     {
-        return mb_strtoupper(mb_substr($word, 0, 1))
-            . mb_strtolower(mb_substr($word, 1));
+        return mb_strtoupper(mb_substr($word, 0, 1)) . mb_strtolower(mb_substr($word, 1));
     }
 
-    public function toSnakeCase(bool $toLowerCase = true, bool $maintainCase = false, bool $toUpperCase = false): string
+    public function toSnakeCase(
+        bool $toLowerCase = true,
+        bool $maintainCase = false,
+        bool $toUpperCase = false
+    ): string
     {
         return $this->implodeWithSeparator('_', $toLowerCase, $maintainCase, $toUpperCase);
     }
 
-    private function implodeWithSeparator(string $separator, bool $toLowerCase = true, bool $maintainCase = false, bool $toUpperCase = false): string
+    private function implodeWithSeparator(
+        string $separator,
+        bool   $toLowerCase = true,
+        bool   $maintainCase = false,
+        bool   $toUpperCase = false
+    ): string
     {
         $snakeCase = implode($separator, $this->words);
 
@@ -89,7 +95,11 @@ class Identifier
         return $snakeCase;
     }
 
-    public function toKebabCase(bool $toLowerCase = true, bool $maintainCase = false, bool $toUpperCase = false): string
+    public function toKebabCase(
+        bool $toLowerCase = true,
+        bool $maintainCase = false,
+        bool $toUpperCase = false
+    ): string
     {
         return $this->implodeWithSeparator('-', $toLowerCase, $maintainCase, $toUpperCase);
     }

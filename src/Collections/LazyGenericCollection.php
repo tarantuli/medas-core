@@ -34,7 +34,6 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
         if (!$this->hasFetched) {
             $this->data = ($this->fetcher)();
             $this->additions = array_values($this->data);
-
             $this->hasFetched = true;
         }
     }
@@ -45,6 +44,7 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     public function offsetExists(mixed $offset): bool
     {
         $this->check();
+
         return parent::offsetExists($offset);
     }
 
@@ -56,6 +56,7 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     public function offsetGet(mixed $offset): mixed
     {
         $this->check();
+
         return parent::offsetGet($offset);
     }
 
@@ -82,30 +83,35 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     public function current(): mixed
     {
         $this->check();
+
         return parent::current();
     }
 
     public function valid(): bool
     {
         $this->check();
+
         return parent::valid();
     }
 
     public function count(): int
     {
         $this->check();
+
         return parent::count();
     }
 
     public function getAdditions(): array
     {
         $this->check();
+
         return parent::getAdditions();
     }
 
     public function getDeletions(): array
     {
         $this->check();
+
         return parent::getDeletions();
     }
 

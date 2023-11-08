@@ -41,6 +41,7 @@ class ArrayCollection
 
         foreach ($this->perIndex as $values) {
             $count = count($values);
+
             if ($maxCount === null || $count > $maxCount) {
                 $maxCount = $count;
                 $atMaxCount = $values;
@@ -57,6 +58,7 @@ class ArrayCollection
 
         foreach ($this->perIndex as $values) {
             $count = count($values);
+
             if ($minCount === null || $count < $minCount) {
                 $minCount = $count;
                 $atMinCount = $values;
