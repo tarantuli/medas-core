@@ -15,7 +15,8 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
     protected array $deletions = [];
 
     public function __construct(
-        /** @var array<int, T> */ protected array $data = [],
+        /** @var array<int, T> */
+        protected array $data = [],
     )
     {
         $this->additions = array_values($this->data);
