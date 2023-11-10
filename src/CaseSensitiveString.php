@@ -78,6 +78,7 @@ class CaseSensitiveString implements \Stringable
         }
 
         $this->string = substr($this->string, strlen($needle));
+
         return true;
     }
 
@@ -87,7 +88,8 @@ class CaseSensitiveString implements \Stringable
             return false;
         }
 
-        $this->string = substr($this->string, 0, -strlen($needle));
+        $this->string = substr($this->string, 0, - strlen($needle));
+
         return true;
     }
 

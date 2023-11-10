@@ -10,14 +10,12 @@ use Medas\Core\Interfaces\{ManagedCollection, SettableCollection, TracksChanges}
 class GenericCollection implements TracksChanges, ManagedCollection, SettableCollection
 {
     protected int $index = 0;
-
     protected bool $hasChanged = false;
     protected array $additions = [];
     protected array $deletions = [];
 
     public function __construct(
-        /** @var array<int, T> */
-        protected array $data = [],
+        /** @var array<int, T> */ protected array $data = [],
     )
     {
         $this->additions = array_values($this->data);
@@ -56,23 +54,19 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
             // A new value, append to the end
             $this->data[] = $value;
             $this->additions[] = $value;
-
             $this->hasChanged = true;
         }
         elseif (!array_key_exists($offset, $this->data)) {
             // A new value with a given offset, put there
             $this->data[$offset] = $value;
             $this->additions[] = $value;
-
             $this->hasChanged = true;
         }
         elseif ($this->data[$offset] !== $value) {
             // An existing value is overwritten
             $this->deletions[] = $this->data[$offset];
-
             $this->data[$offset] = $value;
             $this->additions[] = $value;
-
             $this->hasChanged = true;
         }
     }

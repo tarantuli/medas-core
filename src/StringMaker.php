@@ -90,7 +90,6 @@ class StringMaker
         $retval .= '(';
         $firstValue = true;
         $vars = get_object_vars($argument);
-
         $class = new \ReflectionClass($argument);
 
         if ($class->hasProperty('id')) {

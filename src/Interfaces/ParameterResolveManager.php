@@ -10,7 +10,10 @@ namespace Medas\Core\Interfaces;
  */
 interface ParameterResolveManager
 {
-    public function resolveMethodParameters(\ReflectionMethod|\ReflectionFunction $method, array $givenArguments): array;
+    public function resolveMethodParameters(
+        \ReflectionMethod|\ReflectionFunction $method,
+        array                                 $givenArguments
+    ): array;
 
     public function resolveParameter(\ReflectionParameter|\ReflectionProperty $parameter): mixed;
 }
