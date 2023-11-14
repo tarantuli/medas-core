@@ -14,7 +14,7 @@ class StringMaker
 
     public function fromArray(array $argument): string
     {
-        if (count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)) >= 25) {
+        if (count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)) >= 100) {
             return '�';
         }
 

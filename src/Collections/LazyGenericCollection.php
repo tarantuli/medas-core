@@ -67,6 +67,7 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->check();
+
         parent::offsetSet($offset, $value);
     }
 
@@ -76,6 +77,7 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     public function offsetUnset(mixed $offset): void
     {
         $this->check();
+
         parent::offsetUnset($offset);
     }
 
@@ -118,6 +120,7 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     public function resetChangeTracking(): void
     {
         $this->check();
+
         parent::resetChangeTracking();
     }
 }
