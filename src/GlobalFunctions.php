@@ -56,7 +56,7 @@ function service(string $type): object
  * The return value is null or an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
  */
 function attribute(
-    string                                                                                                         $type,
+    string                                                                                                    $type,
     ReflectionClassConstant|ReflectionClass|ReflectionFunctionAbstract|ReflectionParameter|ReflectionProperty $reflector
 ): object|null
 {
