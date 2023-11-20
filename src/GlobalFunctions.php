@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
+use Medas\Core\{Interfaces\ConfigManager, Interfaces\ServiceManager, MedasRepository};
+
 // This file should be in the global namespace
-
-use Medas\Core\Interfaces\{ConfigManager, ServiceManager};
-use Medas\Core\MedasRepository;
-
 /**
  * This global function holds the reference to the active MedasRepository, which holds the active ServiceManager and
  * ObjectInstantiator. Set $initialize to true to reset the repository to a new instance.
@@ -58,7 +56,7 @@ function service(string $type): object
  * The return value is null or an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
  */
 function attribute(
-    string                                                                                                    $type,
+    string                                                                                                         $type,
     ReflectionClassConstant|ReflectionClass|ReflectionFunctionAbstract|ReflectionParameter|ReflectionProperty $reflector
 ): object|null
 {
@@ -84,7 +82,6 @@ function propertyValue(object $object, string $propertyName): mixed
  * The parameter signature should be tight, so users are not seduced to use the wrong method, leading
  * to unclear code (e.g. $parameterTypes = propertyTypes($parameter)).
  */
-
 /**
  * This method returns the types declared on the given ReflectionParameter as a normalized array
  * of ReflectionNamedType instances.
@@ -99,9 +96,7 @@ function parameterTypes(ReflectionParameter $parameter): array
         return [];
     }
 
-    return $type instanceof ReflectionUnionType
-        ? $type->getTypes()
-        : [$type];
+    return $type instanceof ReflectionUnionType ? $type->getTypes() : [$type];
 }
 
 /**
@@ -118,7 +113,5 @@ function propertyTypes(ReflectionProperty $parameter): array
         return [];
     }
 
-    return $type instanceof ReflectionUnionType
-        ? $type->getTypes()
-        : [$type];
+    return $type instanceof ReflectionUnionType ? $type->getTypes() : [$type];
 }
