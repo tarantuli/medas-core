@@ -120,7 +120,7 @@ function whileTrue(callable $callable, int $maxCount = 256): void
 {
     $counter = 0;
 
-    do {
-        $returnValue = $callable();
-    } while ($returnValue && ++$counter < $maxCount);
+    while ($callable() && ++$counter < $maxCount) {
+        // Do nothing else
+    }
 }
