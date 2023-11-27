@@ -115,3 +115,12 @@ function propertyTypes(ReflectionProperty $parameter): array
 
     return $type instanceof ReflectionUnionType ? $type->getTypes() : [$type];
 }
+
+function whileTrue(callable $callable, int $maxCount = 256): void
+{
+    $counter = 0;
+
+    do {
+        $returnValue = $callable();
+    } while ($returnValue && ++$counter < $maxCount);
+}
