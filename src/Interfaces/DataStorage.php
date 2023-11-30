@@ -23,5 +23,5 @@ interface DataStorage
         string    $content,
         \DateTime $modificationTime = null,
         \DateTime $creationTime = null
-    ): string|null;
+    ): bool;
 }
