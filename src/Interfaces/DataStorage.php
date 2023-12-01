@@ -16,12 +16,9 @@ interface DataStorage
 
     public function modificationTime(string $path): \DateTime|null;
 
-    public function creationTime(string $path): \DateTime|null;
-
     public function store(
         string    $path,
         string    $content,
         \DateTime $modificationTime = null,
-        \DateTime $creationTime = null
     ): bool;
 }
