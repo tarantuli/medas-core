@@ -66,7 +66,7 @@ TODO
 
 ## Data manipulation
 
-### [medas-typed-data-argument](https://github.com/tarantuli/medas-typed-data-argument)
+### [medas-typed-data-arguments](https://github.com/tarantuli/medas-typed-data-arguments)
 
 TODO
 
@@ -86,6 +86,10 @@ TODO
 
 TODO
 
+### [medas-hex-grid](https://github.com/tarantuli/medas-hex-grid)
+
+TODO
+
 ## Entities and storage
 
 ### [medas-entity-manager](https://github.com/tarantuli/medas-entity-manager)
@@ -97,6 +101,10 @@ TODO
 TODO
 
 ### [medas-storage-manager](https://github.com/tarantuli/medas-storage-manager)
+
+TODO
+
+### [medas-storage-manager-tests](https://github.com/tarantuli/medas-storage-manager-tests)
 
 TODO
 
@@ -113,6 +121,20 @@ TODO
 TODO
 
 ### [medas-json-storage](https://github.com/tarantuli/medas-json-storage)
+
+TODO
+
+## HTTP
+
+### [medas-http-client](https://github.com/tarantuli/medas-http-client)
+
+TODO
+
+### [medas-http-file-server](https://github.com/tarantuli/medas-http-file-server)
+
+TODO
+
+### [medas-http-file-client](https://github.com/tarantuli/medas-http-file-client)
 
 TODO
 
@@ -153,5 +175,11 @@ TODO
 TODO
 
 ### [medas-markdown-to-pdf](https://github.com/tarantuli/medas-markdown-to-pdf)
+
+TODO
+
+## Medas framework
+
+### [medas-dependency-checker](https://github.com/tarantuli/medas-dependency-checker)
 
 TODO
