@@ -11,6 +11,7 @@ class IdentifierFromTest extends BaseTestClass
     public function testFromCamelCase(): void
     {
         $camelToKebab = Identifier::fromCamelCase('fromCamelCase')->toKebabCase();
+
         self::assertEquals('from-camel-case', $camelToKebab);
     }
 }

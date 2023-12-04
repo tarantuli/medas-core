@@ -12,6 +12,7 @@ class WhileTrueTest extends BaseTestClass
 
         whileTrue(function () use (&$localCounter) {
             ++$localCounter;
+
             return true;
         });
 
@@ -24,6 +25,7 @@ class WhileTrueTest extends BaseTestClass
 
         whileTrue(function () use (&$localCounter) {
             ++$localCounter;
+
             return true;
         }, 10);
 

@@ -15,7 +15,6 @@ class StringTest extends BaseTestClass
     {
         self::assertTrue($this->getCaseSensitiveString()->startsWith('aaab'));
         self::assertFalse($this->getCaseSensitiveString()->startsWith('aaaB'));
-
         self::assertTrue($this->getCaseInsensitiveString()->startsWith('aaab'));
         self::assertTrue($this->getCaseInsensitiveString()->startsWith('aaaB'));
     }
@@ -33,18 +32,22 @@ class StringTest extends BaseTestClass
     public function testChopFromStart(): void
     {
         $string = $this->getCaseSensitiveString();
+
         self::assertTrue($string->chopFromStart('aaab'));
         self::assertEquals('bbccc', (string) $string);
 
         $string = $this->getCaseSensitiveString();
+
         self::assertFalse($string->chopFromStart('aaaB'));
         self::assertEquals(self::TEST_STRING, (string) $string);
 
         $string = $this->getCaseInsensitiveString();
+
         self::assertTrue($string->chopFromStart('aaab'));
         self::assertEquals('bbccc', (string) $string);
 
         $string = $this->getCaseInsensitiveString();
+
         self::assertTrue($string->chopFromStart('aaaB'));
         self::assertEquals('bbccc', (string) $string);
     }
