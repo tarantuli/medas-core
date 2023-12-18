@@ -20,6 +20,13 @@ class Identifier
         return new self($identifier);
     }
 
+    public static function fromPascalCase(string $pascalCase): self
+    {
+        $identifier = str_replace('_', ' ', $pascalCase);
+
+        return new self($identifier);
+    }
+
     private array $words;
 
     public function __construct(string $identifier)
