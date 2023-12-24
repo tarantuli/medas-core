@@ -80,6 +80,15 @@ class Identifier
         return $this->implodeWithSeparator('_', $toLowerCase, $maintainCase, $toUpperCase);
     }
 
+    public function toKebabCase(
+        bool $toLowerCase = true,
+        bool $maintainCase = false,
+        bool $toUpperCase = false
+    ): string
+    {
+        return $this->implodeWithSeparator('-', $toLowerCase, $maintainCase, $toUpperCase);
+    }
+
     private function implodeWithSeparator(
         string $separator,
         bool   $toLowerCase = true,
@@ -100,14 +109,5 @@ class Identifier
         }
 
         return $snakeCase;
-    }
-
-    public function toKebabCase(
-        bool $toLowerCase = true,
-        bool $maintainCase = false,
-        bool $toUpperCase = false
-    ): string
-    {
-        return $this->implodeWithSeparator('-', $toLowerCase, $maintainCase, $toUpperCase);
     }
 }

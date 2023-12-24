@@ -29,15 +29,6 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
         $this->fetcher = $loader;
     }
 
-    private function check(): void
-    {
-        if (!$this->hasFetched) {
-            $this->data = ($this->fetcher)();
-            $this->additions = array_values($this->data);
-            $this->hasFetched = true;
-        }
-    }
-
     /**
      * @param int $offset
      */
@@ -122,5 +113,14 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
         $this->check();
 
         parent::resetChangeTracking();
+    }
+
+    private function check(): void
+    {
+        if (!$this->hasFetched) {
+            $this->data = ($this->fetcher)();
+            $this->additions = array_values($this->data);
+            $this->hasFetched = true;
+        }
     }
 }

@@ -8,6 +8,8 @@ use Medas\Core\CaseSensitiveString;
 
 abstract class BaseException extends \Exception
 {
+    abstract public function pattern(): string;
+
     private \Exception|null $previous = null;
     private array $arguments;
 
@@ -29,8 +31,6 @@ abstract class BaseException extends \Exception
 
         parent::__construct($message, 1, $this->previous);
     }
-
-    abstract public function pattern(): string;
 
     public function arguments(): array
     {
