@@ -18,6 +18,13 @@ class BasicCollection implements Collection
     {
     }
 
+    public function values(): iterable
+    {
+        foreach ($this->data as $key => $value) {
+            yield $key => $value;
+        }
+    }
+
     /**
      * @param int $offset
      */
