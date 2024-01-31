@@ -9,10 +9,10 @@ namespace Medas\Core\Attributes;
  * with property promotion.
  */
 #[\Attribute(\Attribute::TARGET_PARAMETER | \Attribute::TARGET_PROPERTY)]
-class PreferredDefault
+readonly class PreferredDefault
 {
     public function __construct(
-        public readonly string $className,
+        public string $className,
     )
     {
     }
