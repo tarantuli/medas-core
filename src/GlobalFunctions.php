@@ -90,13 +90,7 @@ function propertyValue(object $object, string $propertyName): mixed
  */
 function parameterTypes(ReflectionParameter $parameter): array
 {
-    $type = $parameter->getType();
-
-    if (!$type) {
-        return [];
-    }
-
-    return $type instanceof ReflectionUnionType ? $type->getTypes() : [$type];
+    return normalizeType($parameter->getType());
 }
 
 /**
@@ -107,13 +101,18 @@ function parameterTypes(ReflectionParameter $parameter): array
  */
 function propertyTypes(ReflectionProperty $parameter): array
 {
-    $type = $parameter->getType();
+    return normalizeType($parameter->getType());
+}
 
-    if (!$type) {
+function normalizeType(ReflectionIntersectionType|ReflectionNamedType|ReflectionUnionType|null $type): array
+{
+    if ($type === null) {
         return [];
     }
 
-    return $type instanceof ReflectionUnionType ? $type->getTypes() : [$type];
+    return ($type instanceof ReflectionUnionType || $type instanceof ReflectionIntersectionType)
+        ? $type->getTypes()
+        : [$type];
 }
 
 function whileTrue(callable $callable, int $maxCount = 256): void
