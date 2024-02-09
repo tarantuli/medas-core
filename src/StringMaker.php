@@ -62,13 +62,13 @@ class StringMaker
             $string = $this->fromObject($argument);
         }
         elseif (null === $argument) {
-            $string = 'NULL';
+            $string = 'null';
         }
         elseif (true === $argument) {
-            $string = 'TRUE';
+            $string = 'true';
         }
         elseif (false === $argument) {
-            $string = 'FALSE';
+            $string = 'false';
         }
         elseif (is_resource($argument)) {
             $string = sprintf('resource:%s(%u)', get_resource_type($argument), (int) $argument);
