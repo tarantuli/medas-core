@@ -14,7 +14,7 @@ use Medas\Core\Interfaces\Cache;
  * ```php
  * $value = service(CacheManager::class)->get()->get($keyName, fn() => ...)
  * ````
- * ... without having to check whether there a cache was explicitly registered or not.
+ * ... without having to check whether a cache was explicitly registered or not.
  */
 class NoopCache implements Cache
 {
