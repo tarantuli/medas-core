@@ -10,8 +10,11 @@ use Medas\Core\Interfaces\Cache;
  * A cache implementation that does nothing. If get() is called, it returns the result of the getter. set() and
  * remove() have no effect.
  *
- * Used as a default cache, which allows other code to pass code through service(CacheManager::class)->get()->get(...)
- * without having to check whether there a cache was explicitly registered or not.
+ * Used as a default cache, which allows other code to pass code through:
+ * ```php
+ * $value = service(CacheManager::class)->get()->get($keyName, fn() => ...)
+ * ````
+ * ... without having to check whether there a cache was explicitly registered or not.
  */
 class NoopCache implements Cache
 {
