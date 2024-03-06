@@ -7,7 +7,8 @@ namespace Medas\Core\Interfaces;
 /**
  * Generic interface that can be used to mark objects that are clearable.
  *
- * Specifically, Cache instances that implement this are cleared when clearAll() on the CacheManager is called.
+ * Specifically, @class(Medas\Core\Interfaces\Cache) instances that implement this are cleared when clearAll() on the
+ * @class(Medas\Core\Interfaces\CacheManager) is called.
  */
 interface Clearable
 {

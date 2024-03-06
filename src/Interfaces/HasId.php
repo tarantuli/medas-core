@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * This generic interface marks objects that have an identifier method named id().
+ * This generic interface marks objects that have an identifier method named ```id()```.
  */
 interface HasId
 {

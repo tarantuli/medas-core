@@ -15,7 +15,10 @@ class SingletonStore
     private static array $objects = [];
 
     /**
-     * The return value is an object of type $class. This is specified in PhpStorm in .phpstorm.meta.php
+     * The return value is an object of type $class.
+     */
+    /*
+     * The return value is specified for PhpStorm using .phpstorm.meta.php
      */
     public static function get(string $class): object
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * A generic interface that combines \ArrayAccess, \Iterator and \Countable.
+ * A generic interface that combines ```\ArrayAccess```, ```\Iterator``` and ```\Countable```.
  *
  * Examples:
  *

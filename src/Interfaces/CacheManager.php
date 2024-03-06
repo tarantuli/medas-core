@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * Cache managers should maintain a list of named caches. If get('default') is called and no cache with that name has
- * been registered yet, it should create a NoopCache instance, register that and return it.
+ * Cache managers should maintain a list of named caches. If ```get('default')``` is called and no cache with that name
+ * has been registered yet, it should create a @class(Medas\Core\Interfaces\Clearable) instance, register that and
+ * return it.
  *
- * clearAll() must call clear() on all registered caches implementing Clearable.
+ * ```clearAll()``` must call ```clear()``` on all registered caches implementing
+ * @class(Medas\Core\Interfaces\Clearable).
  *
  * Example:
  *

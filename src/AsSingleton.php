@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Medas\Core;
 
 /**
- * A basic trait that turns a class into a singleton. More lightweight than a service, useful for subtype instances.
+ * A basic trait that turns a class into a singleton. More lightweight than a @class(Medas\Core\Attributes\Service),
+ * useful for subtype instances.
  */
 trait AsSingleton
 {

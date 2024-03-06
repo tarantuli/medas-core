@@ -11,7 +11,7 @@ interface TracksChanges
 {
     /**
      * Must return true if the content or values of this object have changed since construction or the last call to
-     * resetChangeTracking(), false otherwise.
+     * ```resetChangeTracking()```, false otherwise.
      *
      * @return bool
      */

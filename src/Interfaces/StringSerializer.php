@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
-/** See Serialzer */
+/** See @class(Medas\Core\Interfaces\Serializer) */
 interface StringSerializer extends Serializer
 {
     public function serialize(mixed $value): string;

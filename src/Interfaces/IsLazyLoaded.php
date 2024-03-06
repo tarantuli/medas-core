@@ -6,7 +6,7 @@ namespace Medas\Core\Interfaces;
 
 /**
  * Objects that implement this interface should not load their data on instantiation, but only when it is needed.
- * They should load it by executing the closure provided using setLoader().
+ * They should load it by executing the closure provided using ```setLoader()```.
  */
 interface IsLazyLoaded
 {

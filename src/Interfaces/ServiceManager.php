@@ -7,23 +7,26 @@ namespace Medas\Core\Interfaces;
 /**
  * The service manager is responsible for finding and maintaining service classes and their instances.
  *
- * The default implementation is found in medas/service-manager.
+ * The default implementation is @class(Medas\ServiceManager\ServiceManager).
  */
 interface ServiceManager
 {
     /**
-     * The return value is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
+     * The return value is an object of type $type.
+     */
+    /*
+     *  This is specified in PhpStorm in .phpstorm.meta.php
      */
     public function resolve(string $type): object;
 
     /**
      * Looks for classes that implement the given type. If none are found, it returns null. If multiple implementors
-     * are found, and none is explicitly bound using bindImplementor(), it throws an exception.
+     * are found, and none is explicitly bound using ```bindImplementation()```, it throws an exception.
      */
     public function findImplementingClass(string $type): string|null;
 
     /**
-     * Binds the given object as the implementation for the given types. That is, if resolve() is called with any of
+     * Binds the given object as the implementation for the given types. That is, if ````resolve()```` is called with any of
      * these types, $implementor will be returned.
      */
     public function bindImplementation(object $implementation, string ...$forTypes): self;

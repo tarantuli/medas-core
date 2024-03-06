@@ -7,8 +7,8 @@ namespace Medas\Core\Caching;
 use Medas\Core\Interfaces\Cache;
 
 /**
- * A cache implementation that does nothing. If get() is called, it returns the result of the getter. set() and
- * remove() have no effect.
+ * A cache implementation that does nothing. If ```get()``` is called, it returns the result of the getter. ```set()```
+ * and ```remove()``` have no effect.
  *
  * Used as a default cache, which allows other code to pass code through:
  * ```php

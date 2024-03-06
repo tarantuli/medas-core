@@ -6,8 +6,9 @@ use Medas\Core\{Interfaces\ConfigManager, Interfaces\ServiceManager, MedasReposi
 
 // This file should be in the global namespace
 /**
- * This global function holds the reference to the active MedasRepository, which holds the active ServiceManager and
- * ObjectInstantiator. Set $initialize to true to reset the repository to a new instance.
+ * This global function holds the reference to the active @class(Medas\Core\MedasRepository), which holds the active
+ * @class(Medas\Core\ServiceManager) and @class(Medas\Core\ObjectInstantiator). Set ```$initialize``` to true to reset
+ *     the repository to a new instance.
  */
 function medas(bool $initialize = false): MedasRepository
 {
@@ -21,7 +22,8 @@ function medas(bool $initialize = false): MedasRepository
 }
 
 /**
- * This global function calls the ConfigManager service and requests the config value for the given value.
+ * This global function calls the @class(Medas\Core\Interfaces\ConfigManager) service and requests the config value for
+ * the given value.
  */
 function config(string $path): mixed
 {
@@ -31,7 +33,7 @@ function config(string $path): mixed
 }
 
 /**
- * This global functions returns the active ServiceManager instance.
+ * This global functions returns the active @class(Medas\Core\Interfaces\ServiceManager) instance.
  */
 function sm(): ServiceManager
 {
@@ -39,9 +41,13 @@ function sm(): ServiceManager
 }
 
 /**
- * This global function calls the active ServiceManager instance and asks it to resolve $type to its service instance.
+ * This global function calls the active @class(Medas\Core\Interfaces\ServiceManager) instance and asks it to resolve
+ * $type to its service instance.
  *
- * The return value is an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
+ * The return value is an object of type $type.
+ */
+/*
+ * The return value is specified for PhpStorm using .phpstorm.meta.php
  */
 function service(string $type): object
 {
@@ -50,10 +56,13 @@ function service(string $type): object
 }
 
 /**
- * This global function asks the given Reflector if it has an attribute that's of the given type. If so, it returns
- * an instance of the attribute class.
+ * This global function asks the given reflection object if it has an attribute that's of the given type. If so, it
+ * returns an instance of the attribute class.
  *
- * The return value is null or an object of type $type. This is specified in PhpStorm in .phpstorm.meta.php
+ * The return value is null or an object of type $type.
+ */
+/*
+ * The return value is specified for PhpStorm using .phpstorm.meta.php
  */
 function attribute(
     string                                                                                                    $type,

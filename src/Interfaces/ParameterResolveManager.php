@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * A parameter resolve manager is responsible for resolving parameter values using registered ParameterResolve and
- * ArgumentProcessor instances.
+ * A parameter resolve manager is responsible for resolving parameter values using registered
+ * @class(Medas\Core\Interfaces\ParameterResolver) and
+ * @class(Medas\Core\Interfaces\ArgumentProcessor) instances.
  */
 interface ParameterResolveManager
 {

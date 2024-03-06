@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * A collection which allows setting of the data members using setData(). See Collection for more information.
+ * A collection which allows setting of the data members using ```setData()```.
  */
 interface SettableCollection
 {
