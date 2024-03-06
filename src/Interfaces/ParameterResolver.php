@@ -14,16 +14,16 @@ use Medas\Core\ParameterResolverResult;
  *
  * Examples:
  *
- * - ServiceFinderByType from medas/object-instantiator is a resolver that looks for services implementing the type
- *   of the parameter. In short, this is the core of dependency injection in the medas framework.
+ * - @class(Medas\ObjectInstantiator\ParameterResolving\ServiceFinderByType) is a resolver that looks for services
+ *   implementing the type of the parameter. In short, this is the core of dependency injection in the medas framework.
  *
- * - PreferredDefaultFinder from medas/object-instantiator is a resolver that looks for values tagged
- *   with a preferred default.
+ * - @class(Medas\ObjectInstantiator\ParameterResolving\PreferredDefaultFinder) is a resolver that looks for values
+ *   tagged with a preferred default.
  *
- * - ConfigOptionResolver from medas/config-options is a resolver that looks for values tagged as config options.
+ * - @class(Medas\ConfigOptions\ConfigOptionResolver) is a resolver that looks for values tagged as config options.
  *
- * - BodyDataResolver from medas/http-request-handler is a resolver that looks for values in the body input
- *   of the request that match the parameter name.
+ * - @class(Medas\HttpRequestHandler\BodyDataResolver) is a resolver that looks for values in the body input of the
+ *   request that match the parameter name.
  */
 interface ParameterResolver
 {

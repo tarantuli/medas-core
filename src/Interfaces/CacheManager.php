@@ -12,7 +12,7 @@ namespace Medas\Core\Interfaces;
  *
  * Example:
  *
- * - The straight forward implementation in medas/service-manager.
+ * - The straight forward implementation at @class(Medas\ServiceManager\Cache\CacheManager).
  */
 interface CacheManager
 {

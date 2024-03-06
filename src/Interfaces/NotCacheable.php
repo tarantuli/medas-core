@@ -12,7 +12,8 @@ namespace Medas\Core\Interfaces;
  *
  * Examples:
  *
- * - WithValues and AllEntities from medas/entity-manager are Selectors marked with this interface. Selectors are
+ * - @class(Medas\EntityManager\Selector\Selectors\WithValues) and
+ *   @class(Medas\EntityManager\Selector\Selectors\AllEntities) are Selectors marked with this interface. Selectors are
  *   cached by default, but these specific implementations should not be.
  */
 interface NotCacheable

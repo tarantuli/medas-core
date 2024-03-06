@@ -9,9 +9,10 @@ namespace Medas\Core\Interfaces;
  *
  * Examples:
  *
- * - GenericCollection from medas/core.
+ * - @class(Medas\Core\Collections\GenericCollection).
  *
- * - LazyGenericCollection from medas/core is a collection that only calls its fetcher when data is actually read.
+ * - @class(Medas\Core\Collections\LazyGenericCollection) is a collection that only calls its fetcher when data
+ *   is actually read.
  *
  * @template T
  */

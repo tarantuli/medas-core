@@ -11,10 +11,10 @@ namespace Medas\Core\Interfaces;
  * Implementations should respect the NotCacheable interface.
  *
  * Examples:
- * - NoopCache from medas/core is a cache that remembers nothing. It always calls the getter to retrieve the value.
+ * - @class(Medas\Core\Caching\NoopCache) is a cache that remembers nothing. It always calls the getter to retrieve the value.
  *   This should be created as a default cache by CacheManagers if no other cache is registered explicitly.
  *
- * - FileSystemCache from medas/cache is a filesystem cache that stores serialized representations of values
+ * - @class(Medas\Cache\FileSystemCache) is a filesystem cache that stores serialized representations of values
  *   in a directory tree.
  */
 interface Cache

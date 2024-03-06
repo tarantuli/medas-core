@@ -9,7 +9,7 @@ namespace Medas\Core\Interfaces;
  *
  * Example:
  *
- * - ConfigManager from medas/config-manager reads input from .yaml files in a given directory. It replaces values that
+ * - @class(Medas\ConfigManager\ConfigManager) reads input from .yaml files in a given directory. It replaces values that
  *   look like "$env(...)" with values from .env files in a given directory and the $_ENV variable. It caches all read
  *   values.
  */
