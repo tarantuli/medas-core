@@ -12,6 +12,9 @@ class StringMaker
 {
     use AsSingleton;
 
+    /**
+     * Turns the given array into a human-readable single string.
+     */
     public function fromArray(array $argument): string
     {
         if (count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)) >= 100) {
@@ -41,6 +44,9 @@ class StringMaker
         return $retval;
     }
 
+    /**
+     * Turns the given variable into a human-readable single string.
+     */
     public function fromVariable(
         mixed $argument,
         bool  $quotesOnlyAroundWhitespace = false,
@@ -84,6 +90,9 @@ class StringMaker
         return $string;
     }
 
+    /**
+     * Turns the given object into a human-readable single string.
+     */
     public function fromObject(object $argument): string
     {
         $retval = get_class($argument);
@@ -119,6 +128,10 @@ class StringMaker
         return $retval;
     }
 
+    /**
+     * Turns the given string into a human-readable single string that's valid UTF-8 by replacing non-valid bytes by a
+     * "▪" followed by a hexadecimal representation of the byte value.
+     */
     public function forceUtf8(string $string): string
     {
         $result = '';
