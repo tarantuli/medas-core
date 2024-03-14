@@ -1,6 +1,9 @@
 {
     "name": "morphp/medas-core",
     "description": "Medas core",
+    "keywords": [
+        "medas"
+    ],
     "authors": [
         {
             "name": "Patrick Morpey",
