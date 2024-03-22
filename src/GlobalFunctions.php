@@ -44,7 +44,7 @@ function sm(): ServiceManager
  * This global function calls the active @class(Medas\Core\Interfaces\ServiceManager) instance and asks it to resolve
  * $type to its service instance.
  *
- * The return value is an object of type $type.
+ * The return value is an object of type `$type`.
  */
 /*
  * The return value is specified for PhpStorm using .phpstorm.meta.php
@@ -59,7 +59,7 @@ function service(string $type): object
  * This global function asks the given reflection object if it has an attribute that's of the given type. If so, it
  * returns an instance of the attribute class.
  *
- * The return value is null or an object of type $type.
+ * The return value is null or an object of type `$type`.
  */
 /*
  * The return value is specified for PhpStorm using .phpstorm.meta.php

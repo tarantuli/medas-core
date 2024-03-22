@@ -15,7 +15,7 @@ namespace Medas\Core\Interfaces;
 interface ObjectInstantiator
 {
     /**
-     * The return value is an object of type $type.
+     * The return value is an object of type `$type`.
      */
     /*
      * The return value is specified for PhpStorm using .phpstorm.meta.php

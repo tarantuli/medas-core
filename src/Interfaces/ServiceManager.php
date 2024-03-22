@@ -12,7 +12,7 @@ namespace Medas\Core\Interfaces;
 interface ServiceManager
 {
     /**
-     * The return value is an object of type $type.
+     * The return value is an object of type `$type`.
      */
     /*
      *  This is specified in PhpStorm in .phpstorm.meta.php

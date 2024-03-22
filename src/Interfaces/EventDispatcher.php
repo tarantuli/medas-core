@@ -12,7 +12,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 interface EventDispatcher extends EventDispatcherInterface
 {
     /**
-     * The return value is the object that was passed as $event.
+     * The return value is the object that was passed as `$event`.
      */
     /*
      * The return value is specified for PhpStorm using .phpstorm.meta.php
