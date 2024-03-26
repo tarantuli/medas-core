@@ -7,7 +7,7 @@ namespace Medas\CoreTest\Strings;
 use Medas\Core\{CaseSensitiveString, StringMaker};
 use Medas\CoreTest\BaseTestClass;
 
-class StringMakerTests extends BaseTestClass
+class StringMakerTest extends BaseTestClass
 {
     public function testArray(): void
     {
@@ -20,7 +20,7 @@ class StringMakerTests extends BaseTestClass
     {
         $string = StringMaker::instance()->fromVariable([new CaseSensitiveString('a')]);
 
-        self::assertEquals('[Medas\Core\Stringo()]', $string);
+        self::assertEquals('[Medas\Core\CaseSensitiveString()]', $string);
     }
 
     public function testForceUtf8(): void
