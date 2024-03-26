@@ -102,14 +102,16 @@ class StringMaker
         $vars = get_object_vars($argument);
         $class = new \ReflectionClass($argument);
 
-        if ($class->hasProperty('id')) {
-            $property = $class->getProperty('id');
+        foreach (['id', 'name'] as $propertyName) {
+            if ($class->hasProperty($propertyName)) {
+                $property = $class->getProperty($propertyName);
 
-            if ($property->isInitialized($argument)) {
-                $vars['id'] = $property->getValue($argument);
-            }
-            else {
-                $vars['id'] = '�';
+                if ($property->isInitialized($argument)) {
+                    $vars[$propertyName] = $property->getValue($argument);
+                }
+                else {
+                    $vars[$propertyName] = '�';
+                }
             }
         }
 
