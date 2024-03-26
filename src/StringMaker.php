@@ -15,8 +15,10 @@ class StringMaker
     /**
      * Turns the given array into a human-readable single string.
      */
-    public function fromArray(array $argument): string
+    public function fromArray(array $argument, StringMaker\Settings $settings = null): string
     {
+        $settings ??= new StringMaker\Settings();
+
         if (count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)) >= 100) {
             return '�';
         }
@@ -30,11 +32,11 @@ class StringMaker
             }
 
             if ((string) $key !== (string) $counter) {
-                $retval .= $this->fromVariable($key);
+                $retval .= $this->fromVariable($key, $settings);
                 $retval .= ': ';
             }
 
-            $retval .= $this->fromVariable($value);
+            $retval .= $this->fromVariable($value, $settings);
 
             ++$counter;
         }
@@ -47,14 +49,12 @@ class StringMaker
     /**
      * Turns the given variable into a human-readable single string.
      */
-    public function fromVariable(
-        mixed $argument,
-        bool  $quotesOnlyAroundWhitespace = false,
-        bool  $forceUtf8 = false,
-    ): string
+    public function fromVariable(mixed $argument, StringMaker\Settings $settings = null): string
     {
+        $settings ??= new StringMaker\Settings();
+
         if (is_string($argument)) {
-            if ($argument === '�' || ($quotesOnlyAroundWhitespace && !preg_match('/\s/u', $argument))) {
+            if ($argument === '�' || ($settings->quotesOnlyAroundWhitespace && !preg_match('/\s/u', $argument))) {
                 $string = $argument;
             }
             else {
@@ -62,10 +62,10 @@ class StringMaker
             }
         }
         elseif (is_array($argument)) {
-            $string = $this->fromArray($argument);
+            $string = $this->fromArray($argument, $settings);
         }
         elseif (is_object($argument)) {
-            $string = $this->fromObject($argument);
+            $string = $this->fromObject($argument, $settings);
         }
         elseif (null === $argument) {
             $string = 'null';
@@ -83,7 +83,7 @@ class StringMaker
             $string = (string) $argument;
         }
 
-        if ($forceUtf8) {
+        if ($settings->forceUtf8) {
             $string = $this->forceUtf8($string);
         }
 
@@ -93,8 +93,9 @@ class StringMaker
     /**
      * Turns the given object into a human-readable single string.
      */
-    public function fromObject(object $argument): string
+    public function fromObject(object $argument, StringMaker\Settings $settings = null): string
     {
+        $settings ??= new StringMaker\Settings();
         $retval = get_class($argument);
         $retval .= '(';
         $firstValue = true;
@@ -117,9 +118,9 @@ class StringMaker
                 $retval .= ', ';
             }
 
-            $retval .= $this->fromVariable($key);
+            $retval .= $this->fromVariable($key, $settings);
             $retval .= ': ';
-            $retval .= $this->fromVariable($value);
+            $retval .= $this->fromVariable($value, $settings);
             $firstValue = false;
         }
 

@@ -12,7 +12,10 @@ class CaseSensitiveString implements \Stringable
         bool  $forceUtf8 = false,
     ): static
     {
-        return new static(StringMaker::instance()->fromVariable($argument, $quotesOnlyAroundWhitespace, $forceUtf8));
+        return new static(StringMaker::instance()->fromVariable(
+            $argument,
+            new StringMaker\Settings($quotesOnlyAroundWhitespace, $forceUtf8)
+        ));
     }
 
     protected string $string;

@@ -25,7 +25,7 @@ class StringMakerTests extends BaseTestClass
 
     public function testForceUtf8(): void
     {
-        $string = StringMaker::instance()->fromVariable("ab\xa0\xa1cd", forceUtf8: true);
+        $string = StringMaker::instance()->fromVariable("ab\xa0\xa1cd", new StringMaker\Settings(forceUtf8: true));
 
         self::assertEquals('"ab▪a0▪a1cd"', $string);
     }
