@@ -9,7 +9,7 @@ namespace Medas\Core\Interfaces;
  * group and option names into a dot separated path, and asking the ConfigManager for a value for that path. Options
  * can also declare a default value if none is found this.
  *
- * Packages should implement and use config options were possible, because it makes configurable values findable and
+ * Packages should implement and use config options where possible, because it makes configurable values findable and
  * therefor listable.
  */
 interface ConfigOption
@@ -19,7 +19,7 @@ interface ConfigOption
     public function name(): string;
 
     /**
-     * A single line describing what this option does. It should start with a capital and not end with a dot
+     * A single line describing what this option does. It should start with a capital and not end with a dot.
      */
     public function description(): string;
 
