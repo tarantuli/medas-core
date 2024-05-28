@@ -6,10 +6,6 @@ goals in mind:
 - To practice applying certain patterns, styles and practices
 - To organize my own code
 
-## Links
-
-- [Packages](docs/packages.md)
-
 ## Usability
 
 I would not recommend using these packages yourself at this moment. Most of them only implement the features I've needed

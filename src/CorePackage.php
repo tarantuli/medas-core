@@ -24,4 +24,9 @@ class CorePackage extends BasePackage
     {
         require_once __DIR__ . '/GlobalFunctions.php';
     }
+
+    public function hasMarkdownDocumentation(): bool
+    {
+        return true;
+    }
 }
