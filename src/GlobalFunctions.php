@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
-use Medas\Core\{Interfaces\ConfigManager, Interfaces\ServiceManager, MedasRepository};
+use Medas\Core\{
+    FloatingNumber,
+    Interfaces\ConfigManager,
+    Interfaces\ServiceManager,
+    MedasRepository
+};
 
 // This file should be in the global namespace
 /**
@@ -131,4 +136,9 @@ function whileTrue(callable $callable, int $maxCount = 256): void
     while ($callable() && ++$counter < $maxCount) {
         // Do nothing else
     }
+}
+
+function is_nihil(float $value): bool
+{
+    return FloatingNumber::SMALL_NEGATIVE < $value && $value < FloatingNumber::SMALL_POSITIVE;
 }
