@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
-/** See @class(Medas\Core\Interfaces\RoutedRequestHandlerManager) */
-interface RoutedRequestHandler
+/** See @class(Medas\Core\Interfaces\HttpRequestHandlerManager) */
+interface HttpRequestHandler
 {
     public function priority(): int;
 
