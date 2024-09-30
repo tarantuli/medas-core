@@ -13,6 +13,23 @@ readonly class UrlReader
     {
         $this->handle = curl_init();
 
+        $this->initializeCurl();
+    }
+
+    public function __serialize(): array
+    {
+        return [];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->handle = curl_init();
+
+        $this->initializeCurl();
+    }
+
+    private function initializeCurl(): void
+    {
         curl_setopt($this->handle, CURLOPT_POST, false);
         curl_setopt($this->handle, CURLOPT_HEADER, true);
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
