@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Medas\Core\{
-    Exceptions\FailedToReadContent,
     FloatingNumber,
     Interfaces\ConfigManager,
     Interfaces\ServiceManager,
@@ -142,29 +141,4 @@ function whileTrue(callable $callable, int $maxCount = 256): void
 function is_nihil(float $value): bool
 {
     return FloatingNumber::SMALL_NEGATIVE < $value && $value < FloatingNumber::SMALL_POSITIVE;
-}
-
-/**
- * Fetches the URI, throws an exception on failure
- */
-function fetchUri(string $uri): string
-{
-    $handle = curl_init();
-
-    curl_setopt($handle, CURLOPT_URL, $uri);
-    curl_setopt($handle, CURLOPT_POST, false);
-    curl_setopt($handle, CURLOPT_HEADER, true);
-    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 10);
-
-    $response = curl_exec($handle);
-    $hlength = curl_getinfo($handle, CURLINFO_HEADER_SIZE);
-    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-    $body = substr($response, $hlength);
-
-    if ($httpCode != 200) {
-        throw new FailedToReadContent($uri);
-    }
-
-    return $body;
 }
