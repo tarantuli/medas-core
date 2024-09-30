@@ -145,15 +145,26 @@ function is_nihil(float $value): bool
 }
 
 /**
- * A wrapper for file_get_contents() that throws an exception on failure.
+ * Fetches the URI, throws an exception on failure
  */
-function readContent(string $path): string
+function fetchUri(string $uri): string
 {
-    $content = @file_get_contents($path);
+    $handle = curl_init();
 
-    if ($content === false) {
-        throw new FailedToReadContent($path);
+    curl_setopt($handle, CURLOPT_URL, $uri);
+    curl_setopt($handle, CURLOPT_POST, false);
+    curl_setopt($handle, CURLOPT_HEADER, true);
+    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 10);
+
+    $response = curl_exec($handle);
+    $hlength = curl_getinfo($handle, CURLINFO_HEADER_SIZE);
+    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+    $body = substr($response, $hlength);
+
+    if ($httpCode != 200) {
+        throw new FailedToReadContent($uri);
     }
 
-    return $content;
+    return $body;
 }

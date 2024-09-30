@@ -15,6 +15,7 @@
     "prefer-stable": true,
     "require": {
         "psr/event-dispatcher": "^1.0",
+        "ext-curl": "*",
         "ext-mbstring": "*"
     },
     "require-dev": {
