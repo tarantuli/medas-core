@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Medas\Core\{
+    Exceptions\FailedToReadContent,
     FloatingNumber,
     Interfaces\ConfigManager,
     Interfaces\ServiceManager,
@@ -141,4 +142,18 @@ function whileTrue(callable $callable, int $maxCount = 256): void
 function is_nihil(float $value): bool
 {
     return FloatingNumber::SMALL_NEGATIVE < $value && $value < FloatingNumber::SMALL_POSITIVE;
+}
+
+/**
+ * A wrapper for file_get_contents() that throws an exception on failure.
+ */
+function readContent(string $path): string
+{
+    $content = @file_get_contents($path);
+
+    if ($content === false) {
+        throw new FailedToReadContent($path);
+    }
+
+    return $content;
 }
