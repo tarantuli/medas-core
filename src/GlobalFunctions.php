@@ -6,7 +6,8 @@ use Medas\Core\{
     FloatingNumber,
     Interfaces\ConfigManager,
     Interfaces\ServiceManager,
-    MedasRepository
+    MedasRepository,
+    SingletonStore
 };
 
 // This file should be in the global namespace
@@ -141,4 +142,20 @@ function whileTrue(callable $callable, int $maxCount = 256): void
 function is_nihil(float $value): bool
 {
     return FloatingNumber::SMALL_NEGATIVE < $value && $value < FloatingNumber::SMALL_POSITIVE;
+}
+
+/**
+ * The return value is an object of type `$class`.
+ *
+ * Prefer to use a ServiceManager implementation or apply the AsSingleton trait to get a singleton instance of a class.
+ *
+ * This function should be used when you want to have singleton instances of readonly data object, which don't fit
+ * service characteristics, nor cannot be used with AsSingleton (due to a readonly nature).
+ */
+/*
+ * The return value is specified for PhpStorm using .phpstorm.meta.php
+ */
+function singleton(string $class): object
+{
+    return SingletonStore::get($class);
 }

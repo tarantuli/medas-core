@@ -8,7 +8,7 @@ namespace Medas\Core;
  * Prefer to use a ServiceManager implementation or apply AsSingleton to get a singleton instance of a class.
  *
  * This store should be used when you want to have singleton instances of readonly data object, which don't fit
- * service characteristics, nor cannot be used with AsSingleton (due to the readonly nature).
+ * service characteristics, nor cannot be used with AsSingleton (due to a readonly nature).
  */
 class SingletonStore
 {

@@ -29,5 +29,9 @@ namespace PHPSTORM_META {
         '' => '@',
     ]));
 
+    override(\singleton(), map([
+        '' => '@',
+    ]));
+
     override(EventDispatcher::dispatch(), type(0));
 }
