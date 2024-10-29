@@ -4,29 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-class Identifier
+readonly class Identifier
 {
-    public static function fromCamelCase(string $camelCase): self
-    {
-        $identifier = mb_strtolower(preg_replace('/(.)(\p{Lu})/', '$1 $2', $camelCase));
-
-        return new self($identifier);
-    }
-
-    public static function fromKebabCase(string $kebabCase): self
-    {
-        $identifier = str_replace('-', ' ', $kebabCase);
-
-        return new self($identifier);
-    }
-
-    public static function fromPascalCase(string $pascalCase): self
-    {
-        $identifier = str_replace('_', ' ', $pascalCase);
-
-        return new self($identifier);
-    }
-
     private array $words;
 
     public function __construct(string $identifier)
@@ -87,6 +66,11 @@ class Identifier
     ): string
     {
         return $this->implodeWithSeparator('-', $toLowerCase, $maintainCase, $toUpperCase);
+    }
+
+    public function toPhrase(bool $toLowerCase = true, bool $maintainCase = false, bool $toUpperCase = false): string
+    {
+        return $this->implodeWithSeparator(' ', $toLowerCase, $maintainCase, $toUpperCase);
     }
 
     private function implodeWithSeparator(
