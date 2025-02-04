@@ -34,4 +34,8 @@ namespace PHPSTORM_META {
     ]));
 
     override(EventDispatcher::dispatch(), type(0));
+
+    override(EventDispatcher::lazyDispatch(), map([
+        '' => '@|null',
+    ]));
 }

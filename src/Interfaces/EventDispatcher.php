@@ -24,5 +24,8 @@ interface EventDispatcher extends EventDispatcherInterface
      *
      * If there are no listeners, the object will not be created and null will be returned.
      */
-    public function lazyDispatch(callable $callable): object|null;
+    /*
+     * The return value is specified for PhpStorm using .phpstorm.meta.php
+     */
+    public function lazyDispatch(string $eventType, callable $callable): object|null;
 }
