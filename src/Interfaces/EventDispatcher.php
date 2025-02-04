@@ -18,4 +18,11 @@ interface EventDispatcher extends EventDispatcherInterface
      * The return value is specified for PhpStorm using .phpstorm.meta.php
      */
     public function dispatch(object $event): object;
+
+    /**
+     * The event object will only be created using the callable if there is a listener. The return value is this object.
+     *
+     * If there are no listeners, the object will not be created and null will be returned.
+     */
+    public function lazyDispatch(callable $callable): object|null;
 }
