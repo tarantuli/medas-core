@@ -62,6 +62,34 @@ function service(string $type): object
 }
 
 /**
+ * This global function turns an array of service objects into an array of class names.
+ */
+function servicesToNames(array $services): array
+{
+    $names = [];
+
+    foreach ($services as $service) {
+        $names[] = $service::class;
+    }
+
+    return $names;
+}
+
+/**
+ * This global function turns an array of class names into an array service objects
+ */
+function namesToServices(array $names): array
+{
+    $services = [];
+
+    foreach ($names as $name) {
+        $services[] = service($name);
+    }
+
+    return $services;
+}
+
+/**
  * This global function asks the given reflection object if it has an attribute that's of the given type. If so, it
  * returns an instance of the attribute class.
  *
