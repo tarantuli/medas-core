@@ -7,3 +7,4 @@ namespace Medas\Core\Interfaces;
 interface MemoryCache extends Cache
 {
 }
+
