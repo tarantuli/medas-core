@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Caching;
 
-use Medas\Core\Interfaces\Cache;
+use Medas\Core\Interfaces\{Cache, NonPersistentCache};
 
 /**
  * A cache implementation that does nothing. If ```get()``` is called, it returns the result of the getter. ```set()```
@@ -16,7 +16,7 @@ use Medas\Core\Interfaces\Cache;
  * ````
  * ... without having to check whether a cache was explicitly registered or not.
  */
-class NoopCache implements Cache
+class NoopCache implements Cache, NonPersistentCache
 {
     public function get(array|string $key, callable $getter): mixed
     {

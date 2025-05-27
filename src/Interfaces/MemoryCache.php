@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
-interface MemoryCache extends Cache
+interface MemoryCache extends Cache, NonPersistentCache
 {
 }
-
