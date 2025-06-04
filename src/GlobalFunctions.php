@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Medas\Core\{
     FloatingNumber,
     Interfaces\ConfigManager,
+    Interfaces\EventDispatcher,
     Interfaces\ServiceManager,
     MedasRepository,
     SingletonStore
@@ -186,4 +187,12 @@ function is_nihil(float $value): bool
 function singleton(string $class): object
 {
     return SingletonStore::get($class);
+}
+
+/**
+ * This function resolves the EventDispatcher, and then dispatches the event
+ */
+function dispatch(object $event): object
+{
+    return service(EventDispatcher::class)->dispatch($event);
 }
