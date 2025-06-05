@@ -155,7 +155,7 @@ class StringMaker
         return $result;
     }
 
-    public function fromPattern(string $pattern, ...$arguments): string
+    public function fromPattern(string $pattern, array $arguments): string
     {
         $settings = new StringMaker\Settings(true, true);
 
