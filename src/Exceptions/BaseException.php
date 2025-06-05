@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Exceptions;
 
-use Medas\Core\CaseSensitiveString;
+use Medas\Core\StringMaker;
 
 abstract class BaseException extends \Exception
 {
@@ -16,18 +16,7 @@ abstract class BaseException extends \Exception
     public function __construct(...$arguments)
     {
         $this->arguments = $arguments;
-
-        foreach ($arguments as &$argument) {
-            try {
-                $argument = CaseSensitiveString::fromVariable($argument, true, true)
-                    ->truncateToCharLength(1000);
-            }
-            catch (\Exception) {
-                $argument = '�';
-            }
-        }
-
-        $message = vsprintf($this->pattern(), $arguments);
+        $message = StringMaker::instance()->fromPattern($this->pattern(), $arguments);
 
         parent::__construct($message, 1, $this->previous);
     }

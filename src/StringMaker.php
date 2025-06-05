@@ -95,6 +95,10 @@ class StringMaker
      */
     public function fromObject(object $argument, StringMaker\Settings $settings = null): string
     {
+        if ($argument instanceof \Stringable) {
+            return (string) $argument;
+        }
+
         $settings ??= new StringMaker\Settings();
         $retval = get_class($argument);
         $retval .= '(';
@@ -149,5 +153,22 @@ class StringMaker
         }
 
         return $result;
+    }
+
+    public function fromPattern(string $pattern, ...$arguments): string
+    {
+        $settings = new StringMaker\Settings(true, true);
+
+        foreach ($arguments as &$argument) {
+            try {
+                $string = new CaseSensitiveString($this->fromVariable($argument, $settings));
+                $argument = $string->truncateToCharLength(1000);
+            }
+            catch (\Exception) {
+                $argument = '�';
+            }
+        }
+
+        return vsprintf($pattern, $arguments);
     }
 }

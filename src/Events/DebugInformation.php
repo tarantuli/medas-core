@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Events;
 
-use Medas\Core\CaseSensitiveString;
+use Medas\Core\StringMaker;
 
 readonly class DebugInformation
 {
@@ -12,16 +12,6 @@ readonly class DebugInformation
 
     public function __construct(string $pattern, ...$arguments)
     {
-        foreach ($arguments as &$argument) {
-            try {
-                $argument = CaseSensitiveString::fromVariable($argument, true, true)
-                    ->truncateToCharLength(1000);
-            }
-            catch (\Exception) {
-                $argument = '�';
-            }
-        }
-
-        $this->message = vsprintf($pattern, $arguments);
+        $this->message = StringMaker::instance()->fromPattern($pattern, $arguments);
     }
 }
