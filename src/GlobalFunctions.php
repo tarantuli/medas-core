@@ -217,3 +217,13 @@ function cacheSet(string|array $key, mixed $value, string $cache = null): void
 {
     service(CacheManager::class)->get($cache)->set($key, $value);
 }
+
+/**
+ * This function resolves the CacheManager, and then removes the value of the given key
+ *
+ * @param string|string[] $key
+ */
+function cacheUnset(string|array $key, string $cache = null): void
+{
+    service(CacheManager::class)->get($cache)->remove($key);
+}
