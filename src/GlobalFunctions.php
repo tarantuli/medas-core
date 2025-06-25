@@ -207,3 +207,13 @@ function cache(string|array $key, callable $getter, string $cache = null): mixed
 {
     return service(CacheManager::class)->get($cache)->get($key, $getter);
 }
+
+/**
+ * This function resolves the CacheManager, and then sets the gives value
+ *
+ * @param string|string[] $key
+ */
+function cacheSet(string|array $key, mixed $value, string $cache = null): void
+{
+    service(CacheManager::class)->get($cache)->set($key, $value);
+}
