@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Medas\Core\{
     FloatingNumber,
+    Interfaces\CacheManager,
     Interfaces\ConfigManager,
     Interfaces\EventDispatcher,
     Interfaces\ServiceManager,
@@ -195,4 +196,14 @@ function singleton(string $class): object
 function dispatch(object $event): object
 {
     return service(EventDispatcher::class)->dispatch($event);
+}
+
+/**
+ * This function resolves the CacheManager, and then fetches the results of the given key
+ *
+ * @param string|string[] $key
+ */
+function cache(string|array $key, callable $getter, string $cache = null): mixed
+{
+    return service(CacheManager::class)->get($cache)->get($key, $getter);
 }
