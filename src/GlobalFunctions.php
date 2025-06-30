@@ -201,7 +201,7 @@ function dispatch(object $event): object
  * This function resolves the EventDispatcher, and then dispatches the vote object. If allowedAccess is not true, it
  * throws the exception, otherwise it does nothing.
  */
-function dispatchElseThrow(BasicVote $vote, Throwable|callable $exception): void
+function allowElseThrow(BasicVote $vote, Throwable|callable $exception): void
 {
     dispatch($vote);
 
