@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-use Medas\Core\{
+use Medas\Core\{Events\BasicVote,
     FloatingNumber,
     Interfaces\CacheManager,
     Interfaces\ConfigManager,
     Interfaces\EventDispatcher,
     Interfaces\ServiceManager,
     MedasRepository,
-    SingletonStore
-};
+    SingletonStore};
 
 // This file should be in the global namespace
 /**
@@ -179,7 +178,7 @@ function is_nihil(float $value): bool
  *
  * Prefer to use a ServiceManager implementation or apply the AsSingleton trait to get a singleton instance of a class.
  *
- * This function should be used when you want to have singleton instances of readonly data object, which don't fit
+ * This function should be used when you want to have singleton instances of readonly data objects, which don't fit
  * service characteristics, nor cannot be used with AsSingleton (due to a readonly nature).
  */
 /*
@@ -196,6 +195,19 @@ function singleton(string $class): object
 function dispatch(object $event): object
 {
     return service(EventDispatcher::class)->dispatch($event);
+}
+
+/**
+ * This function resolves the EventDispatcher, and then dispatches the vote object. If allowedAccess is not true, it
+ * throws the exception, otherwise it does nothing.
+ */
+function dispatchElseThrow(BasicVote $vote, Throwable|callable $exception): void
+{
+    dispatch($vote);
+
+    if (!$vote->allowedAccess) {
+        throw ($exception instanceof Throwable ? $exception : $exception());
+    }
 }
 
 /**
