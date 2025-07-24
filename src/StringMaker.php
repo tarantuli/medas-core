@@ -142,6 +142,7 @@ class StringMaker
     public function forceUtf8(string $string): string
     {
         $result = '';
+        $replacements = 0;
 
         foreach (mb_str_split($string) as $char) {
             if (mb_check_encoding($char, 'UTF-8')) {
@@ -149,7 +150,13 @@ class StringMaker
             }
             else {
                 $result .= '▪' . str_pad(dechex(ord($char)), 2, '0', STR_PAD_LEFT);
+
+                ++$replacements;
             }
+        }
+
+        if ($replacements > 0.1 * mb_strlen($string)) {
+            return '0x' . bin2hex($string);
         }
 
         return $result;

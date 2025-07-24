@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-use Medas\Core\{Events\BasicVote,
+use Medas\Core\{
+    Events\BasicVote,
     FloatingNumber,
     Interfaces\CacheManager,
     Interfaces\ConfigManager,
     Interfaces\EventDispatcher,
     Interfaces\ServiceManager,
     MedasRepository,
-    SingletonStore};
+    SingletonStore
+};
 
 // This file should be in the global namespace
 /**
