@@ -54,7 +54,10 @@ class StringMaker
         $settings ??= new StringMaker\Settings();
 
         if (is_string($argument)) {
-            if ($argument === '�' || ($settings->quotesOnlyAroundWhitespace && !preg_match('/\s/u', $argument))) {
+            if ($argument === '�') {
+                $string = $argument;
+            }
+            elseif ($settings->quotesOnlyAroundWhitespace && $argument !== '' && !preg_match('/\s/u', $argument)) {
                 $string = $argument;
             }
             else {
