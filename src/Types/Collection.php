@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Medas\Core\Types;
+
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
+class Collection extends BaseType
+{
+    public function __construct(
+        public string $collectionType,
+        public string $contentType,
+    )
+    {
+    }
+}
