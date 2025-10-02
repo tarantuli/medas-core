@@ -15,9 +15,9 @@ use Medas\Core\{
 
 // This file should be in the global namespace
 /**
- * This global function holds the reference to the active @class(Medas\Core\MedasRepository), which holds the active
- * @class(Medas\Core\ServiceManager) and @class(Medas\Core\ObjectInstantiator). Set ```$initialize``` to true to reset
- *     the repository to a new instance.
+ * This global function holds the reference to the active @class(Medas\Core\MedasRepository), which holds the
+ * active @class(Medas\Core\ServiceManager) and @class(Medas\Core\ObjectInstantiator). Set ```$initialize``` to true
+ * to reset the repository to a new instance.
  */
 function medas(bool $initialize = false): MedasRepository
 {
@@ -42,7 +42,7 @@ function config(string $path): mixed
 }
 
 /**
- * This global functions returns the active @class(Medas\Core\Interfaces\ServiceManager) instance.
+ * This global function returns the active @class(Medas\Core\Interfaces\ServiceManager) instance.
  */
 function sm(): ServiceManager
 {
@@ -79,7 +79,7 @@ function servicesToNames(array $services): array
 }
 
 /**
- * This global function turns an array of class names into an array service objects
+ * This global function turns an array of class names into an array of service objects
  */
 function namesToServices(array $names): array
 {
@@ -122,11 +122,11 @@ function propertyValue(object $object, string $propertyName): mixed
 }
 
 /*
- * Don't combine the next two functions or try to consolidate the content into one function, and call it
+ * Don't combine the next two functions or try to consolidate the content into one function and call it
  * from the function.
  *
  * The parameter signature should be tight, so users are not seduced to use the wrong method, leading
- * to unclear code (e.g. $parameterTypes = propertyTypes($parameter)).
+ * to unclear code (e.g., $parameterTypes = propertyTypes($parameter)).
  */
 /**
  * This method returns the types declared on the given ReflectionParameter as a normalized array
@@ -192,7 +192,7 @@ function singleton(string $class): object
 }
 
 /**
- * This function resolves the EventDispatcher, and then dispatches the event
+ * This function resolves the EventDispatcher and then dispatches the event
  */
 function dispatch(object $event): object
 {
@@ -200,7 +200,7 @@ function dispatch(object $event): object
 }
 
 /**
- * This function resolves the EventDispatcher, and then dispatches the vote object. If allowedAccess is not true, it
+ * This function resolves the EventDispatcher and then dispatches the vote object. If allowedAccess is not true, it
  * throws the exception, otherwise it does nothing.
  */
 function allowElseThrow(BasicVote $vote, Throwable|callable $exception): void
@@ -213,7 +213,7 @@ function allowElseThrow(BasicVote $vote, Throwable|callable $exception): void
 }
 
 /**
- * This function resolves the CacheManager, and then fetches the results of the given key
+ * This function resolves the CacheManager and then fetches the results of the given key
  *
  * @param string|string[] $key
  */
@@ -223,7 +223,7 @@ function cache(string|array $key, callable $getter, string $cache = null): mixed
 }
 
 /**
- * This function resolves the CacheManager, and then sets the gives value
+ * This function resolves the CacheManager and then sets the given value
  *
  * @param string|string[] $key
  */
@@ -233,7 +233,7 @@ function cacheSet(string|array $key, mixed $value, string $cache = null): void
 }
 
 /**
- * This function resolves the CacheManager, and then removes the value of the given key
+ * This function resolves the CacheManager and then removes the value of the given key
  *
  * @param string|string[] $key
  */
