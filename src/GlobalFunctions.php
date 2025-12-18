@@ -118,7 +118,7 @@ function attribute(
  */
 function propertyValue(object $object, string $propertyName): mixed
 {
-    return (new ReflectionClass($object))->getProperty($propertyName)->getValue($object);
+    return new ReflectionClass($object)->getProperty($propertyName)->getValue($object);
 }
 
 /*
@@ -217,7 +217,7 @@ function allowElseThrow(BasicVote $vote, Throwable|callable $exception): void
  *
  * @param string|string[] $key
  */
-function cache(string|array $key, callable $getter, string $cache = null): mixed
+function cache(string|array $key, callable $getter, ?string $cache = null): mixed
 {
     return service(CacheManager::class)->get($cache)->get($key, $getter);
 }
@@ -227,7 +227,7 @@ function cache(string|array $key, callable $getter, string $cache = null): mixed
  *
  * @param string|string[] $key
  */
-function cacheSet(string|array $key, mixed $value, string $cache = null): void
+function cacheSet(string|array $key, mixed $value, ?string $cache = null): void
 {
     service(CacheManager::class)->get($cache)->set($key, $value);
 }
@@ -237,7 +237,7 @@ function cacheSet(string|array $key, mixed $value, string $cache = null): void
  *
  * @param string|string[] $key
  */
-function cacheUnset(string|array $key, string $cache = null): void
+function cacheUnset(string|array $key, ?string $cache = null): void
 {
     service(CacheManager::class)->get($cache)->remove($key);
 }

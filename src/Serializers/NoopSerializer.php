@@ -16,7 +16,7 @@ class NoopSerializer implements Serializer
         return $value;
     }
 
-    public function unserialize(mixed $value, Type $type = null): mixed
+    public function unserialize(mixed $value, ?Type $type = null): mixed
     {
         return $value;
     }

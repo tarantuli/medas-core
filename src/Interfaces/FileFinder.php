@@ -9,10 +9,10 @@ interface FileFinder
     /**
      * Recursively finds all files matching the given regexp pattern in the given directory.
      */
-    public function find(string $directory, string $matchPattern, string $ignorePattern = null): iterable;
+    public function find(string $directory, string $matchPattern, ?string $ignorePattern = null): iterable;
 
     /**
      * Recursively finds all files with the given extension in the given directory.
      */
-    public function findByExtension(string $directory, string $extension, string $ignorePattern = null): iterable;
+    public function findByExtension(string $directory, string $extension, ?string $ignorePattern = null): iterable;
 }

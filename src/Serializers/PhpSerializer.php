@@ -16,7 +16,7 @@ class PhpSerializer implements Serializer
         return serialize($value);
     }
 
-    public function unserialize(mixed $value, Type $type = null): mixed
+    public function unserialize(mixed $value, ?Type $type = null): mixed
     {
         return unserialize($value);
     }

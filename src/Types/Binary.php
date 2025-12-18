@@ -7,10 +7,10 @@ namespace Medas\Core\Types;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class Binary extends BaseType
 {
-    const MAX_1_BYTE_LENGTH = 255;
-    const MAX_2_BYTE_LENGTH = 65535;
-    const MAX_3_BYTE_LENGTH = 16777215;
-    const MAX_4_BYTE_LENGTH = 4294967295;
+    const int MAX_1_BYTE_LENGTH = 255;
+    const int MAX_2_BYTE_LENGTH = 65535;
+    const int MAX_3_BYTE_LENGTH = 16777215;
+    const int MAX_4_BYTE_LENGTH = 4294967295;
 
     public function __construct(
         public int $minLength = 0,
