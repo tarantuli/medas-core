@@ -15,7 +15,7 @@ class StringMaker
     /**
      * Turns the given array into a human-readable single string.
      */
-    public function fromArray(array $argument, StringMaker\Settings $settings = null): string
+    public function fromArray(array $argument, ?StringMaker\Settings $settings = null): string
     {
         $settings ??= new StringMaker\Settings();
 
@@ -49,7 +49,7 @@ class StringMaker
     /**
      * Turns the given variable into a human-readable single string.
      */
-    public function fromVariable(mixed $argument, StringMaker\Settings $settings = null): string
+    public function fromVariable(mixed $argument, ?StringMaker\Settings $settings = null): string
     {
         $settings ??= new StringMaker\Settings();
 
@@ -96,7 +96,7 @@ class StringMaker
     /**
      * Turns the given object into a human-readable single string.
      */
-    public function fromObject(object $argument, StringMaker\Settings $settings = null): string
+    public function fromObject(object $argument, ?StringMaker\Settings $settings = null): string
     {
         if ($argument instanceof \Stringable) {
             return (string) $argument;
