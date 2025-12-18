@@ -20,7 +20,7 @@ class Integer extends BaseType
     const int SIGNED_3_BYTE_MAX = 8388607;
     const int SIGNED_4_BYTE_MIN = -2147483648;
     const int SIGNED_4_BYTE_MAX = 2147483647;
-    const int SIGNED_8_BYTE_MIN = -9223372036854775808;
+    const float SIGNED_8_BYTE_MIN = -9223372036854775808;
     const int SIGNED_8_BYTE_MAX = 9223372036854775807;
 
     public function __construct(
