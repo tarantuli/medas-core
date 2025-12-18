@@ -11,7 +11,7 @@ class Integer extends BaseType
     const int UNSIGNED_2_BYTE_MAX = 65535;
     const int UNSIGNED_3_BYTE_MAX = 16777215;
     const int UNSIGNED_4_BYTE_MAX = 4294967295;
-    const int UNSIGNED_8_BYTE_MAX = 18446744073709551615;
+    const float UNSIGNED_8_BYTE_MAX = 18446744073709551615;
     const int SIGNED_1_BYTE_MIN = -128;
     const int SIGNED_1_BYTE_MAX = 127;
     const int SIGNED_2_BYTE_MIN = -32768;
