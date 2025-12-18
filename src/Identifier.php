@@ -13,7 +13,7 @@ readonly class Identifier
         $this->words = preg_split('/\s+/', $identifier);
     }
 
-    public function toPascalCase(?string $prefix = null): string
+    public function toPascalCase(string|null $prefix = null): string
     {
         return $this->capitalize($this->toCamelCase($prefix));
     }
@@ -23,7 +23,7 @@ readonly class Identifier
         return mb_strtoupper(mb_substr($word, 0, 1)) . mb_substr($word, 1);
     }
 
-    public function toCamelCase(?string $prefix = null): string
+    public function toCamelCase(string|null $prefix = null): string
     {
         $words = $this->words;
 

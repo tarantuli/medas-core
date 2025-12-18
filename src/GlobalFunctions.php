@@ -217,7 +217,7 @@ function allowElseThrow(BasicVote $vote, Throwable|callable $exception): void
  *
  * @param string|string[] $key
  */
-function cache(string|array $key, callable $getter, ?string $cache = null): mixed
+function cache(string|array $key, callable $getter, string|null $cache = null): mixed
 {
     return service(CacheManager::class)->get($cache)->get($key, $getter);
 }
@@ -227,7 +227,7 @@ function cache(string|array $key, callable $getter, ?string $cache = null): mixe
  *
  * @param string|string[] $key
  */
-function cacheSet(string|array $key, mixed $value, ?string $cache = null): void
+function cacheSet(string|array $key, mixed $value, string|null $cache = null): void
 {
     service(CacheManager::class)->get($cache)->set($key, $value);
 }
@@ -237,7 +237,7 @@ function cacheSet(string|array $key, mixed $value, ?string $cache = null): void
  *
  * @param string|string[] $key
  */
-function cacheUnset(string|array $key, ?string $cache = null): void
+function cacheUnset(string|array $key, string|null $cache = null): void
 {
     service(CacheManager::class)->get($cache)->remove($key);
 }

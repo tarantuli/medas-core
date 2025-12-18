@@ -15,10 +15,10 @@ class RectangleSides
     public float $left;
 
     public function __construct(
-        float  $top,
-        ?float $right = null,
-        ?float $bottom = null,
-        ?float $left = null,
+        float      $top,
+        float|null $right = null,
+        float|null $bottom = null,
+        float|null $left = null,
     )
     {
         $this->top = $top;
