@@ -106,7 +106,14 @@ class StringMaker
         $retval = get_class($argument);
         $retval .= '(';
         $firstValue = true;
-        $vars = get_object_vars($argument);
+
+        if (method_exists($argument, '__serialize')) {
+            $vars = $argument->__serialize();
+        }
+        else {
+            $vars = get_object_vars($argument);
+        }
+
         $class = new \ReflectionClass($argument);
 
         foreach (['id', 'name'] as $propertyName) {
