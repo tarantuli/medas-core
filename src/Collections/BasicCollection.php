@@ -108,4 +108,9 @@ class BasicCollection implements Collection
     {
         return count($this->data);
     }
+
+    public function contains(mixed $value): bool
+    {
+        return in_array($value, $this->data, true);
+    }
 }
