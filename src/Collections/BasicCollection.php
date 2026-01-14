@@ -18,6 +18,11 @@ class BasicCollection implements Collection
     {
     }
 
+    public function __serialize(): array
+    {
+        return $this->data;
+    }
+
     public function values(): iterable
     {
         foreach ($this->data as $key => $value) {
