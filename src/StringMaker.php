@@ -104,7 +104,7 @@ class StringMaker
 
         $settings ??= new StringMaker\Settings();
         $retval = get_class($argument);
-        $retval .= '(';
+        $retval .= sprintf('[%u](', spl_object_id($argument));
         $firstValue = true;
 
         if (method_exists($argument, '__serialize')) {
