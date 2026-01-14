@@ -22,6 +22,11 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
         $this->additions = array_values($this->data);
     }
 
+    public function __serialize(): array
+    {
+        return $this->data;
+    }
+
     public function setData(array $data): void
     {
         $this->data = $data;
