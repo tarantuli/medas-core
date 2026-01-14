@@ -106,7 +106,7 @@ class StringMaker
         $retval = get_class($argument);
         $retval .= '(';
         $firstValue = true;
-        $vars = get_object_vars($settings->addNonPublicProperties ? (array) $argument : $argument);
+        $vars = get_object_vars($argument);
         $class = new \ReflectionClass($argument);
 
         foreach (['id', 'name'] as $propertyName) {
