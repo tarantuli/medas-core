@@ -139,8 +139,8 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
         return $this->deletions;
     }
 
-    public function contains(mixed $needle): bool
+    public function contains(mixed $value): bool
     {
-        return in_array($needle, $this->data, true);
+        return in_array($value, $this->data, true);
     }
 }

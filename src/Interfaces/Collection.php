@@ -26,4 +26,7 @@ interface Collection extends \ArrayAccess, \Iterator, \Countable
 
     /** @return T */
     public function current(): mixed;
+
+    /**  @param T $value */
+    public function contains(mixed $value): bool;
 }
