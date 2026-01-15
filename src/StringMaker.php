@@ -99,11 +99,13 @@ class StringMaker
     public function fromObject(object $argument, StringMaker\Settings|null $settings = null): string
     {
         if ($argument instanceof \Stringable) {
-            return (string) $argument;
+            return $settings->alwaysAddClass
+                ? sprintf("%s[%u]<%s>", $argument::class, spl_object_id($argument), $argument)
+                : (string) $argument;
         }
 
         $settings ??= new StringMaker\Settings();
-        $retval = get_class($argument);
+        $retval = $argument::class;
         $retval .= sprintf('[%u](', spl_object_id($argument));
         $firstValue = true;
 

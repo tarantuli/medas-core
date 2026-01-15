@@ -14,6 +14,7 @@ class Settings
     public function __construct(
         public bool $quotesOnlyAroundWhitespace = false,
         public bool $forceUtf8 = false,
+        public bool $alwaysAddClass = false,
     )
     {
     }
