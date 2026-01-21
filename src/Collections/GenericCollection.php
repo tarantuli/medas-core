@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
-use Medas\Core\Interfaces\{ManagedCollection, SettableCollection, TracksChanges};
+use Medas\Core\Interfaces\{ManagedCollection, TracksChanges};
 
 /** @template T */
-class GenericCollection implements TracksChanges, ManagedCollection, SettableCollection
+class GenericCollection implements TracksChanges, ManagedCollection
 {
     protected int $index = 0;
     protected array $initialData = [];
@@ -153,7 +153,8 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
     public function getModifications(): iterable
     {
         foreach ($this->data as $key => $value) {
-            if (in_array($value, $this->initialData, true) && $this->initialData[$key] !== $value) {
+            if (in_array($value, $this->initialData, true)
+                    && (!array_key_exists($key, $this->initialData) || $this->initialData[$key] !== $value)) {
                 yield $key => $value;
             }
         }

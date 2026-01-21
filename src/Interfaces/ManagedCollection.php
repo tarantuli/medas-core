@@ -8,7 +8,7 @@ namespace Medas\Core\Interfaces;
  * A collection that also maintains its additions and deletions. See @class(Medas\Core\Interfaces\Collection) for more
  * information.
  */
-interface ManagedCollection extends Collection
+interface ManagedCollection extends SettableCollection
 {
     public function getAdditions(): iterable;
 
