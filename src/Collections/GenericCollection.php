@@ -10,16 +10,14 @@ use Medas\Core\Interfaces\{ManagedCollection, SettableCollection, TracksChanges}
 class GenericCollection implements TracksChanges, ManagedCollection, SettableCollection
 {
     protected int $index = 0;
-    protected bool $hasChanged = false;
-    protected array $additions = [];
-    protected array $deletions = [];
+    protected array $initialData = [];
 
     public function __construct(
         /** @var array<int, T> */
         protected array $data = [],
     )
     {
-        $this->additions = array_values($this->data);
+        $this->initialData = $data;
     }
 
     public function __serialize(): array
@@ -59,21 +57,14 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
         if ($offset === null) {
             // A new value, append to the end
             $this->data[] = $value;
-            $this->additions[] = $value;
-            $this->hasChanged = true;
         }
         elseif (!array_key_exists($offset, $this->data)) {
             // A new value with a given offset, put there
             $this->data[$offset] = $value;
-            $this->additions[] = $value;
-            $this->hasChanged = true;
         }
         elseif ($this->data[$offset] !== $value) {
             // An existing value is overwritten
-            $this->deletions[] = $this->data[$offset];
             $this->data[$offset] = $value;
-            $this->additions[] = $value;
-            $this->hasChanged = true;
         }
     }
 
@@ -83,11 +74,7 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
     public function offsetUnset(mixed $offset): void
     {
         if (array_key_exists($offset, $this->data)) {
-            $this->deletions[] = $this->data[$offset];
-
             unset($this->data[$offset]);
-
-            $this->hasChanged = true;
         }
     }
 
@@ -124,28 +111,51 @@ class GenericCollection implements TracksChanges, ManagedCollection, SettableCol
 
     public function resetChangeTracking(): void
     {
-        $this->hasChanged = false;
-        $this->additions = [];
-        $this->deletions = [];
+        $this->initialData = $this->data;
     }
 
     public function hasChanged(): bool
     {
-        return $this->hasChanged;
+        if (count($this->initialData) !== count($this->data)) {
+            return true;
+        }
+
+        return array_any(
+            $this->data,
+            fn($value, $key) => !array_key_exists($key, $this->initialData)
+                || $this->initialData[$key] !== $value
+        );
     }
 
-    public function getAdditions(): array
+    public function getAdditions(): iterable
     {
-        return $this->additions;
+        foreach ($this->data as $key => $value) {
+            if (!in_array($value, $this->initialData, true)) {
+                yield $key => $value;
+            }
+        }
     }
 
-    public function getDeletions(): array
+    public function getDeletions(): iterable
     {
-        return $this->deletions;
+        foreach ($this->initialData as $key => $value) {
+            if (!in_array($value, $this->data, true)) {
+                yield $key => $value;
+            }
+        }
     }
 
     public function contains(mixed $value): bool
     {
         return in_array($value, $this->data, true);
+    }
+
+    public function getModifications(): iterable
+    {
+        foreach ($this->data as $key => $value) {
+            if (in_array($value, $this->initialData, true) && $this->initialData[$key] !== $value) {
+                yield $key => $value;
+            }
+        }
     }
 }

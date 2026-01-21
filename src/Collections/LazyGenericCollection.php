@@ -94,14 +94,14 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
         return parent::count();
     }
 
-    public function getAdditions(): array
+    public function getAdditions(): iterable
     {
         $this->check();
 
         return parent::getAdditions();
     }
 
-    public function getDeletions(): array
+    public function getDeletions(): iterable
     {
         $this->check();
 
@@ -118,8 +118,7 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     private function check(): void
     {
         if (!$this->hasFetched) {
-            $this->data = ($this->fetcher)();
-            $this->additions = array_values($this->data);
+            $this->initialData = $this->data = ($this->fetcher)();
             $this->hasFetched = true;
         }
     }

@@ -19,16 +19,6 @@ class StringTest extends BaseTestClass
         self::assertTrue($this->getCaseInsensitiveString()->startsWith('aaaB'));
     }
 
-    private function getCaseSensitiveString(): CaseSensitiveString
-    {
-        return new CaseSensitiveString(self::TEST_STRING);
-    }
-
-    private function getCaseInsensitiveString(): CaseSensitiveString
-    {
-        return new CaseInsensitiveString(self::TEST_STRING);
-    }
-
     public function testChopFromStart(): void
     {
         $string = $this->getCaseSensitiveString();
@@ -50,5 +40,15 @@ class StringTest extends BaseTestClass
 
         self::assertTrue($string->chopFromStart('aaaB'));
         self::assertEquals('bbccc', (string) $string);
+    }
+
+    private function getCaseSensitiveString(): CaseSensitiveString
+    {
+        return new CaseSensitiveString(self::TEST_STRING);
+    }
+
+    private function getCaseInsensitiveString(): CaseSensitiveString
+    {
+        return new CaseInsensitiveString(self::TEST_STRING);
     }
 }

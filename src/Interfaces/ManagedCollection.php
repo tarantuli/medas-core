@@ -10,7 +10,9 @@ namespace Medas\Core\Interfaces;
  */
 interface ManagedCollection extends Collection
 {
-    public function getAdditions(): array;
+    public function getAdditions(): iterable;
 
-    public function getDeletions(): array;
+    public function getModifications(): iterable;
+
+    public function getDeletions(): iterable;
 }
