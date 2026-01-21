@@ -7,7 +7,7 @@ namespace Medas\Core\Interfaces;
 /**
  * A collection which allows setting of the data members using ```setData()```.
  */
-interface SettableCollection
+interface SettableCollection extends Collection
 {
     public function setData(array $data): void;
 }
