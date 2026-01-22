@@ -194,6 +194,9 @@ function singleton(string $class): object
 /**
  * This function resolves the EventDispatcher and then dispatches the event
  */
+/*
+ * The return value is specified for PhpStorm using .phpstorm.meta.php
+ */
 function dispatch(object $event): object
 {
     return service(EventDispatcher::class)->dispatch($event);
