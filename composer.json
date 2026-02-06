@@ -1,36 +1,32 @@
 {
-    "name": "morphp/medas-core",
-    "description": "Medas core",
-    "keywords": [
-        "medas"
-    ],
-    "authors": [
-        {
-            "name": "Patrick Morpey",
-            "email": "patrick@morphp.nl"
-        }
-    ],
-    "type": "library",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "psr/event-dispatcher": "^1.0",
-        "ext-curl": "*",
-        "ext-mbstring": "*"
-    },
-    "require-dev": {
-        "morphp/medas-service-manager": "dev-dev",
-        "phpunit/phpunit": "^9"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-dev": "0.x-dev"
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "Medas\\Core\\": "src/",
-            "Medas\\CoreTest\\": "tests/"
-        }
+  "name": "morphp/medas-core",
+  "description": "Medas core",
+  "version": "2.0.0",
+  "keywords": [
+    "medas"
+  ],
+  "authors": [
+    {
+      "name": "Patrick Morpey",
+      "email": "patrick@morphp.nl"
     }
+  ],
+  "type": "library",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "psr/event-dispatcher": "^1.0",
+    "ext-curl": "*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "morphp/medas-service-manager": "^2",
+    "phpunit/phpunit": "^9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Medas\\Core\\": "src/",
+      "Medas\\CoreTest\\": "tests/"
+    }
+  }
 }
