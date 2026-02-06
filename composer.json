@@ -12,8 +12,6 @@
     }
   ],
   "type": "library",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "require": {
     "psr/event-dispatcher": "^1.0",
     "ext-curl": "*",
@@ -30,3 +28,4 @@
     }
   }
 }
+
