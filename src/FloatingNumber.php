@@ -7,10 +7,10 @@ namespace Medas\Core;
 class FloatingNumber
 {
     /** A very small positive float that's used to compare numbers to zero */
-    public const float SMALL_POSITIVE = +1e-10;
+    public const SMALL_POSITIVE = +1e-10;
 
     /** A very small negative float that's used to compare numbers to zero */
-    public const float SMALL_NEGATIVE = -1e-10;
+    public const SMALL_NEGATIVE = -1e-10;
 
     public static function isMoreThanOrEqual(float $a, float $b): bool
     {

@@ -118,7 +118,7 @@ function attribute(
  */
 function propertyValue(object $object, string $propertyName): mixed
 {
-    return new ReflectionClass($object)->getProperty($propertyName)->getValue($object);
+    return (new ReflectionClass($object))->getProperty($propertyName)->getValue($object);
 }
 
 /*
