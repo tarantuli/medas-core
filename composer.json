@@ -1,7 +1,7 @@
 {
   "name": "morphp/medas-core",
   "description": "Medas core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "medas"
   ],
@@ -18,7 +18,7 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
-    "morphp/medas-service-manager": "^2",
+    "morphp/medas-service-manager": "^1",
     "phpunit/phpunit": "^9"
   },
   "autoload": {
