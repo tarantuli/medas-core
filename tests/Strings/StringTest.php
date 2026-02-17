@@ -22,23 +22,23 @@ class StringTest extends BaseTestClass
     public function testChopFromStart(): void
     {
         $string = $this->getCaseSensitiveString();
+        $string = $string->chopFromStart('aaab');
 
-        self::assertTrue($string->chopFromStart('aaab'));
         self::assertEquals('bbccc', (string) $string);
 
         $string = $this->getCaseSensitiveString();
+        $string = $string->chopFromStart('aaaB');
 
-        self::assertFalse($string->chopFromStart('aaaB'));
         self::assertEquals(self::TEST_STRING, (string) $string);
 
         $string = $this->getCaseInsensitiveString();
+        $string = $string->chopFromStart('aaab');
 
-        self::assertTrue($string->chopFromStart('aaab'));
         self::assertEquals('bbccc', (string) $string);
 
         $string = $this->getCaseInsensitiveString();
+        $string = $string->chopFromStart('aaaB');
 
-        self::assertTrue($string->chopFromStart('aaaB'));
         self::assertEquals('bbccc', (string) $string);
     }
 

@@ -7,23 +7,21 @@ namespace Medas\Core;
 /**
  * Represents the four sides of a rectangle
  */
-class RectangleSides
+readonly class RectangleSides
 {
-    public float $top;
     public float $right;
     public float $bottom;
     public float $left;
 
     public function __construct(
-        float      $top,
-        float|null $right = null,
-        float|null $bottom = null,
-        float|null $left = null,
+        public float $top,
+        float|null   $right = null,
+        float|null   $bottom = null,
+        float|null   $left = null,
     )
     {
-        $this->top = $top;
-        $this->right = $right === null ? $this->top : $right;
-        $this->bottom = $bottom === null ? $this->top : $bottom;
-        $this->left = $left === null ? $this->right : $left;
+        $this->right = $right ?? $this->top;
+        $this->bottom = $bottom ?? $this->top;
+        $this->left = $left ?? $this->right;
     }
 }

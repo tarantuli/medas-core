@@ -43,7 +43,7 @@ readonly class UrlReader
         $response = curl_exec($this->handle);
         $httpCode = curl_getinfo($this->handle, CURLINFO_HTTP_CODE);
 
-        if ($httpCode != 200) {
+        if ($httpCode !== 200) {
             throw new Exceptions\FailedToReadContent($url);
         }
 

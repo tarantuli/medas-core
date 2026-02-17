@@ -9,6 +9,7 @@ use Medas\Core\Attributes\{EventListener, Service};
 #[Service]
 class DebugInformationGatherer
 {
+    /** @var string[] */
     public array $events = [];
 
     #[EventListener]

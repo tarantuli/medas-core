@@ -69,27 +69,15 @@ function service(string $type): object
  */
 function servicesToNames(array $services): array
 {
-    $names = [];
-
-    foreach ($services as $service) {
-        $names[] = $service::class;
-    }
-
-    return $names;
+    return array_map(static fn(object $service): string => $service::class, $services);
 }
 
 /**
- * This global function turns an array of class names into an array of service objects
+ * This global function turns an array of class names into an array of service objects by calling service() on each name
  */
 function namesToServices(array $names): array
 {
-    $services = [];
-
-    foreach ($names as $name) {
-        $services[] = service($name);
-    }
-
-    return $services;
+    return array_map(static fn(string $name): object => service($name), $names);
 }
 
 /**

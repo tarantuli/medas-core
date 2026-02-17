@@ -12,7 +12,7 @@ class IdentifierTest extends BaseTestClass
     {
         $identifier = new Identifier('Variable ID  with   spaces');
 
-        self::assertInstanceOf(Identifier::class, $identifier);
+        self::assertEquals('variable id with spaces', $identifier->toPhrase());
 
         return $identifier;
     }
@@ -75,5 +75,35 @@ class IdentifierTest extends BaseTestClass
     public function testKebabCaseOriginalCase(Identifier $identifier): void
     {
         self::assertEquals('Variable-ID-with-spaces', $identifier->toKebabCase(maintainCase: true));
+    }
+
+    public function testCreateFromPascalCase(): void
+    {
+        self::assertEquals('compound name', new Identifier('CompoundName')->toPhrase());
+    }
+
+    public function testCreateFromCamelCase(): void
+    {
+        self::assertEquals('compound name', new Identifier('compoundName')->toPhrase());
+    }
+
+    public function testCreateFromSnakeCase(): void
+    {
+        self::assertEquals('compound name', new Identifier('compound_name')->toPhrase());
+    }
+
+    public function testCreateFromKebabCase(): void
+    {
+        self::assertEquals('compound name', new Identifier('compound-name')->toPhrase());
+    }
+
+    public function testCreateFromSpaceCase(): void
+    {
+        self::assertEquals('compound name', new Identifier('compound name')->toPhrase());
+    }
+
+    public function testSingleWord(): void
+    {
+        self::assertEquals('word', new Identifier('word')->toPhrase());
     }
 }

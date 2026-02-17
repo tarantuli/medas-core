@@ -8,10 +8,10 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 abstract class BasicVote implements StoppableEventInterface
 {
-    public bool|null $allowedAccess = null;
+    public AllowedAccess $allowedAccess = AllowedAccess::Pending;
 
     public function isPropagationStopped(): bool
     {
-        return $this->allowedAccess !== null;
+        return AllowedAccess::Pending !== $this->allowedAccess;
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
-use Medas\Core\Interfaces\IsLazyLoaded;
+use Medas\Core\{Exceptions\NoInitializerHasBeenSet, Interfaces\IsLazyLoaded};
 
 /**
  * @template T
@@ -13,13 +13,11 @@ use Medas\Core\Interfaces\IsLazyLoaded;
 class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
 {
     private bool $hasFetched = false;
-    private \Closure $fetcher;
+    private \Closure|null $fetcher;
 
     public function __construct(\Closure|null $loader = null)
     {
-        if ($loader instanceof \Closure) {
-            $this->fetcher = $loader;
-        }
+        $this->fetcher = $loader;
 
         parent::__construct();
     }
@@ -118,6 +116,10 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     private function check(): void
     {
         if (!$this->hasFetched) {
+            if ($this->fetcher === null) {
+                throw new NoInitializerHasBeenSet();
+            }
+
             $this->initialData = $this->data = ($this->fetcher)();
             $this->hasFetched = true;
         }

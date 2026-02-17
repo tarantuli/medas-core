@@ -19,9 +19,9 @@ class ArrayCollection
         $this->perIndex[$index][] = $value;
     }
 
-    public function atIndex(mixed $index): array
+    public function atIndex(mixed $index): array|null
     {
-        return $this->perIndex[$index];
+        return $this->perIndex[$index] ?? null;
     }
 
     public function atMaxIndex(): array

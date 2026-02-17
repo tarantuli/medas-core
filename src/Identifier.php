@@ -10,7 +10,23 @@ readonly class Identifier
 
     public function __construct(string $identifier)
     {
-        $this->words = preg_split('/\s+/', $identifier);
+        $analyzer = new Identifiers\IdentifierAnalyzer();
+
+        match ($analyzer->determine($identifier)) {
+            Identifiers\IdentifierType::SnakeCase => $this->words = explode('_', $identifier),
+            Identifiers\IdentifierType::KebabCase => $this->words = explode('-', $identifier),
+            Identifiers\IdentifierType::PascalCase => $this->words = preg_split(
+                '/(?=[A-Z])/',
+                strtolower(substr($identifier, 0, 1)) . substr($identifier, 1)
+            ),
+
+            Identifiers\IdentifierType::CamelCase => $this->words = preg_split(
+                '/(?=[A-Z])/',
+                $identifier
+            ),
+
+            Identifiers\IdentifierType::SpaceCase => $this->words = preg_split('/\s+/', $identifier)
+        };
     }
 
     public function toPascalCase(string|null $prefix = null): string

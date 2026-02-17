@@ -15,14 +15,13 @@ class StringMaker
     /**
      * Turns the given array into a human-readable single string.
      */
-    public function fromArray(array $argument, StringMaker\Settings|null $settings = null): string
+    public function fromArray(array $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
-        $settings ??= new StringMaker\Settings();
-
-        if (count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)) >= 100) {
+        if ($depth >= 100) {
             return '�';
         }
 
+        $settings ??= new StringMaker\Settings();
         $retval = '[';
         $counter = 0;
 
@@ -32,11 +31,11 @@ class StringMaker
             }
 
             if ((string) $key !== (string) $counter) {
-                $retval .= $this->fromVariable($key, $settings);
+                $retval .= $this->fromVariable($key, $settings, ++$depth);
                 $retval .= ': ';
             }
 
-            $retval .= $this->fromVariable($value, $settings);
+            $retval .= $this->fromVariable($value, $settings, ++$depth);
 
             ++$counter;
         }
@@ -49,8 +48,12 @@ class StringMaker
     /**
      * Turns the given variable into a human-readable single string.
      */
-    public function fromVariable(mixed $argument, StringMaker\Settings|null $settings = null): string
+    public function fromVariable(mixed $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
+        if ($depth >= 100) {
+            return '�';
+        }
+
         $settings ??= new StringMaker\Settings();
 
         if (is_string($argument)) {
@@ -65,10 +68,10 @@ class StringMaker
             }
         }
         elseif (is_array($argument)) {
-            $string = $this->fromArray($argument, $settings);
+            $string = $this->fromArray($argument, $settings, ++$depth);
         }
         elseif (is_object($argument)) {
-            $string = $this->fromObject($argument, $settings);
+            $string = $this->fromObject($argument, $settings, ++$depth);
         }
         elseif (null === $argument) {
             $string = 'null';
@@ -87,7 +90,7 @@ class StringMaker
         }
 
         if ($settings->forceUtf8) {
-            $string = $this->forceUtf8($string);
+            $string = $this->forceUtf8($string, ++$depth);
         }
 
         return $string;
@@ -96,8 +99,12 @@ class StringMaker
     /**
      * Turns the given object into a human-readable single string.
      */
-    public function fromObject(object $argument, StringMaker\Settings|null $settings = null): string
+    public function fromObject(object $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
+        if ($depth >= 100) {
+            return '�';
+        }
+
         if ($argument instanceof \Stringable) {
             return $settings->alwaysAddClass
                 ? sprintf("%s[%u]<%s>", $argument::class, spl_object_id($argument), $argument)
@@ -136,9 +143,9 @@ class StringMaker
                 $retval .= ', ';
             }
 
-            $retval .= $this->fromVariable($key, $settings);
+            $retval .= $this->fromVariable($key, $settings, ++$depth);
             $retval .= ': ';
-            $retval .= $this->fromVariable($value, $settings);
+            $retval .= $this->fromVariable($value, $settings, ++$depth);
             $firstValue = false;
         }
 
@@ -151,8 +158,12 @@ class StringMaker
      * Turns the given string into a human-readable single string that's valid UTF-8 by replacing non-valid bytes by a
      * "▪" followed by a hexadecimal representation of the byte value.
      */
-    public function forceUtf8(string $string): string
+    public function forceUtf8(string $string, int $depth = 0): string
     {
+        if ($depth >= 100) {
+            return '�';
+        }
+
         $result = '';
         $replacements = 0;
 
@@ -174,13 +185,17 @@ class StringMaker
         return $result;
     }
 
-    public function fromPattern(string $pattern, array $arguments): string
+    public function fromPattern(string $pattern, array $arguments, int $depth = 0): string
     {
+        if ($depth >= 100) {
+            return '�';
+        }
+
         $settings = new StringMaker\Settings(true, true);
 
         foreach ($arguments as &$argument) {
             try {
-                $string = new CaseSensitiveString($this->fromVariable($argument, $settings));
+                $string = new CaseSensitiveString($this->fromVariable($argument, $settings, ++$depth));
                 $argument = $string->truncateToCharLength(1000);
             }
             catch (\Exception) {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-class CaseInsensitiveString extends CaseSensitiveString
+readonly class CaseInsensitiveString extends CaseSensitiveString
 {
     public function startsWith(string $needle): bool
     {

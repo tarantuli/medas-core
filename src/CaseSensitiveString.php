@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-class CaseSensitiveString implements \Stringable
+readonly class CaseSensitiveString implements \Stringable
 {
     public static function fromVariable(
         mixed $argument,
@@ -33,7 +33,7 @@ class CaseSensitiveString implements \Stringable
     public function truncateToByteLength(int $maxByteLength): self
     {
         if (strlen($this->string) <= $maxByteLength) {
-            return $this;
+            return clone $this;
         }
 
         // First, cut by character length
@@ -45,15 +45,13 @@ class CaseSensitiveString implements \Stringable
         }
 
         // Append the ellipsis (three bytes long)
-        $this->string = $cutByCharacters . '…';
-
-        return $this;
+        return new static($cutByCharacters . '…');
     }
 
     public function truncateToCharLength(int $maxCharLength): self
     {
         if (count(mb_str_split($this->string)) > $maxCharLength) {
-            $this->string = mb_substr($this->string, 0, $maxCharLength - 1) . '…';
+            return new static(mb_substr($this->string, 0, $maxCharLength - 1) . '…');
         }
 
         return $this;
@@ -71,29 +69,25 @@ class CaseSensitiveString implements \Stringable
 
     public function endsWith(string $needle): bool
     {
-        return str_starts_with($this->string, $needle);
+        return str_ends_with($this->string, $needle);
     }
 
-    public function chopFromStart(string $needle): bool
+    public function chopFromStart(string $needle): self
     {
         if (!$this->startsWith($needle)) {
-            return false;
+            return clone $this;
         }
 
-        $this->string = substr($this->string, strlen($needle));
-
-        return true;
+        return new static(substr($this->string, strlen($needle)));
     }
 
-    public function chopFromEnd(string $needle): bool
+    public function chopFromEnd(string $needle): self
     {
         if (!$this->endsWith($needle)) {
-            return false;
+            return clone $this;
         }
 
-        $this->string = substr($this->string, 0, -strlen($needle));
-
-        return true;
+        return new static(substr($this->string, 0, -strlen($needle)));
     }
 
     public function contains(string $needle): bool
@@ -120,10 +114,12 @@ class CaseSensitiveString implements \Stringable
         return $matched ? $matches : [];
     }
 
-    public function regexReplace(string $pattern, string $replacement, int $limit = -1): int
+    /**
+     * Prior to version 2.1.0, this method returned the number of replacements made. From version 2.1.0 onwards,
+     * it returns the modified string.
+     */
+    public function regexReplace(string $pattern, string $replacement, int $limit = -1): self
     {
-        $this->string = preg_replace($pattern, $replacement, $this->string, $limit, $count);
-
-        return $count;
+        return new static(preg_replace($pattern, $replacement, $this->string, $limit));
     }
 }
