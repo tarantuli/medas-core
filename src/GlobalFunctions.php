@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Medas\Core\{
+    Events\AllowedAccess,
     Events\BasicVote,
     FloatingNumber,
     Interfaces\CacheManager,
@@ -199,7 +200,7 @@ if (!function_exists('medas')) {
     {
         dispatch($vote);
 
-        if (!$vote->allowedAccess) {
+        if ($vote->allowedAccess !== AllowedAccess::Allowed) {
             throw ($exception instanceof Throwable ? $exception : $exception());
         }
     }

@@ -18,12 +18,12 @@ use Medas\Core\Interfaces\{Cache, NonPersistentCache};
  */
 class NoopCache implements Cache, NonPersistentCache
 {
-    public function get(array|string $key, callable $getter): mixed
+    public function get(array|string $key, callable $getter, int $ttl = 0): mixed
     {
         return $getter();
     }
 
-    public function set(array|string $key, mixed $value): void
+    public function set(array|string $key, mixed $value, int $ttl = 0): void
     {
         // Do nothing
     }
@@ -31,5 +31,10 @@ class NoopCache implements Cache, NonPersistentCache
     public function remove(array|string $key): void
     {
         // Do nothing
+    }
+
+    public function contains(array|string $key): bool
+    {
+        return false;
     }
 }
