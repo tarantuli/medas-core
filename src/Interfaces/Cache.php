@@ -27,4 +27,7 @@ interface Cache
 
     /** @param string|string[] $key */
     public function remove(string|array $key): void;
+
+    /** @param string|string[] $key */
+    public function contains(string|array $key): bool;
 }
