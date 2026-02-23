@@ -20,10 +20,10 @@ namespace Medas\Core\Interfaces;
 interface Cache
 {
     /** @param string|string[] $key */
-    public function get(string|array $key, callable $getter): mixed;
+    public function get(string|array $key, callable $getter, int $ttl = 0): mixed;
 
     /** @param string|string[] $key */
-    public function set(string|array $key, mixed $value): void;
+    public function set(string|array $key, mixed $value, int $ttl = 0): void;
 
     /** @param string|string[] $key */
     public function remove(string|array $key): void;
