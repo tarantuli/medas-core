@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
-use Medas\ServiceManager\ErrorHandling\ExceptionHandler;
-
 /**
  * The default implementation is @class(Medas\ServiceManager\ServiceConfig).
  */
