@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-use Medas\ServiceManager\BasePackage;
-
 class CorePackage extends BasePackage
 {
     use AsSingleton;

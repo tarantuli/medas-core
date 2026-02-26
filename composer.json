@@ -22,7 +22,11 @@
   },
   "autoload": {
     "psr-4": {
-      "Medas\\Core\\": "src/",
+      "Medas\\Core\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "Medas\\CoreTest\\": "tests/"
     }
   }
