@@ -15,18 +15,36 @@ readonly class Identifier
         match ($analyzer->determine($identifier)) {
             Identifiers\IdentifierType::SnakeCase => $this->words = explode('_', $identifier),
             Identifiers\IdentifierType::KebabCase => $this->words = explode('-', $identifier),
-            Identifiers\IdentifierType::PascalCase => $this->words = preg_split(
-                '/(?=[A-Z])/',
-                strtolower(substr($identifier, 0, 1)) . substr($identifier, 1)
-            ),
+            Identifiers\IdentifierType::PascalCase => $this->words = $this->splitByCapital(strtolower(substr($identifier, 0, 1)) . substr(
+                $identifier,
+                1
+            )),
 
-            Identifiers\IdentifierType::CamelCase => $this->words = preg_split(
-                '/(?=[A-Z])/',
-                $identifier
-            ),
-
-            Identifiers\IdentifierType::SpaceCase => $this->words = preg_split('/\s+/', $identifier)
+            Identifiers\IdentifierType::CamelCase => $this->words = $this->splitByCapital($identifier),
+            Identifiers\IdentifierType::SpaceCase => $this->words = $this->splitBySpace($identifier)
         };
+    }
+
+    private function splitByCapital(string $identifier): array
+    {
+        $words = preg_split('/(?=[A-Z])/', $identifier);
+
+        if ($words === false) {
+            throw new Exceptions\SplitByCapitalFailed($identifier, preg_last_error_msg());
+        }
+
+        return $words;
+    }
+
+    private function splitBySpace(string $identifier): array
+    {
+        $words = preg_split('/\s+/', $identifier);
+
+        if ($words === false) {
+            throw new Exceptions\SplitBySpaceFailed($identifier, preg_last_error_msg());
+        }
+
+        return $words;
     }
 
     public function toPascalCase(string|null $prefix = null): string

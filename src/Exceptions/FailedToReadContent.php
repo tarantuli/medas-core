@@ -6,13 +6,13 @@ namespace Medas\Core\Exceptions;
 
 class FailedToReadContent extends BaseException
 {
-    public function __construct(string $path)
+    public function __construct(string $path, string $errorMessage)
     {
-        parent::__construct($path);
+        parent::__construct($path, $errorMessage);
     }
 
     public function pattern(): string
     {
-        return 'failed to read content of %s';
+        return 'failed to read content of %s: %s';
     }
 }

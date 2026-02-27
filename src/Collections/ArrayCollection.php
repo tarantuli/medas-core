@@ -24,17 +24,25 @@ class ArrayCollection
         return $this->perIndex[$index] ?? null;
     }
 
-    public function atMaxIndex(): array
+    public function atMaxIndex(): array|null
     {
+        if (empty($this->indexes)) {
+            return null;
+        }
+
         return $this->perIndex[max($this->indexes)];
     }
 
-    public function atMinIndex(): array
+    public function atMinIndex(): array|null
     {
+        if (empty($this->indexes)) {
+            return null;
+        }
+
         return $this->perIndex[min($this->indexes)];
     }
 
-    public function atMaxCount(): array
+    public function atMaxCount(): array|null
     {
         $maxCount = null;
         $atMaxCount = null;
@@ -51,7 +59,7 @@ class ArrayCollection
         return $atMaxCount;
     }
 
-    public function atMinCount(): array
+    public function atMinCount(): array|null
     {
         $minCount = null;
         $atMinCount = null;

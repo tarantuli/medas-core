@@ -8,6 +8,12 @@ class System
 {
     public static function isFunctionAvailable(string $name): bool
     {
-        return is_callable($name) && !str_contains(ini_get('disable_functions'), $name);
+        static $disabled = null;
+
+        if ($disabled === null) {
+            $disabled = array_map('trim', explode(',', ini_get('disable_functions')));
+        }
+
+        return is_callable($name) && !in_array($name, $disabled, true);
     }
 }

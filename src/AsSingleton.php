@@ -21,7 +21,7 @@ trait AsSingleton
         return self::$instance;
     }
 
-    private function __construct()
+    protected function __construct()
     {
     }
 }

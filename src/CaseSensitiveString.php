@@ -120,6 +120,17 @@ readonly class CaseSensitiveString implements \Stringable
      */
     public function regexReplace(string $pattern, string $replacement, int $limit = -1): self
     {
-        return new static(preg_replace($pattern, $replacement, $this->string, $limit));
+        $result = preg_replace($pattern, $replacement, $this->string, $limit);
+
+        if ($result === null) {
+            throw new Exceptions\RegexReplaceFailed(
+                $this->string,
+                $pattern,
+                $replacement,
+                preg_last_error_msg()
+            );
+        }
+
+        return new static($result);
     }
 }

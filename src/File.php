@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
-class File
+readonly class File
 {
     public function __construct(
         public string      $content,

@@ -31,11 +31,11 @@ class StringMaker
             }
 
             if ((string) $key !== (string) $counter) {
-                $retval .= $this->fromVariable($key, $settings, ++$depth);
+                $retval .= $this->fromVariable($key, $settings, $depth + 1);
                 $retval .= ': ';
             }
 
-            $retval .= $this->fromVariable($value, $settings, ++$depth);
+            $retval .= $this->fromVariable($value, $settings, $depth + 1);
 
             ++$counter;
         }
@@ -68,10 +68,10 @@ class StringMaker
             }
         }
         elseif (is_array($argument)) {
-            $string = $this->fromArray($argument, $settings, ++$depth);
+            $string = $this->fromArray($argument, $settings, $depth + 1);
         }
         elseif (is_object($argument)) {
-            $string = $this->fromObject($argument, $settings, ++$depth);
+            $string = $this->fromObject($argument, $settings, $depth + 1);
         }
         elseif (null === $argument) {
             $string = 'null';
@@ -90,7 +90,7 @@ class StringMaker
         }
 
         if ($settings->forceUtf8) {
-            $string = $this->forceUtf8($string, ++$depth);
+            $string = $this->forceUtf8($string, $depth + 1);
         }
 
         return $string;
@@ -105,13 +105,14 @@ class StringMaker
             return '�';
         }
 
+        $settings ??= new StringMaker\Settings();
+
         if ($argument instanceof \Stringable) {
             return $settings->alwaysAddClass
                 ? sprintf("%s[%u]<%s>", $argument::class, spl_object_id($argument), $argument)
                 : (string) $argument;
         }
 
-        $settings ??= new StringMaker\Settings();
         $retval = $argument::class;
         $retval .= sprintf('[%u](', spl_object_id($argument));
         $firstValue = true;
@@ -143,9 +144,9 @@ class StringMaker
                 $retval .= ', ';
             }
 
-            $retval .= $this->fromVariable($key, $settings, ++$depth);
+            $retval .= $this->fromVariable($key, $settings, $depth + 1);
             $retval .= ': ';
-            $retval .= $this->fromVariable($value, $settings, ++$depth);
+            $retval .= $this->fromVariable($value, $settings, $depth + 1);
             $firstValue = false;
         }
 
@@ -195,7 +196,7 @@ class StringMaker
 
         foreach ($arguments as &$argument) {
             try {
-                $string = new CaseSensitiveString($this->fromVariable($argument, $settings, ++$depth));
+                $string = new CaseSensitiveString($this->fromVariable($argument, $settings, $depth + 1));
                 $argument = $string->truncateToCharLength(1000);
             }
             catch (\Exception) {

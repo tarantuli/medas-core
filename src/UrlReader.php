@@ -11,7 +11,13 @@ readonly class UrlReader
 
     public function __construct()
     {
-        $this->handle = curl_init();
+        $handle = curl_init();
+
+        if ($handle === false) {
+            throw new Exceptions\FailedToInitializeCurl();
+        }
+
+        $this->handle = $handle;
 
         $this->initializeCurl();
     }
@@ -23,7 +29,13 @@ readonly class UrlReader
 
     public function __unserialize(array $data): void
     {
-        $this->handle = curl_init();
+        $handle = curl_init();
+
+        if ($handle === false) {
+            throw new Exceptions\FailedToInitializeCurl();
+        }
+
+        $this->handle = $handle;
 
         $this->initializeCurl();
     }
@@ -32,6 +44,7 @@ readonly class UrlReader
     {
         curl_setopt($this->handle, CURLOPT_POST, false);
         curl_setopt($this->handle, CURLOPT_HEADER, true);
+        curl_setopt($this->handle, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT, 10);
     }
@@ -41,10 +54,15 @@ readonly class UrlReader
         curl_setopt($this->handle, CURLOPT_URL, $url);
 
         $response = curl_exec($this->handle);
+
+        if ($response === false) {
+            throw new Exceptions\FailedToReadContent($url, curl_error($this->handle));
+        }
+
         $httpCode = curl_getinfo($this->handle, CURLINFO_HTTP_CODE);
 
-        if ($httpCode !== 200) {
-            throw new Exceptions\FailedToReadContent($url);
+        if ($httpCode < 200 || $httpCode >= 300) {
+            throw new Exceptions\FailedToReadContent($url, "HTTP {$httpCode}");
         }
 
         $headerSize = curl_getinfo($this->handle, CURLINFO_HEADER_SIZE);

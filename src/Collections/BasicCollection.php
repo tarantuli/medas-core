@@ -9,8 +9,6 @@ use Medas\Core\Interfaces\Collection;
 /** @template T */
 class BasicCollection implements Collection
 {
-    protected int $index = 0;
-
     public function __construct(
         /** @var array<int, T> */
         protected array $data = [],
@@ -21,6 +19,11 @@ class BasicCollection implements Collection
     public function __serialize(): array
     {
         return $this->data;
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->data = $data;
     }
 
     public function values(): iterable
@@ -81,27 +84,27 @@ class BasicCollection implements Collection
     /** @return T */
     public function current(): mixed
     {
-        return $this->data[$this->index];
+        return current($this->data);
     }
 
     public function next(): void
     {
-        ++$this->index;
+        next($this->data);
     }
 
-    public function key(): int
+    public function key(): int|string|null
     {
-        return $this->index;
+        return key($this->data);
     }
 
     public function valid(): bool
     {
-        return array_key_exists($this->index, $this->data);
+        return key($this->data) !== null;
     }
 
     public function rewind(): void
     {
-        $this->index = 0;
+        reset($this->data);
     }
 
     public function count(): int

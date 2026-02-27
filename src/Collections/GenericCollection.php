@@ -21,9 +21,13 @@ class GenericCollection extends BasicCollection implements TracksChanges, Manage
         parent::__construct($data);
     }
 
+    /**
+     * Sets the data and resets change tracking.
+     */
     public function setData(array $data): void
     {
         $this->data = $data;
+        $this->initialData = $data;
     }
 
     public function resetChangeTracking(): void
@@ -44,6 +48,9 @@ class GenericCollection extends BasicCollection implements TracksChanges, Manage
         );
     }
 
+    /**
+     * This uses value-based comparison, so it's best used for object collections.
+     */
     public function getAdditions(): iterable
     {
         foreach ($this->data as $key => $value) {
@@ -53,6 +60,9 @@ class GenericCollection extends BasicCollection implements TracksChanges, Manage
         }
     }
 
+    /**
+     * This uses value-based comparison, so it's best used for object collections.
+     */
     public function getDeletions(): iterable
     {
         foreach ($this->initialData as $key => $value) {
@@ -62,11 +72,20 @@ class GenericCollection extends BasicCollection implements TracksChanges, Manage
         }
     }
 
-    public function getModifications(): iterable
+    public function getMovements(): iterable
     {
         foreach ($this->data as $key => $value) {
             if (in_array($value, $this->initialData, true)
                     && (!array_key_exists($key, $this->initialData) || $this->initialData[$key] !== $value)) {
+                yield $key => $value;
+            }
+        }
+    }
+
+    public function getModifications(): iterable
+    {
+        foreach ($this->data as $key => $value) {
+            if (array_key_exists($key, $this->initialData) && $this->initialData[$key] !== $value) {
                 yield $key => $value;
             }
         }

@@ -12,7 +12,15 @@ interface ManagedCollection extends SettableCollection
 {
     public function getAdditions(): iterable;
 
-    public function getModifications(): iterable;
-
     public function getDeletions(): iterable;
+
+    /**
+     * This should return the elements that have changed order
+     */
+    public function getMovements(): iterable;
+
+    /**
+     * This should return the keys and values that have changed value
+     */
+    public function getModifications(): iterable;
 }

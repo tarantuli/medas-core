@@ -16,11 +16,14 @@ class DateConstants
     public const int ONE_MINUTE = 60;
 
     /** The number of seconds in 31 days */
-    public const int ONE_MONTH = 2678400;
+    public const int ONE_MONTH_OF_31_DAYS = 2678400;
 
     /** The number of seconds in one week */
     public const int ONE_WEEK = 604800;
 
+    /** The number of seconds in 365 days */
+    public const int ONE_YEAR_OF_365_DAYS = 31536000;
+
     /** The number of seconds in 366 days */
-    public const int ONE_YEAR = 31622400;
+    public const int ONE_YEAR_OF_366_DAYS = 31622400;
 }

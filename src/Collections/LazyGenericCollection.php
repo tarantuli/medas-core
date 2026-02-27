@@ -22,6 +22,13 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
         parent::__construct();
     }
 
+    public function setData(array $data): void
+    {
+        $this->hasFetched = true;
+
+        parent::setData($data);
+    }
+
     public function setLoader(callable $loader): void
     {
         $this->fetcher = $loader;
@@ -111,6 +118,55 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
         $this->check();
 
         parent::resetChangeTracking();
+    }
+
+    public function values(): iterable
+    {
+        $this->check();
+
+        return parent::values();
+    }
+
+    public function contains(mixed $value): bool
+    {
+        $this->check();
+
+        return parent::contains($value);
+    }
+
+    public function rewind(): void
+    {
+        $this->check();
+
+        parent::rewind();
+    }
+
+    public function next(): void
+    {
+        $this->check();
+
+        parent::next();
+    }
+
+    public function key(): int|string|null
+    {
+        $this->check();
+
+        return parent::key();
+    }
+
+    public function getModifications(): iterable
+    {
+        $this->check();
+
+        return parent::getModifications();
+    }
+
+    public function getMovements(): iterable
+    {
+        $this->check();
+
+        return parent::getMovements();
     }
 
     private function check(): void
