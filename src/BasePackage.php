@@ -11,6 +11,11 @@ abstract class BasePackage implements Interfaces\Package
         return 0;
     }
 
+    public function isTestPackage(): bool
+    {
+        return false;
+    }
+
     public function initialize(Interfaces\ServiceConfig $config): void
     {
         // Do nothing

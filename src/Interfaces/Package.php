@@ -13,6 +13,8 @@ interface Package extends IsSingleton
 
     public function sourceDirectory(): string;
 
+    public function isTestPackage(): bool;
+
     public function initialize(ServiceConfig $config): void;
 
     public function postInstall(): void;
