@@ -210,9 +210,9 @@ if (!function_exists('medas')) {
      *
      * @param string|string[] $key
      */
-    function cache(string|array $key, callable $getter, string|null $cache = null): mixed
+    function cache(string|array $key, callable $getter, string|null $cache = null, int $ttl = 0): mixed
     {
-        return service(CacheManager::class)->get($cache)->get($key, $getter);
+        return service(CacheManager::class)->get($cache)->get($key, $getter, $ttl);
     }
 
     /**
@@ -220,9 +220,9 @@ if (!function_exists('medas')) {
      *
      * @param string|string[] $key
      */
-    function cacheSet(string|array $key, mixed $value, string|null $cache = null): void
+    function cacheSet(string|array $key, mixed $value, string|null $cache = null, int $ttl = 0): void
     {
-        service(CacheManager::class)->get($cache)->set($key, $value);
+        service(CacheManager::class)->get($cache)->set($key, $value, $ttl);
     }
 
     /**
