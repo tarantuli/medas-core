@@ -13,7 +13,16 @@ class PhpSerializer implements Serializer
 {
     public function serialize(mixed $value): string
     {
-        return serialize($value);
+        try {
+            return serialize($value);
+        }
+        catch (\Throwable $e) {
+            throw new \Exception(
+                get_debug_type($value) . ': ' . $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
+        }
     }
 
     public function unserialize(mixed $value, Type|null $type = null): mixed
