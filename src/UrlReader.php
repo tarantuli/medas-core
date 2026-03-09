@@ -62,7 +62,7 @@ readonly class UrlReader
         $httpCode = curl_getinfo($this->handle, CURLINFO_HTTP_CODE);
 
         if ($httpCode < 200 || $httpCode >= 300) {
-            throw new Exceptions\FailedToReadContent($url, "HTTP {$httpCode}");
+            throw new Exceptions\FailedToReadContent($url, "HTTP $httpCode");
         }
 
         $headerSize = curl_getinfo($this->handle, CURLINFO_HEADER_SIZE);
