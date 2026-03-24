@@ -9,7 +9,10 @@ readonly class UrlReader
 {
     private \CurlHandle $handle;
 
-    public function __construct()
+    public function __construct(
+        #[Attributes\ConfigValue(ConfigOptions\UrlReaderConnectTimeout::class)]
+        private int $connectTimeout = 10,
+    )
     {
         $handle = curl_init();
 
@@ -46,7 +49,7 @@ readonly class UrlReader
         curl_setopt($this->handle, CURLOPT_HEADER, true);
         curl_setopt($this->handle, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
     }
 
     public function read(string $url): string

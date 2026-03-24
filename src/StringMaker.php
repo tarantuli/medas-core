@@ -8,16 +8,26 @@ namespace Medas\Core;
  * This class should not be a service; keep it as independent and low-level as possible, so it can be used reliably in
  * core processes like exception handling.
  */
-class StringMaker
+readonly class StringMaker
 {
     use AsSingleton;
+
+    public function __construct(
+        #[Attributes\ConfigValue(ConfigOptions\StringMakerMaxDepth::class)]
+        private int $maxDepth = 100,
+
+        #[Attributes\ConfigValue(ConfigOptions\StringMakerMaxStringLength::class)]
+        private int $maxStringLength = 1000,
+    )
+    {
+    }
 
     /**
      * Turns the given array into a human-readable single string.
      */
     public function fromArray(array $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
-        if ($depth >= 100) {
+        if ($depth >= $this->maxDepth) {
             return '�';
         }
 
@@ -50,7 +60,7 @@ class StringMaker
      */
     public function fromVariable(mixed $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
-        if ($depth >= 100) {
+        if ($depth >= $this->maxDepth) {
             return '�';
         }
 
@@ -101,7 +111,7 @@ class StringMaker
      */
     public function fromObject(object $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
-        if ($depth >= 100) {
+        if ($depth >= $this->maxDepth) {
             return '�';
         }
 
@@ -161,7 +171,7 @@ class StringMaker
      */
     public function forceUtf8(string $string, int $depth = 0): string
     {
-        if ($depth >= 100) {
+        if ($depth >= $this->maxDepth) {
             return '�';
         }
 
@@ -188,7 +198,7 @@ class StringMaker
 
     public function fromPattern(string $pattern, array $arguments, int $depth = 0): string
     {
-        if ($depth >= 100) {
+        if ($depth >= $this->maxDepth) {
             return '�';
         }
 
@@ -197,7 +207,7 @@ class StringMaker
         foreach ($arguments as &$argument) {
             try {
                 $string = new CaseSensitiveString($this->fromVariable($argument, $settings, $depth + 1));
-                $argument = $string->truncateToCharLength(1000);
+                $argument = $string->truncateToCharLength($this->maxStringLength);
             }
             catch (\Exception) {
                 $argument = '�';
