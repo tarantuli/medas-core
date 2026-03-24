@@ -8,16 +8,16 @@ namespace Medas\Core;
  * This class should not be a service; keep it as independent and low-level as possible, so it can be used reliably in
  * core processes like exception handling.
  */
-readonly class StringMaker
+class StringMaker
 {
     use AsSingleton;
 
     public function __construct(
         #[Attributes\ConfigValue(ConfigOptions\StringMakerMaxDepth::class)]
-        private int $maxDepth = 100,
+        private readonly int $maxDepth = 100,
 
         #[Attributes\ConfigValue(ConfigOptions\StringMakerMaxStringLength::class)]
-        private int $maxStringLength = 1000,
+        private readonly int $maxStringLength = 1000,
     )
     {
     }
