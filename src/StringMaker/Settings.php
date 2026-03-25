@@ -15,6 +15,7 @@ class Settings
         public bool $quotesOnlyAroundWhitespace = false,
         public bool $forceUtf8 = false,
         public bool $alwaysAddClass = false,
+        public bool $useObjectIds = true,
     )
     {
     }
