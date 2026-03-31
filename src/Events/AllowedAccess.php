@@ -7,6 +7,7 @@ namespace Medas\Core\Events;
 enum AllowedAccess
 {
     case Pending;
+    case Unauthenticated;
     case Allowed;
     case Denied;
 }
