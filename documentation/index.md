@@ -1,1 +1,32 @@
-- [Class types](class-types)
+# For developers
+
+- [Class types](for-developers/class-types/index)
+  - [Services](for-developers/class-types/services)
+  - [Data objects](for-developers/class-types/data-objects)
+  - [Process objects](for-developers/class-types/process-objects)
+- [Entrypoints](for-developers/entrypoints)
+- [Packages](for-developers/packages)
+- [Console commands](for-developers/console-commands)
+- [Config options](for-developers/config-options/index)
+  - [YAML file](for-developers/config-options/yaml-file)
+  - [Environment variables](for-developers/config-options/environment-variables)
+- [Events](for-developers/events)
+- [Exceptions](for-developers/exceptions)
+- [Types](for-developers/types)
+- [Identifiers](for-developers/identifiers)
+- [Caching](for-developers/caching)
+- [Collections](for-developers/collections)
+- [Testing](for-developers/testing)
+
+# For users
+
+- [Directory structure](for-users/directory-structure)
+- [Installation](for-users/installation)
+- [Configuration](for-users/configuration/index)
+  - [YAML files](for-users/configuration/yaml-files)
+  - [Environment variables](for-users/configuration/environment-variables)
+- [Usage](for-users/usage/index)
+  - [Bootstrapping](for-users/usage/bootstrapping)
+  - [Web server](for-users/usage/web-server)
+  - [Console commands](for-users/usage/running-console-commands)
+  - [Post-install](for-users/usage/post-install)
