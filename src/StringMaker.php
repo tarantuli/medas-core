@@ -118,18 +118,27 @@ class StringMaker
         $settings ??= new StringMaker\Settings();
 
         if ($argument instanceof \Stringable) {
-            return $settings->alwaysAddClass
-                ? sprintf(
-                    "%s[%s]<%s>",
-                    $argument::class,
-                    $settings->useObjectIds ? spl_object_id($argument) : '###',
-                    $argument
-                )
-                : (string) $argument;
+            if (!$settings->alwaysAddClass) {
+                return (string) $argument;
+            }
+
+            if ($settings->useObjectIds) {
+                return sprintf("%s[%s]<%s>", $argument::class, spl_object_id($argument), $argument);
+            }
+            else {
+                return sprintf("%s<%s>", $argument::class, $argument);
+            }
         }
 
         $retval = $argument::class;
-        $retval .= sprintf('[%s](', $settings->useObjectIds ? spl_object_id($argument) : '###');
+
+        if ($settings->useObjectIds) {
+            $retval .= sprintf('[%s](', spl_object_id($argument));
+        }
+        else {
+            $retval .= '(';
+        }
+
         $firstValue = true;
 
         if (method_exists($argument, '__serialize')) {
