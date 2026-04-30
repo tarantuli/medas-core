@@ -1,0 +1,19 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Medas\Core\Interfaces;
+
+/**
+ * An authentication token controller creates tokens based on data, invalidates tokens, and retrieves data from tokens.
+ */
+interface AuthenticationTokenController
+{
+    public function create(mixed $data): string;
+
+    public function invalidate(string $token): void;
+
+    public function data(string $token): mixed;
+
+    public function userId(string $token): string|null;
+}
