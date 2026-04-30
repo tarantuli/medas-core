@@ -13,7 +13,7 @@ interface AuthenticationTokenController
 
     public function invalidate(string $token): void;
 
-    public function data(string $token): AuthenticationData;
+    public function data(string $token): AuthenticationData|null;
 
     public function userId(string $token): mixed;
 }
