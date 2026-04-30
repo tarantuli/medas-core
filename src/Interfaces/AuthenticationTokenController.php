@@ -9,11 +9,11 @@ namespace Medas\Core\Interfaces;
  */
 interface AuthenticationTokenController
 {
-    public function create(mixed $data): string;
+    public function create(AuthenticationData $data): string;
 
     public function invalidate(string $token): void;
 
-    public function data(string $token): mixed;
+    public function data(string $token): AuthenticationData;
 
-    public function userId(string $token): string|null;
+    public function userId(string $token): mixed;
 }
