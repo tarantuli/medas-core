@@ -17,7 +17,6 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
-    "morphp/medas-service-manager": "^3",
     "phpunit/phpunit": "^10"
   },
   "autoload": {
