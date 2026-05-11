@@ -9,5 +9,5 @@ YAML values can reference environment variables using `$env(NAME)` syntax, keepi
 
 See the sub-pages for details on each layer:
 
-- [YAML files](yaml-files)
-- [Environment variables](environment-variables)
+- [YAML files](yaml-files.md)
+- [Environment variables](environment-variables.md)

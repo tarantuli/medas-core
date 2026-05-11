@@ -54,4 +54,4 @@ readonly class TreeBuilder
 
 ## Contrast with data objects
 
-A [data object](data-objects) is immutable and represents a finished piece of data. A process object is mutable and represents an ongoing computation. Once a process is complete, its result may be extracted into a data object if it needs to be passed further.
+A [data object](data-objects.md) is immutable and represents a finished piece of data. A process object is mutable and represents an ongoing computation. Once a process is complete, its result may be extracted into a data object if it needs to be passed further.

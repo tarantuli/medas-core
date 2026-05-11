@@ -27,7 +27,7 @@ readonly class MailTransport
 
 ## Injecting via YAML interpolation
 
-For values that are configured through the config option system but whose concrete values come from the environment, use `$env(NAME)` syntax inside a YAML file. See [YAML file](yaml-file) for details.
+For values that are configured through the config option system but whose concrete values come from the environment, use `$env(NAME)` syntax inside a YAML file. See [YAML file](yaml-file.md) for details.
 
 ## Requirements
 

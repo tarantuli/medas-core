@@ -33,6 +33,6 @@ readonly class ThumbnailResizer
 
 ## What services are not
 
-- Services are not data objects. If a class primarily holds data rather than performs an action, it should be a [data object](data-objects) instead.
+- Services are not data objects. If a class primarily holds data rather than performs an action, it should be a [data object](data-objects.md) instead.
 - Services must not cache state between calls. Use a `CacheManager` if caching is needed.
 - Services must not be instantiated manually with `new`. Always resolve them through the service manager.
