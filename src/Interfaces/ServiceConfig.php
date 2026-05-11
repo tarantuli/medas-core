@@ -16,6 +16,21 @@ interface ServiceConfig
 
     public function exceptionHandlers(): array;
 
+    /**
+     * Registers exception handler class names to be lazily resolved via service() when first needed.
+     * Class names are serializable and therefore cacheable, unlike instances.
+     */
+    public function addExceptionHandlerClasses(string ...$classes): self;
+
+    /** @return string[] */
+    public function exceptionHandlerClasses(): array;
+
+    /**
+     * Registers a type binding in the service mapping without requiring an instance.
+     * Equivalent to ServiceManager::bindImplementation() but usable during initialize().
+     */
+    public function addTypeBinding(string $implementationClass, string ...$forTypes): self;
+
     public function addParameterResolver(ParameterResolver $parameterResolver): self;
 
     public function parameterResolvers(): array;

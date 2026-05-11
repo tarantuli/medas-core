@@ -17,6 +17,12 @@ interface Package extends IsSingleton
 
     public function initialize(ServiceConfig $config): void;
 
+    /**
+     * Called after all packages have been initialized, with the full service container available.
+     * Use for non-cacheable runtime setup that requires service resolution.
+     */
+    public function ready(): void;
+
     public function postInstall(): void;
 
     /**

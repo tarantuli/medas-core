@@ -21,6 +21,11 @@ abstract class BasePackage implements Interfaces\Package
         // Do nothing
     }
 
+    public function ready(): void
+    {
+        // Do nothing
+    }
+
     public function postInstall(): void
     {
         // Do nothing
