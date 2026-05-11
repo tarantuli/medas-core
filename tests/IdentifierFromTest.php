@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Medas\CoreTest;
 
-use Medas\Core\Identifiers\IdentifierMaker;
+use Medas\Core\Identifier;
 
 class IdentifierFromTest extends BaseTestClass
 {
     public function testFromCamelCase(): void
     {
-        $maker = new IdentifierMaker();
-        $camelToKebab = $maker->fromCamelCase('fromCamelCase')->toKebabCase();
+        $identifier = new Identifier('fromCamelCase');
+        $camelToKebab = $identifier->toKebabCase();
 
         self::assertEquals('from-camel-case', $camelToKebab);
     }

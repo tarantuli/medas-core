@@ -42,8 +42,9 @@ class GenericCollectionTest extends TestCase
         $b = new \stdClass();
         $c = new \stdClass();
         $collection = new GenericCollection([$a, $b, $c]);
-
-        $collection->setData([$b, $c, $a]);
+        $collection[0] = $b;
+        $collection[1] = $c;
+        $collection[2] = $a;
 
         self::assertEquals([], iterator_to_array($collection->getAdditions()));
         self::assertEquals([], iterator_to_array($collection->getDeletions()));
@@ -56,8 +57,8 @@ class GenericCollectionTest extends TestCase
         $b = new \stdClass();
         $c = new \stdClass();
         $collection = new GenericCollection([$a, $b, $c]);
-
-        $collection->setData([$a, $c, $b]);
+        $collection[1] = $c;
+        $collection[2] = $b;
 
         self::assertEquals([], iterator_to_array($collection->getAdditions()));
         self::assertEquals([], iterator_to_array($collection->getDeletions()));
