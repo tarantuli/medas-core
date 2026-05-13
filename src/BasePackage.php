@@ -11,6 +11,11 @@ abstract class BasePackage implements Interfaces\Package
         return 0;
     }
 
+    public function devDependencies(): array
+    {
+        return [];
+    }
+
     public function isTestPackage(): bool
     {
         return false;

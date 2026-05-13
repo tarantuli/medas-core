@@ -9,6 +9,16 @@ namespace Medas\Core\Interfaces;
  */
 interface ServiceConfig
 {
+    public function isDev(): bool;
+
+    public function addPackage(Package $package, bool $doInitialize = false): self;
+
+    public function addPackages(array $packages): self;
+
+    public function addDevPackage(Package $package, bool $doInitialize = false): self;
+
+    public function addDevPackages(array $packages): self;
+
     public function addExceptionHandler(ExceptionHandler $exceptionHandler): self;
 
     /** @var ExceptionHandler[] $exceptionHandlers */
@@ -30,6 +40,13 @@ interface ServiceConfig
      * Equivalent to ServiceManager::bindImplementation() but usable during initialize().
      */
     public function addTypeBinding(string $implementationClass, string ...$forTypes): self;
+
+    public function addManualBinding(
+        string $class,
+        string $parameter,
+        mixed  $value,
+        string $method = '__construct',
+    ): void;
 
     public function addParameterResolver(ParameterResolver $parameterResolver): self;
 

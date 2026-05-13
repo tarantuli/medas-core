@@ -11,6 +11,9 @@ interface Package extends IsSingleton
     /** @return Package[] */
     public function dependencies(): array;
 
+    /** @return Package[] */
+    public function devDependencies(): array;
+
     public function sourceDirectory(): string;
 
     public function isTestPackage(): bool;
