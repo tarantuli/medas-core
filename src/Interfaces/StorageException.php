@@ -17,7 +17,7 @@ use Medas\Core\Exceptions\StorageExceptionType;
  */
 interface StorageException
 {
-    public StorageExceptionType $exceptionType{
-        get;
+    public StorageExceptionType $exceptionType{get;
+
     }
 }
