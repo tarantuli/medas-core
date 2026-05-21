@@ -6,5 +6,8 @@ namespace Medas\Core\Interfaces;
 
 interface ExceptionHandler
 {
-    public function handleException(\Throwable $exception): void;
+    /**
+     * The handler must return true if it took action to handle the exception.
+     */
+    public function handleException(\Throwable $exception): bool;
 }
