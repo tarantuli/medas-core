@@ -38,7 +38,7 @@ Test packages are excluded from production builds. Use them to register mock ser
 Because services are resolved through the `ServiceManager`, swap in a test double by re-binding the interface before the test runs:
 
 ```php
-$config->bind(MailerInterface::class, NullMailer::class);
+$config->addTypeBinding(NullMailer::class, MailerInterface::class);
 ```
 
 For services with no interface, bind the concrete class to a subclass or a `PHPUnit` mock registered via a factory.

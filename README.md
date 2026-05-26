@@ -113,19 +113,19 @@ whileTrue(callable $callable, int $maxCount = 256): void
 
 Attributes are the primary way to annotate classes and their members.
 
-| Attribute                               | Target               | Purpose                                                       |
-|-----------------------------------------|----------------------|---------------------------------------------------------------|
-| `#[Service]`                            | Class                | Marks a class as a singleton service                          |
-| `#[EventListener]`                      | Method               | Marks a method as an event listener                           |
-| `#[EnvValue(name: '...')]`              | Parameter / Property | Injects a value from `$_ENV`                                  |
-| `#[ConfigValue(configOption: '...')]`   | Parameter / Property | Injects a config value                                        |
-| `#[PreferredDefault(className: '...')]` | Parameter / Property | Specifies a preferred service implementation                  |
-| `#[Handler]`                            | Method               | Marks a method as a handler                                   |
-| `#[Entrypoint]`                         | Class                | Marks a class as an application entrypoint                    |
-| `#[ValueValidator]`                     | Class                | Marks a class as a value validator                            |
-| `#[DumpObject]`                         | Class                | Marks a class for debug dumping                               |
-| `#[RequiredButUnused]`                  | Parameter            | Marks a parameter that must exist but is intentionally unused |
-| `#[HasMarkdownDocumentation]`           | Class                | Indicates the class has associated Markdown documentation     |
+| Attribute                               | Target               | Purpose                                                             |
+|-----------------------------------------|----------------------|---------------------------------------------------------------------|
+| `#[Service]`                            | Class                | Marks a class as a singleton service                                |
+| `#[EventListener]`                      | Method               | Marks a method as an event listener                                 |
+| `#[EnvValue(name: '...')]`              | Parameter / Property | Injects a value from `$_ENV`                                        |
+| `#[ConfigValue(configOption: '...')]`   | Parameter / Property | Injects a config value                                              |
+| `#[PreferredDefault(className: '...')]` | Parameter / Property | Specifies a preferred service implementation                        |
+| `#[Handler(className: '...')]`          | Property             | Delegates serialization of a property to a custom `PropertyHandler` |
+| `#[Entrypoint]`                         | Class / Method       | Marks a class or method as an application entrypoint                |
+| `#[ValueValidator]`                     | Method               | Marks a method on a Type class as a value validator                 |
+| `#[DumpObject]`                         | Class                | Marks a class for debug dumping                                     |
+| `#[RequiredButUnused]`                  | Parameter            | Marks a parameter that must exist but is intentionally unused       |
+| `#[HasMarkdownDocumentation]`           | Class                | Indicates the class has associated Markdown documentation           |
 
 ---
 
@@ -295,7 +295,7 @@ dispatch($vote);
 allowElseThrow($vote, new AccessDeniedException());
 ```
 
-Listeners set `$vote->allowedAccess = true` or `false`. Propagation stops as soon as a decision is made.
+Listeners set `$vote->allowedAccess` to `AllowedAccess::Allowed`, `AllowedAccess::Denied`, or `AllowedAccess::Unauthenticated`. Propagation stops as soon as a non-`Pending` value is set.
 
 **`DebugInformation`** — a simple event for collecting debug messages:
 

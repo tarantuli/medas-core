@@ -38,7 +38,7 @@ class RoutingPackage extends BasePackage
 
     public function initialize(ServiceConfig $config): void
     {
-        $config->bind(Router::class, RouterImplementation::class);
+        $config->addTypeBinding(RouterImplementation::class, Router::class);
     }
 
     public function hasMarkdownDocumentation(): bool
