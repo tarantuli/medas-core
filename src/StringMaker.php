@@ -67,15 +67,7 @@ class StringMaker
         $settings ??= new StringMaker\Settings();
 
         if (is_string($argument)) {
-            if ($argument === '�') {
-                $string = $argument;
-            }
-            elseif ($settings->quotesOnlyAroundWhitespace && $argument !== '' && !preg_match('/\s/u', $argument)) {
-                $string = $argument;
-            }
-            else {
-                $string = '"' . $argument . '"';
-            }
+            $string = $argument;
         }
         elseif (is_array($argument)) {
             $string = $this->fromArray($argument, $settings, $depth + 1);
@@ -101,6 +93,12 @@ class StringMaker
 
         if ($settings->forceUtf8) {
             $string = $this->forceUtf8($string, $depth + 1);
+        }
+
+        if (is_string($argument)
+                && $string !== '�'
+                && (!$settings->quotesOnlyAroundWhitespace || $string === '' || preg_match('/\s/u', $string))) {
+            $string = '"' . $string . '"';
         }
 
         return $string;
