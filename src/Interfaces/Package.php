@@ -18,7 +18,7 @@ interface Package extends IsSingleton
 
     public function isTestPackage(): bool;
 
-    public function initialize(ServiceConfig $config): void;
+    public function initialize(ServiceConfigBuilder $config): void;
 
     /**
      * Called after all packages have been initialized, with the full service container available.

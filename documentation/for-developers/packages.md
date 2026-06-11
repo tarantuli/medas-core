@@ -18,7 +18,7 @@ Every package extends `BasePackage` and uses the `AsSingleton` trait, making it 
 ## Example
 
 ```php
-use Medas\Core\{AsSingleton, BasePackage, Interfaces\ServiceConfig};
+use Medas\Core\{AsSingleton, BasePackage, Interfaces\ServiceConfigBuilder};
 
 class RoutingPackage extends BasePackage
 {
@@ -36,7 +36,7 @@ class RoutingPackage extends BasePackage
         return __DIR__;
     }
 
-    public function initialize(ServiceConfig $config): void
+    public function initialize(ServiceConfigBuilder $config): void
     {
         $config->addTypeBinding(RouterImplementation::class, Router::class);
     }

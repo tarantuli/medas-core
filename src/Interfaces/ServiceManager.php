@@ -24,10 +24,4 @@ interface ServiceManager
      * are found, and none is explicitly bound using ```bindImplementation()```, it throws an exception.
      */
     public function findImplementingClass(string $type): string|null;
-
-    /**
-     * Binds the given object as the implementation for the given types. That is, if ````resolve()```` is called with any of
-     * these types, $implementor will be returned.
-     */
-    public function bindImplementation(object $implementation, string ...$forTypes): self;
 }

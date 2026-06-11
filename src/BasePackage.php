@@ -21,7 +21,7 @@ abstract class BasePackage implements Interfaces\Package
         return false;
     }
 
-    public function initialize(Interfaces\ServiceConfig $config): void
+    public function initialize(Interfaces\ServiceConfigBuilder $config): void
     {
         // Do nothing
     }
