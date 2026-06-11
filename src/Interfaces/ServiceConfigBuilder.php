@@ -30,10 +30,13 @@ interface ServiceConfigBuilder
 
     public function addParameterResolver(string $parameterResolver): self;
 
+    public function addParameterResolvers(string ...$parameterResolver): self;
+
     public function addArgumentProcessor(string $argumentProcessor): self;
+
+    public function addArgumentProcessors(string ...$argumentProcessor): self;
 
     public function addExceptionHandler(string $exceptionHandler): self;
 
-    /** @var string[] $exceptionHandlers */
-    public function addExceptionHandlers(array $exceptionHandlers): self;
+    public function addExceptionHandlers(string ...$exceptionHandlers): self;
 }
