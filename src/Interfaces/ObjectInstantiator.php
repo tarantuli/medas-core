@@ -7,6 +7,11 @@ namespace Medas\Core\Interfaces;
 /**
  * The object instantiator is responsible for instantiating objects, using the given arguments as parameter values.
  *
+ * The constructor will receive three arguments:
+ *   - ServiceManager  $manager
+ *   - array           $parameterResolvers  An array of class names of ParameterResolver implementations
+ *   - array           $argumentProcessors  An array of class names of ArgumentProcessors implementations
+ *
  * The default implementation is @class(Medas\ObjectInstantiator\ObjectInstantiator). It allows the registration of
  * multiple parameter resolvers and argument processors. It's primary parameter resolver resolves arguments whose type
  * is a class that is marked as a @class(Medas\Core\Attributes\Service), using singleton instances from the
