@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\Core\Exceptions;
 
-class DebuggedCircularDependencyFound extends BaseException
+use Medas\Core\Interfaces\DeclaresMaxStringLength;
+
+class DebuggedCircularDependencyFound extends BaseException implements DeclaresMaxStringLength
 {
     public function __construct(array $requestStates, string $current, string $source)
     {
@@ -25,5 +27,10 @@ class DebuggedCircularDependencyFound extends BaseException
     public function pattern(): string
     {
         return "%s";
+    }
+
+    public function maxStringLength(): int
+    {
+        return 10000;
     }
 }
