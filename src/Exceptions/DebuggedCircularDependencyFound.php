@@ -6,19 +6,24 @@ namespace Medas\Core\Exceptions;
 
 class DebuggedCircularDependencyFound extends BaseException
 {
-    public function __construct(array $trace, string $current, string $sourceFile)
+    public function __construct(array $requestStates, string $current, string $source)
     {
-        $circle = ["$current => $sourceFile"];
+        $history = '';
 
-        foreach ($trace as $class => $sourceFile) {
-            $circle[] = "$class => $sourceFile";
+        foreach ($requestStates as $state) {
+            $history .= sprintf(
+                "  %s  %s   from %s\n",
+                $state[2] ? '✓' : '☐',
+                $state[0],
+                $state[1]
+            );
         }
 
-        parent::__construct(implode("\n*  ", $circle));
+        parent::__construct("triggered by instantiation request for $current from $source\n\n" . $history);
     }
 
     public function pattern(): string
     {
-        return "circular dependency found:\n*  %s";
+        return "%s";
     }
 }
