@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Exceptions;
 
-use Medas\Core\StringMaker;
+use Medas\Core\{Interfaces\DeclaresMaxStringLength, StringMaker};
 
 abstract class BaseException extends \Exception
 {
@@ -12,7 +12,15 @@ abstract class BaseException extends \Exception
 
     public function __construct(...$arguments)
     {
-        $message = StringMaker::instance()->fromPattern($this->pattern(), $arguments);
+        $maxStringLengh = $this instanceof DeclaresMaxStringLength
+            ? $this->maxStringLength()
+            : null;
+
+        $message = StringMaker::instance()->fromPattern(
+            $this->pattern(),
+            $arguments,
+            maxStringLength: $maxStringLengh
+        );
 
         parent::__construct($message, 1, $this->previous());
     }

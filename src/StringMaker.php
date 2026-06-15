@@ -208,7 +208,12 @@ class StringMaker
         return $result;
     }
 
-    public function fromPattern(string $pattern, array $arguments, int $depth = 0): string
+    public function fromPattern(
+        string   $pattern,
+        array    $arguments,
+        int      $depth = 0,
+        int|null $maxStringLength = null
+    ): string
     {
         if ($depth >= $this->maxDepth) {
             return '�';
@@ -219,7 +224,7 @@ class StringMaker
         foreach ($arguments as &$argument) {
             try {
                 $string = new CaseSensitiveString($this->fromVariable($argument, $settings, $depth + 1));
-                $argument = $string->truncateToCharLength($this->maxStringLength);
+                $argument = $string->truncateToCharLength($maxStringLength ?? $this->maxStringLength);
             }
             catch (\Exception) {
                 $argument = '�';
