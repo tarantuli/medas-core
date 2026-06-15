@@ -17,9 +17,6 @@ namespace PHPSTORM_META {
         '' => '@',
     ]));
 
-    override(ImplementorFinder::find(), map([
-        '' => '@[]',
-    ]));
     override(\attribute(), map([
 
         '' => '@',
