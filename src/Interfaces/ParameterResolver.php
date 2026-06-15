@@ -9,6 +9,8 @@ use Medas\Core\ParameterResolverResult;
 /**
  * Parameter resolvers are called to resolve the value of a method parameter.
  *
+ * They are instantiated using the new operator without arguments, they are not resolved as services.
+ *
  * They are called in order of highest to lowest priority. If ```handle()``` returns true, the resulting value is
  * fetched using ```result()``` and further resolvers are skipped. Medas packages themselves have priorities lower than
  * zero.
