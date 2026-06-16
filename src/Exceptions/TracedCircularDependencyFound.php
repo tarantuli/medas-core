@@ -6,7 +6,7 @@ namespace Medas\Core\Exceptions;
 
 use Medas\Core\Interfaces\DeclaresMaxStringLength;
 
-class DebuggedCircularDependencyFound extends BaseException implements DeclaresMaxStringLength
+class TracedCircularDependencyFound extends BaseException implements DeclaresMaxStringLength
 {
     public function __construct(array $requestStates, string $current, string $source)
     {
