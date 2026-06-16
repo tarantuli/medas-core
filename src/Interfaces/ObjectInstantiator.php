@@ -25,4 +25,11 @@ interface ObjectInstantiator
      * The return value is specified for PhpStorm using .phpstorm.meta.php
      */
     public function instantiate(string $type, array $givenArguments = []): object;
+
+    public function resolveMethodParameters(
+        \ReflectionMethod|\ReflectionFunction $method,
+        array                                 $givenArguments
+    ): array;
+
+    public function resolveParameter(\ReflectionParameter|\ReflectionProperty $parameter): mixed;
 }
