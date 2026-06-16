@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
-interface Package extends IsSingleton
+interface Package extends IsSingleton, DeclaresPriority
 {
     public function priority(): int;
 

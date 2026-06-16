@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /** See @class(Medas\Core\Interfaces\HttpRequestHandlerManager) */
-interface HttpRequestHandler
+interface HttpRequestHandler extends DeclaresPriority
 {
     public function priority(): int;
 

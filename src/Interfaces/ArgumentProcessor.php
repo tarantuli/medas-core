@@ -19,7 +19,7 @@ namespace Medas\Core\Interfaces;
  * Processors are applied in order of highest to lowest priority. Medas packages themselves have priorities lower than
  * zero.
  */
-interface ArgumentProcessor
+interface ArgumentProcessor extends DeclaresPriority
 {
     public function process(\ReflectionParameter|\ReflectionProperty $parameter, mixed $argument): mixed;
 

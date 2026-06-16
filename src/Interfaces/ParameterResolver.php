@@ -28,7 +28,7 @@ use Medas\Core\ParameterResolverResult;
  * - @class(Medas\HttpRequestHandler\BodyDataResolver) is a resolver that looks for values in the body input of the
  *   request that match the parameter name.
  */
-interface ParameterResolver
+interface ParameterResolver extends DeclaresPriority
 {
     public function priority(): int;
 
