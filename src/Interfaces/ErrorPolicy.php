@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core\Interfaces;
 
-interface ErrorHandler
+interface ErrorPolicy
 {
     public function set(): void;
 }
