@@ -14,11 +14,16 @@ use Medas\Core\{
 #[Service]
 readonly class TraceFormatter
 {
+    private StringMaker $stringMaker;
+    private StringMaker\Settings $settings;
+
     public function __construct(
         #[ConfigValue(TraceArgumentMaxLength::class)]
         private int $traceArgumentMaxLength,
     )
     {
+        $this->stringMaker = StringMaker::instance();
+        $this->settings = StringMaker\Settings::forDisplay();
     }
 
     public function toString(array $frames): string
@@ -54,7 +59,7 @@ readonly class TraceFormatter
                 else {
                     $output .= sprintf(
                         "%s\n",
-                        StringMaker::instance()->forceUtf8((string) $argument)
+                        $this->stringMaker->fromVariable($argument, $this->settings)
                     );
                 }
             }
