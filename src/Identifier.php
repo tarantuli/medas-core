@@ -15,12 +15,13 @@ readonly class Identifier
         match ($analyzer->determine($identifier)) {
             Identifiers\IdentifierType::SnakeCase => $this->words = explode('_', $identifier),
             Identifiers\IdentifierType::KebabCase => $this->words = explode('-', $identifier),
-            Identifiers\IdentifierType::PascalCase => $this->words = $this->splitByCapital(strtolower(substr($identifier, 0, 1)) . substr(
-                $identifier,
-                1
-            )),
 
-            Identifiers\IdentifierType::CamelCase => $this->words = $this->splitByCapital($identifier),
+            Identifiers\IdentifierType::PascalCase
+                => $this->words = $this->splitByCapital(strtolower(substr($identifier, 0, 1)) . substr($identifier, 1)),
+
+            Identifiers\IdentifierType::CamelCase
+                => $this->words = $this->splitByCapital($identifier),
+
             Identifiers\IdentifierType::SpaceCase => $this->words = $this->splitBySpace($identifier)
         };
     }

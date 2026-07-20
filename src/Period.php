@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+#[Attributes\DataHolder]
 class Period
 {
     public static function fromString(string $string): self

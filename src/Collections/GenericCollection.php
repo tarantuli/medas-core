@@ -43,8 +43,8 @@ class GenericCollection extends BasicCollection implements TracksChanges, Manage
 
         return array_any(
             $this->data,
-            fn($value, $key) => !array_key_exists($key, $this->initialData)
-                || $this->initialData[$key] !== $value
+            fn($value, $key)
+                => !array_key_exists($key, $this->initialData) || $this->initialData[$key] !== $value
         );
     }
 

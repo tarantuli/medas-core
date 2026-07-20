@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+#[Attributes\DataHolder]
 readonly class Date
 {
     public static function today(): self
