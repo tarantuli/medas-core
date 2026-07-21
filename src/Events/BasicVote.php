@@ -12,6 +12,6 @@ abstract class BasicVote implements StoppableEventInterface
 
     public function isPropagationStopped(): bool
     {
-        return $this->allowedAccess !== AllowedAccess::Pending;
+        return $this->allowedAccess === AllowedAccess::Denied;
     }
 }
