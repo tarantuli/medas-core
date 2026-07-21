@@ -13,8 +13,10 @@ readonly class AttributeChecker
     {
     }
 
-    public function hasAttribute(string $class, string $attribute): bool
+    public function hasAttribute(string|object $classOrObject, string $attribute): bool
     {
+        $class = is_object($classOrObject) ? $classOrObject::class : $classOrObject;
+
         return $this->cacheManager->get()->get(
             [$class, $attribute],
             fn() => $this->determine($class, $attribute)
