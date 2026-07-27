@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\Core\Cors;
 
+use Medas\Core\Attributes\Service;
+
 /**
  * Pure CORS decision logic, shared between anything that needs to write
  * CORS headers regardless of how it dispatches requests or writes
@@ -13,6 +15,7 @@ namespace Medas\Core\Cors;
  * itself, so it has no dependency on any particular request/response
  * abstraction.
  */
+#[Service]
 readonly class CorsHeaders
 {
     /**
