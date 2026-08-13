@@ -29,4 +29,7 @@ interface Collection extends \ArrayAccess, \Iterator, \Countable
 
     /**  @param T $value */
     public function contains(mixed $value): bool;
+
+    /**  @param T $value */
+    public function remove(mixed $value): bool;
 }

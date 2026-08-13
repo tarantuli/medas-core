@@ -116,4 +116,17 @@ class BasicCollection implements Collection
     {
         return in_array($value, $this->data, true);
     }
+
+    public function remove(mixed $value): bool
+    {
+        $key = array_search($value, $this->data, true);
+
+        if ($key === false) {
+            return false;
+        }
+
+        unset($this->data[$key]);
+
+        return true;
+    }
 }
