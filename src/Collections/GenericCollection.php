@@ -16,7 +16,13 @@ class GenericCollection extends BasicCollection implements TracksChanges, Manage
         protected array $data = [],
     )
     {
-        $this->initialData = $data;
+        // A freshly constructed collection has no persisted baseline, so its
+        // entire content counts as additions. The data only becomes the baseline
+        // once the collection is hydrated (setData) or persisted
+        // (resetChangeTracking). Constructing with data therefore means "these
+        // items are new", which is what a new entity's collection needs
+        // to persist.
+        $this->initialData = [];
 
         parent::__construct($data);
     }
