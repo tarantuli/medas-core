@@ -9,6 +9,7 @@ use Medas\Core\{
     Interfaces\CacheManager,
     Interfaces\ConfigManager,
     Interfaces\EventDispatcher,
+    Interfaces\HasId,
     Interfaces\ServiceManager,
     MedasRepository,
     SingletonStore
@@ -163,6 +164,17 @@ if (!function_exists('medas')) {
     function is_nihil(float $value): bool
     {
         return FloatingNumber::SMALL_NEGATIVE < $value && $value < FloatingNumber::SMALL_POSITIVE;
+    }
+
+    /**
+     * Whether two entities are the same, compared on their ids rather than object
+     * identity - so two instances of the same entity loaded in different units of
+     * work still count as equal. Ids are globally unique (uuids, or hashes derived
+     * from the class), so no cross-type check is needed.
+     */
+    function equalIds(HasId $first, HasId $second): bool
+    {
+        return (string) $first->id() === (string) $second->id();
     }
 
     /**

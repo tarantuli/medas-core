@@ -13,7 +13,7 @@ namespace Medas\Core\Interfaces;
  */
 interface HasStorageValue
 {
-    public function toStorageValue(): mixed;
-
     public static function fromStorageValue(mixed $value): static;
+
+    public function toStorageValue(): mixed;
 }
