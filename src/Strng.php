@@ -6,8 +6,8 @@ namespace Medas\Core;
 
 readonly class Strng extends CaseSensitiveString
 {
-    public static function create(string $string): static
+    public static function create(string $value): static
     {
-        return new static($string);
+        return new static($value);
     }
 }

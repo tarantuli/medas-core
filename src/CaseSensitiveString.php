@@ -18,26 +18,25 @@ readonly class CaseSensitiveString implements \Stringable
         ));
     }
 
-    protected string $string;
-
-    public function __construct(string $string)
+    public function __construct(
+        public string $value,
+    )
     {
-        $this->string = $string;
     }
 
     public function __toString(): string
     {
-        return $this->string;
+        return $this->value;
     }
 
     public function truncateToByteLength(int $maxByteLength): self
     {
-        if (strlen($this->string) <= $maxByteLength) {
+        if (strlen($this->value) <= $maxByteLength) {
             return clone $this;
         }
 
         // First, cut by character length
-        $cutByCharacters = mb_substr($this->string, 0, $maxByteLength - 1);
+        $cutByCharacters = mb_substr($this->value, 0, $maxByteLength - 1);
 
         // Then, pop off single characters at the end until its *length in bytes* is good
         while (strlen($cutByCharacters) > $maxByteLength - 3) {
@@ -50,11 +49,41 @@ readonly class CaseSensitiveString implements \Stringable
 
     public function truncateToCharLength(int $maxCharLength): self
     {
-        if (count(mb_str_split($this->string)) > $maxCharLength) {
-            return new static(mb_substr($this->string, 0, $maxCharLength - 1) . '…');
+        if (count(mb_str_split($this->value)) > $maxCharLength) {
+            return new static(mb_substr($this->value, 0, $maxCharLength - 1) . '…');
         }
 
         return $this;
+    }
+
+    public function padToCharLength(int $length, string $padString = ' ', int $type = STR_PAD_RIGHT): self
+    {
+        $padStringLength = mb_strlen($padString);
+
+        if ($padStringLength === 0) {
+            throw new Exceptions\PadStringCannotBeEmpty();
+        }
+
+        $missing = $length - mb_strlen($this->value);
+
+        if ($missing <= 0) {
+            return clone $this;
+        }
+
+        $repeated = str_repeat($padString, (int) ceil($missing / $padStringLength));
+
+        return match ($type) {
+            STR_PAD_LEFT => new static(mb_substr($repeated, 0, $missing) . $this->value),
+
+            STR_PAD_BOTH
+                => new static(mb_substr($repeated, 0, (int) floor($missing / 2)) . $this->value . mb_substr(
+                    $repeated,
+                    0,
+                    (int) ceil($missing / 2)
+                )),
+
+            default => new static($this->value . mb_substr($repeated, 0, $missing)),
+        };
     }
 
     public function surroundedBy(string $needle): bool
@@ -64,12 +93,12 @@ readonly class CaseSensitiveString implements \Stringable
 
     public function startsWith(string $needle): bool
     {
-        return str_starts_with($this->string, $needle);
+        return str_starts_with($this->value, $needle);
     }
 
     public function endsWith(string $needle): bool
     {
-        return str_ends_with($this->string, $needle);
+        return str_ends_with($this->value, $needle);
     }
 
     public function chopFromStart(string $needle): self
@@ -78,7 +107,7 @@ readonly class CaseSensitiveString implements \Stringable
             return clone $this;
         }
 
-        return new static(substr($this->string, strlen($needle)));
+        return new static(substr($this->value, strlen($needle)));
     }
 
     public function chopFromEnd(string $needle): self
@@ -87,29 +116,29 @@ readonly class CaseSensitiveString implements \Stringable
             return clone $this;
         }
 
-        return new static(substr($this->string, 0, -strlen($needle)));
+        return new static(substr($this->value, 0, -strlen($needle)));
     }
 
     public function contains(string $needle): bool
     {
-        return str_contains($this->string, $needle);
+        return str_contains($this->value, $needle);
     }
 
     public function equals(string $needle): bool
     {
-        return $this->string === $needle;
+        return $this->value === $needle;
     }
 
     public function regexMatch(string $pattern, int $flags = 0, int $offset = 0): array|null
     {
-        $matched = preg_match($pattern, $this->string, $match, $flags, $offset);
+        $matched = preg_match($pattern, $this->value, $match, $flags, $offset);
 
         return $matched ? $match : null;
     }
 
     public function regexMatchAll(string $pattern, int $flags = PREG_SET_ORDER, int $offset = 0): array
     {
-        $matched = preg_match_all($pattern, $this->string, $matches, $flags, $offset);
+        $matched = preg_match_all($pattern, $this->value, $matches, $flags, $offset);
 
         return $matched ? $matches : [];
     }
@@ -120,11 +149,11 @@ readonly class CaseSensitiveString implements \Stringable
      */
     public function regexReplace(string $pattern, string $replacement, int $limit = -1): self
     {
-        $result = preg_replace($pattern, $replacement, $this->string, $limit);
+        $result = preg_replace($pattern, $replacement, $this->value, $limit);
 
         if ($result === null) {
             throw new Exceptions\RegexReplaceFailed(
-                $this->string,
+                $this->value,
                 $pattern,
                 $replacement,
                 preg_last_error_msg()

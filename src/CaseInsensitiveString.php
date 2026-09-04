@@ -8,21 +8,21 @@ readonly class CaseInsensitiveString extends CaseSensitiveString
 {
     public function startsWith(string $needle): bool
     {
-        return strncasecmp($this->string, $needle, strlen($needle)) === 0;
+        return strncasecmp($this->value, $needle, strlen($needle)) === 0;
     }
 
     public function endsWith(string $needle): bool
     {
-        return $needle === '' || strcasecmp($needle, substr($this->string, -strlen($needle))) === 0;
+        return $needle === '' || strcasecmp($needle, substr($this->value, -strlen($needle))) === 0;
     }
 
     public function contains(string $needle): bool
     {
-        return stripos($this->string, $needle) !== false;
+        return stripos($this->value, $needle) !== false;
     }
 
     public function equals(string $needle): bool
     {
-        return strcasecmp($this->string, $needle) === 0;
+        return strcasecmp($this->value, $needle) === 0;
     }
 }
