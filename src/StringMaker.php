@@ -223,8 +223,8 @@ class StringMaker
 
         foreach ($arguments as &$argument) {
             try {
-                $string = new CaseSensitiveString($this->fromVariable($argument, $settings, $depth + 1));
-                $argument = $string->truncateToCharLength($maxStringLength ?? $this->maxStringLength);
+                $argument = (string) new CaseSensitiveString($this->fromVariable($argument, $settings, $depth + 1))
+                    ->truncateToCharLength($maxStringLength ?? $this->maxStringLength);
             }
             catch (\Exception) {
                 $argument = '�';
