@@ -7,4 +7,6 @@ namespace Medas\Core\Interfaces;
 interface FileSystemCache extends Cache
 {
     public function baseDirectory(): string;
+
+    public function clearCacheOnInstall(): bool;
 }
