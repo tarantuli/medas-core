@@ -113,19 +113,19 @@ whileTrue(callable $callable, int $maxCount = 256): void
 
 Attributes are the primary way to annotate classes and their members.
 
-| Attribute                               | Target               | Purpose                                                             |
-|-----------------------------------------|----------------------|---------------------------------------------------------------------|
-| `#[Service]`                            | Class                | Marks a class as a singleton service                                |
-| `#[EventListener]`                      | Method               | Marks a method as an event listener                                 |
-| `#[EnvValue(name: '...')]`              | Parameter / Property | Injects a value from `$_ENV`                                        |
-| `#[ConfigValue(configOption: '...')]`   | Parameter / Property | Injects a config value                                              |
-| `#[PreferredDefault(className: '...')]` | Parameter / Property | Specifies a preferred service implementation                        |
-| `#[Handler(className: '...')]`          | Property             | Delegates serialization of a property to a custom `PropertyHandler` |
-| `#[Entrypoint]`                         | Class / Method       | Marks a class or method as an application entrypoint                |
-| `#[ValueValidator]`                     | Method               | Marks a method on a Type class as a value validator                 |
-| `#[DumpObject]`                         | Class                | Marks a class for debug dumping                                     |
-| `#[RequiredButUnused]`                  | Parameter            | Marks a parameter that must exist but is intentionally unused       |
-| `#[HasMarkdownDocumentation]`           | Class                | Indicates the class has associated Markdown documentation           |
+| Attribute                               | Target               | Purpose                                                                                           |
+|-----------------------------------------|----------------------|---------------------------------------------------------------------------------------------------|
+| `#[Service(lazy: true)]`                | Class                | Marks a class as a singleton service; `lazy: false` keeps it from being injected as a lazy object |
+| `#[EventListener]`                      | Method               | Marks a method as an event listener                                                               |
+| `#[EnvValue(name: '...')]`              | Parameter / Property | Injects a value from `$_ENV`                                                                      |
+| `#[ConfigValue(configOption: '...')]`   | Parameter / Property | Injects a config value                                                                            |
+| `#[PreferredDefault(className: '...')]` | Parameter / Property | Specifies a preferred service implementation                                                      |
+| `#[Handler(className: '...')]`          | Property             | Delegates serialization of a property to a custom `PropertyHandler`                               |
+| `#[Entrypoint]`                         | Class / Method       | Marks a class or method as an application entrypoint                                              |
+| `#[ValueValidator]`                     | Method               | Marks a method on a Type class as a value validator                                               |
+| `#[DumpObject]`                         | Class                | Marks a class for debug dumping                                                                   |
+| `#[RequiredButUnused]`                  | Parameter            | Marks a parameter that must exist but is intentionally unused                                     |
+| `#[HasMarkdownDocumentation]`           | Class                | Indicates the class has associated Markdown documentation                                         |
 
 ---
 
@@ -403,18 +403,22 @@ $content = service(UrlReader::class)->read('https://example.com/api');
 
 `medas-core` defines the contracts that other packages implement. Key interfaces include:
 
-| Interface                          | Purpose                                                  |
-|------------------------------------|----------------------------------------------------------|
-| `ServiceManager`                   | Resolves and binds service implementations               |
-| `ObjectInstantiator`               | Instantiates classes with automatic dependency injection |
-| `EventDispatcher`                  | Dispatches events to registered listeners                |
-| `CacheManager` / `Cache`           | Cache retrieval and storage                              |
-| `ConfigManager`                    | Config value access                                      |
-| `Collection` / `ManagedCollection` | Typed iterable collections                               |
-| `TracksChanges`                    | Change tracking on collections or objects                |
-| `Validator`                        | Value validation                                         |
-| `Serializer` / `StringSerializer`  | Serialization contracts                                  |
-| `UuidProvider` / `Uuid`            | UUID generation and representation                       |
+| Interface                                           | Purpose                                                                                                       |
+|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| `ServiceManager`                                    | Resolves and binds service implementations                                                                    |
+| `ResolvesLazily`                                    | A service manager that can register services as lazy objects (`resolveLazy()`)                                |
+| `ObjectInstantiator`                                | Instantiates classes with automatic dependency injection                                                      |
+| `InstantiatesLazily`                                | An object instantiator that can create lazy objects (`instantiateLazy()`)                                     |
+| `ParameterResolver` / `CompilableParameterResolver` | Resolves parameter values; the compilable variant analyses each parameter once, so its analysis can be cached |
+| `ArgumentProcessor` / `CompilableArgumentProcessor` | Post-processes resolved arguments; idem                                                                       |
+| `EventDispatcher`                                   | Dispatches events to registered listeners                                                                     |
+| `CacheManager` / `Cache`                            | Cache retrieval and storage                                                                                   |
+| `ConfigManager`                                     | Config value access                                                                                           |
+| `Collection` / `ManagedCollection`                  | Typed iterable collections                                                                                    |
+| `TracksChanges`                                     | Change tracking on collections or objects                                                                     |
+| `Validator`                                         | Value validation                                                                                              |
+| `Serializer` / `StringSerializer`                   | Serialization contracts                                                                                       |
+| `UuidProvider` / `Uuid`                             | UUID generation and representation                                                                            |
 
 ---
 

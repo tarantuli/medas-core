@@ -2,7 +2,14 @@
 
 namespace PHPSTORM_META {
 
-    use Medas\Core\Interfaces\{EventDispatcher, ImplementorFinder, ObjectInstantiator, ServiceManager};
+    use Medas\Core\Interfaces\{
+        EventDispatcher,
+        ImplementorFinder,
+        InstantiatesLazily,
+        ObjectInstantiator,
+        ResolvesLazily,
+        ServiceManager
+    };
     use Medas\Core\SingletonStore;
 
     override(ServiceManager::resolve(), map([
@@ -10,6 +17,14 @@ namespace PHPSTORM_META {
     ]));
 
     override(ObjectInstantiator::instantiate(), map([
+        '' => '@',
+    ]));
+
+    override(ResolvesLazily::resolveLazy(), map([
+        '' => '@',
+    ]));
+
+    override(InstantiatesLazily::instantiateLazy(), map([
         '' => '@',
     ]));
 

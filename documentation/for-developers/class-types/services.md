@@ -31,6 +31,20 @@ readonly class ThumbnailResizer
 }
 ```
 
+## Lazy injection
+
+Services that are injected as dependencies are lazy objects by default: the injected object has the real class, but its
+constructor (and with it the resolution of its own dependencies) only runs on first access to one of its properties. A
+service that is injected but not used in a request is never constructed. This also means:
+
+- An exception thrown by a constructor surfaces where the service is first used, not where it is injected.
+- Side effects of a constructor are postponed until the service is used. A service whose constructor must run when it
+  is injected must be marked `#[Service(lazy: false)]` — better still, keep constructors free of side effects.
+- Services that depend on each other (A needs B, B needs A) work, as long as neither constructor uses the other.
+
+Services without constructor parameters, and classes extending internal PHP classes, are always instantiated directly.
+Services resolved directly with `service()` are instantiated directly as well, since they are used right away.
+
 ## What services are not
 
 - Services are not data objects. If a class primarily holds data rather than performs an action, it should be a [data object](data-objects.md) instead.

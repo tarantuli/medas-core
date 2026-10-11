@@ -10,17 +10,21 @@ Post-install performs two things in order:
 
 The shell script `bin/post-install-scripts/clear-cache-dirs.sh` wipes all directories listed in `var/dirs-to-clear/`. Each file in that directory contains the path to a cache directory that should be emptied on install, such as `var/cache`. This ensures stale compiled service graphs and other cached data are removed before the new code is used.
 
+An APCu cache can't be cleared from the command line: APCu memory belongs to the web server process. `ApcuCache` registers a generation directory here instead (`var/apcu-generations`); emptying it makes the next web request start a new generation, which no longer sees the old entries.
+
 **2. Runs package post-install hooks**
 
-The PHP script `bin/post-install` bootstraps the application and calls `ServiceManager::postInstall()`:
+The PHP script `bin/post-install` bootstraps the application and runs the `PostInstallRunner`:
 
 ```php
+use Medas\ServiceManager\PostInstallRunner;
+
 require_once __DIR__ . '/../bootstrap.php';
 
-ServiceManager::postInstall();
+new PostInstallRunner()->run();
 ```
 
-`ServiceManager::postInstall()` does two things:
+`PostInstallRunner::run()` does two things:
 
 - Clears all registered caches (via `CacheManager::clearAll()`), which rebuilds the compiled service graph on the next request.
 - Calls `postInstall()` on every registered package, allowing packages to perform one-time setup such as running database migrations or seeding default data.
