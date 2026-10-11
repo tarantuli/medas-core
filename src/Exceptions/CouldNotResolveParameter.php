@@ -6,11 +6,15 @@ namespace Medas\Core\Exceptions;
 
 class CouldNotResolveParameter extends BaseException
 {
-    public function __construct(\ReflectionParameter $parameter)
+    public function __construct(\ReflectionParameter|\ReflectionProperty $parameter)
     {
         $declaringClass = $parameter->getDeclaringClass();
 
-        if ($declaringClass) {
+        // ObjectInstantiator::resolveParameter() also resolves properties, which have no declaring function
+        if ($parameter instanceof \ReflectionProperty) {
+            $message = $declaringClass->name;
+        }
+        elseif ($declaringClass) {
             $message = $declaringClass->name . '::' . $parameter->getDeclaringFunction()->name;
         }
         else {
