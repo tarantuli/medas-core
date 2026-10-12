@@ -9,6 +9,12 @@ namespace Medas\Core\Interfaces;
  */
 interface ServiceConfigBuilder
 {
+    /**
+     * Whether the application runs in development mode, for packages that bind
+     * development-only behaviour while they initialise.
+     */
+    public bool $isDev { get; }
+
     public function addPackage(Package $package, bool $doInitialize = false): self;
 
     /** @var Package[] $packages */
