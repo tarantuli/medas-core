@@ -95,7 +95,11 @@ class StringMaker
             $string = $this->forceUtf8($string, $depth + 1);
         }
 
+        // Too much binary to read becomes a hex dump, which is not a string value: no quotes
+        $isHexDump = is_string($argument) && $string === '0x' . bin2hex($argument);
+
         if (is_string($argument)
+                && !$isHexDump
                 && $string !== '�'
                 && (!$settings->quotesOnlyAroundWhitespace || $string === '' || preg_match('/\s/u', $string))) {
             $string = '"' . $string . '"';
@@ -189,23 +193,46 @@ class StringMaker
 
         $result = '';
         $replacements = 0;
+        $characters = $this->utf8CharactersOrBytes($string);
 
-        foreach (mb_str_split($string) as $char) {
+        foreach ($characters as $char) {
             if (mb_check_encoding($char, 'UTF-8')) {
                 $result .= $char;
             }
             else {
-                $result .= '▪' . str_pad(dechex(ord($char)), 2, '0', STR_PAD_LEFT);
+                $result .= '▪' . bin2hex($char);
 
                 ++$replacements;
             }
         }
 
-        if ($replacements > 0.1 * mb_strlen($string)) {
+        if ($replacements > 0.1 * count($characters)) {
             return '0x' . bin2hex($string);
         }
 
         return $result;
+    }
+
+    /**
+     * Splits a string into valid UTF-8 characters and, between them, single stray bytes.
+     * mb_str_split() cannot be used: it takes a lead byte's full expected length, so a
+     * truncated character swallows the valid characters after it.
+     *
+     * @return string[]
+     */
+    private function utf8CharactersOrBytes(string $string): array
+    {
+        preg_match_all(
+            '/[\x00-\x7F]'
+                . '|[\xC2-\xDF][\x80-\xBF]'
+                . '|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}|\xED[\x80-\x9F][\x80-\xBF]'
+                . '|\xF0[\x90-\xBF][\x80-\xBF]{2}|[\xF1-\xF3][\x80-\xBF]{3}|\xF4[\x80-\x8F][\x80-\xBF]{2}'
+                . '|[\x80-\xFF]/',
+            $string,
+            $matches
+        );
+
+        return $matches[0];
     }
 
     public function fromPattern(

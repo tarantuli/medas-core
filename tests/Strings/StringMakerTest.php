@@ -34,6 +34,16 @@ class StringMakerTest extends BaseTestClass
         self::assertEquals('"ab▪a0▪a1cddddddddcddddddddcddddddddcddddddddcdddddddd"', $string);
     }
 
+    public function testForceUtf8MarksEveryByteOfTruncatedSequence(): void
+    {
+        $string = StringMaker::instance()->fromVariable(
+            "ab\xe2\x82cddddddddcddddddddcddddddddcddddddddcdddddddd",
+            new StringMaker\Settings(forceUtf8: true)
+        );
+
+        self::assertEquals('"ab▪e2▪82cddddddddcddddddddcddddddddcddddddddcdddddddd"', $string);
+    }
+
     public function testForceBinary(): void
     {
         $string = StringMaker::instance()->fromVariable(
@@ -41,6 +51,6 @@ class StringMakerTest extends BaseTestClass
             new StringMaker\Settings(forceUtf8: true)
         );
 
-        self::assertEquals('0x226162a0a1636422', $string);
+        self::assertEquals('0x6162a0a16364', $string);
     }
 }
