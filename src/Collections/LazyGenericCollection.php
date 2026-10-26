@@ -15,9 +15,13 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
     private bool $hasFetched = false;
     private \Closure|null $fetcher;
 
+    // Whether the loaded items are new rather than already persisted (see check())
+    private bool $loadsNewItems;
+
     public function __construct(\Closure|null $loader = null)
     {
         $this->fetcher = $loader;
+        $this->loadsNewItems = $loader !== null;
 
         parent::__construct();
     }
@@ -31,7 +35,8 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
 
     public function setLoader(callable $loader): void
     {
-        $this->fetcher = $loader;
+        $this->fetcher = $loader(...);
+        $this->loadsNewItems = false;
     }
 
     /**
@@ -176,7 +181,12 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
                 throw new NoInitializerHasBeenSet();
             }
 
-            $this->initialData = $this->data = ($this->fetcher)();
+            $this->data = ($this->fetcher)();
+
+            // Like GenericCollection's constructor data, the items of a loader passed to the
+            // constructor are new: they all count as additions. The items of a loader set
+            // with setLoader() (hydration) are the persisted baseline.
+            $this->initialData = $this->loadsNewItems ? [] : $this->data;
             $this->hasFetched = true;
         }
     }
