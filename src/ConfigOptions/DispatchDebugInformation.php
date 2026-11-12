@@ -6,6 +6,9 @@ namespace Medas\Core\ConfigOptions;
 
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOption};
 
+/**
+ * Config option `core.dispatch-debug-information`: whether `DebugInformation` events are dispatched.
+ */
 #[Service]
 readonly class DispatchDebugInformation implements ConfigOption
 {

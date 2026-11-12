@@ -6,6 +6,10 @@ namespace Medas\Core\ConfigOptions;
 
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOption};
 
+/**
+ * Config option `core.trace-argument-max-length`: the number of characters of a string argument that `TraceFormatter`
+ * shows in a stack trace.
+ */
 #[Service]
 readonly class TraceArgumentMaxLength implements ConfigOption
 {

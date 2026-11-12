@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+/**
+ * Generates random codes, like secrets, from one or more character sets.
+ *
+ * Characters are picked with `random_int()`, a cryptographically secure source. A character that occurs in several of
+ * the given sets is used once, so overlapping sets don't make it more likely.
+ *
+ * @notFor Unique codes; it doesn't check whether a code was generated before.
+ */
 #[Attributes\Service]
 readonly class CodeGenerator
 {
     private const string AMBIGUOUS_CHARACTERS = '0oO1ilI';
 
+    /**
+     * @throws Exceptions\NoCharactersAvailableToGenerateACodeFrom When no sets are given.
+     */
     public function generate(int $length, CodeGenerator\CharacterSet ...$sets): string
     {
         $characters = $this->getCharacters($sets, false);
@@ -17,7 +28,11 @@ readonly class CodeGenerator
     }
 
     /**
-     * This generates codes with ambiguous characters like "0" and "o", "1" and "I" or "l" stripped.
+     * Like `generate()`, but leaves out characters that are easily confused when read: `0`, `o`, `O`, `1`, `i`, `l` and
+     * `I`.
+     *
+     * @throws Exceptions\NoCharactersAvailableToGenerateACodeFrom When no sets are given, or none of their characters
+     *                                                             are left.
      */
     public function generateUnambiguous(int $length, CodeGenerator\CharacterSet ...$sets): string
     {

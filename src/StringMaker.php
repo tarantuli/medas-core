@@ -12,13 +12,20 @@ class StringMaker
 {
     use AsSingleton;
 
-    public function __construct(
-        #[Attributes\ConfigValue(ConfigOptions\StringMakerMaxDepth::class)]
-        private readonly int $maxDepth = 100,
+    /*
+     * Fixed instead of configurable: reading config would make this class depend on services, and it must be possible
+     * to create it anywhere, including while handling an exception.
+     */
+    /** The recursion depth at which a placeholder is returned instead. Every nested array or object takes two steps. */
+    private const int MAX_DEPTH = 100;
 
-        #[Attributes\ConfigValue(ConfigOptions\StringMakerMaxStringLength::class)]
-        private readonly int $maxStringLength = 1000,
-    )
+    /** The default maximum number of characters of each argument in `fromPattern()`. */
+    private const int MAX_STRING_LENGTH = 1000;
+
+    /*
+     * Public, unlike the constructor of AsSingleton, so a StringMaker can also be created directly.
+     */
+    public function __construct()
     {
     }
 
@@ -27,7 +34,7 @@ class StringMaker
      */
     public function fromArray(array $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
-        if ($depth >= $this->maxDepth) {
+        if ($depth >= self::MAX_DEPTH) {
             return '�';
         }
 
@@ -60,7 +67,7 @@ class StringMaker
      */
     public function fromVariable(mixed $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
-        if ($depth >= $this->maxDepth) {
+        if ($depth >= self::MAX_DEPTH) {
             return '�';
         }
 
@@ -113,7 +120,7 @@ class StringMaker
      */
     public function fromObject(object $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
-        if ($depth >= $this->maxDepth) {
+        if ($depth >= self::MAX_DEPTH) {
             return '�';
         }
 
@@ -187,7 +194,7 @@ class StringMaker
      */
     public function forceUtf8(string $string, int $depth = 0): string
     {
-        if ($depth >= $this->maxDepth) {
+        if ($depth >= self::MAX_DEPTH) {
             return '�';
         }
 
@@ -242,7 +249,7 @@ class StringMaker
         int|null $maxStringLength = null
     ): string
     {
-        if ($depth >= $this->maxDepth) {
+        if ($depth >= self::MAX_DEPTH) {
             return '�';
         }
 
@@ -251,7 +258,7 @@ class StringMaker
         foreach ($arguments as &$argument) {
             try {
                 $argument = (string) new CaseSensitiveString($this->fromVariable($argument, $settings, $depth + 1))
-                    ->truncateToCharLength($maxStringLength ?? $this->maxStringLength);
+                    ->truncateToCharLength($maxStringLength ?? self::MAX_STRING_LENGTH);
             }
             catch (\Exception) {
                 $argument = '�';

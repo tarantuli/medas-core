@@ -6,8 +6,14 @@ namespace Medas\Core\ConfigOptions;
 
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOption};
 
+/**
+ * Config option `core.debug-information-max-messages`: the number of messages `DebugInformationGatherer` keeps
+ * before it drops the oldest ones.
+ *
+ * @see DebugInformationPruneCount
+ */
 #[Service]
-readonly class StringMakerMaxStringLength implements ConfigOption
+readonly class DebugInformationMaxMessages implements ConfigOption
 {
     public function __construct(
         private CoreGroup $group,
@@ -22,12 +28,12 @@ readonly class StringMakerMaxStringLength implements ConfigOption
 
     public function name(): string
     {
-        return 'string-maker-max-string-length';
+        return 'debug-information-max-messages';
     }
 
     public function description(): string
     {
-        return 'The maximum character length of each argument when formatting a pattern string via StringMaker';
+        return 'The number of debug information messages at which the oldest ones are dropped';
     }
 
     public function hasDefault(): bool
@@ -37,6 +43,6 @@ readonly class StringMakerMaxStringLength implements ConfigOption
 
     public function default(): int
     {
-        return 1000;
+        return 500;
     }
 }

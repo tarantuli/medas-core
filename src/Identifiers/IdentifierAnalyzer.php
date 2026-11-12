@@ -6,6 +6,10 @@ namespace Medas\Core\Identifiers;
 
 use Medas\Core\{Attributes, Exceptions\EmptyIdentifier};
 
+/**
+ * Determines the naming style of an identifier, like `'foo-bar'` or `'fooBar'`, so `Identifier` can convert it to other
+ * styles.
+ */
 #[Attributes\Service]
 readonly class IdentifierAnalyzer
 {
@@ -16,12 +20,16 @@ readonly class IdentifierAnalyzer
     ];
 
     /**
-     * If the string is empty, throw an exception.
-     * If the string contains any dashes, IdentifierType::KebabCase is returned.
-     * If the string contains any underscores, IdentifierType::SnakeCase is returned.
-     * If the string contains any spaces, IdentifierType::SpaceCase is returned.
-     * If the string starts with an uppercase letter, IdentifierType::PascalCase is returned.
-     * Otherwise, IdentifierType::CamelCase is returned.
+     * The first rule that matches decides:
+     *
+     * 1. It contains a `-`: `IdentifierType::KebabCase`.
+     * 2. It contains a `_`: `IdentifierType::SnakeCase`.
+     * 3. It contains a space: `IdentifierType::SpaceCase`.
+     * 4. Its first byte is unchanged by `strtoupper()`: `IdentifierType::PascalCase`. That includes uppercase letters,
+     *    but also digits and other characters without case.
+     * 5. Otherwise: `IdentifierType::CamelCase`.
+     *
+     * @throws EmptyIdentifier When `$identifier` is `''`.
      */
     public function determine(string $identifier): IdentifierType
     {

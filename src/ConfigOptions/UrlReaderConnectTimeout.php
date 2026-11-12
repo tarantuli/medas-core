@@ -6,6 +6,11 @@ namespace Medas\Core\ConfigOptions;
 
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOption};
 
+/**
+ * Config option `core.url-reader-connect-timeout`: how many seconds `UrlReader` waits for a connection to be made.
+ *
+ * It only limits connecting (`CURLOPT_CONNECTTIMEOUT`). `core.url-reader-transfer-timeout` limits the whole request.
+ */
 #[Service]
 readonly class UrlReaderConnectTimeout implements ConfigOption
 {
