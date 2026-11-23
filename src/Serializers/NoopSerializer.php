@@ -7,7 +7,9 @@ namespace Medas\Core\Serializers;
 use Medas\Core\Interfaces\{Serializer, Type};
 
 /**
- * A Serializer implementation that returns the given value without modification for both serialize() and unserialize().
+ * A serializer that returns values as they are, from both `serialize()` and `unserialize()`. `$type` is ignored.
+ *
+ * For places that require a `Serializer` where the values don't need converting.
  */
 class NoopSerializer implements Serializer
 {

@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * This interface marks caches that do not persist data between requests, e.g. in memory caches or no-op caches
+ * Marks caches whose entries don't outlive the process, like memory caches and caches that remember nothing.
+ *
+ * When every registered cache is non-persistent, filling caches in advance is pointless, so the services that
+ * implement @class(Medas\Core\Interfaces\PrimesCache) aren't asked to.
  */
 interface NonPersistentCache
 {

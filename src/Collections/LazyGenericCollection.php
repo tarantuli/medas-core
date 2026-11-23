@@ -4,9 +4,32 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
-use Medas\Core\{Exceptions\NoInitializerHasBeenSet, Interfaces\IsLazyLoaded};
+use Medas\Core\{
+    Exceptions\CannotSerializeUnloadedLazyCollection,
+    Exceptions\NoInitializerHasBeenSet,
+    Interfaces\IsLazyLoaded
+};
 
 /**
+ * A @class(Medas\Core\Collections\GenericCollection) that only calls its loader when its content is first read or
+ * changed, so a relation that's never used costs no query.
+ *
+ * Where the loader comes from decides what its items are:
+ *
+ * - A loader given to the constructor makes new items: they all count as additions, like the data given to a
+ *   `GenericCollection`.
+ * - A loader set with `setLoader()`, as storage does, loads the stored items: they're the baseline.
+ *
+ * `setData()` sets the content without calling the loader. `hasChanged()` only loads new items: stored items that
+ * haven't been loaded can't have changed, but new items count as changed as soon as there are any.
+ *
+ * The loader can't be serialised, so only a collection whose content has been loaded can be serialised. The copy has
+ * the content, and needs no loader.
+ *
+ * @throws NoInitializerHasBeenSet When the content is used, but there's neither a loader nor
+ *                                                         data set with `setData()`.
+ * @throws CannotSerializeUnloadedLazyCollection When the collection is serialised before its
+ *                                                                       content has been loaded.
  * @template T
  * @extends GenericCollection<T>
  */
@@ -24,6 +47,38 @@ class LazyGenericCollection extends GenericCollection implements IsLazyLoaded
         $this->loadsNewItems = $loader !== null;
 
         parent::__construct();
+    }
+
+    public function __serialize(): array
+    {
+        if (!$this->hasFetched) {
+            throw new CannotSerializeUnloadedLazyCollection(static::class);
+        }
+
+        return parent::__serialize();
+    }
+
+    public function __unserialize(array $data): void
+    {
+        parent::__unserialize($data);
+
+        // Only a loaded collection is serialised, so the copy has its content and needs no loader
+        $this->hasFetched = true;
+        $this->fetcher = null;
+        $this->loadsNewItems = false;
+    }
+
+    public function hasChanged(): bool
+    {
+        // Stored items that haven't been loaded can't have changed, so they aren't loaded just to find that out. New
+        // items from a loader given to the constructor are: they count as changed as soon as there are any.
+        if (!$this->hasFetched && !$this->loadsNewItems) {
+            return false;
+        }
+
+        $this->check();
+
+        return parent::hasChanged();
     }
 
     public function setData(array $data): void

@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * Classes marked with this interface should not be cached by @class(Medas\Core\Interfaces\Cache) instances.
+ * Marks values that a @class(Medas\Core\Interfaces\Cache) mustn't store, as an opt-out for classes that are cached by
+ * default. Every cache is required to check for it.
  *
- * This can be used as an opt-out on classes that by default are cached. Cache instances are required to check for this
- * interface.
+ * Only the value itself is checked, not the objects it contains.
  *
  * Examples:
  *
  * - @class(Medas\EntityManager\Selector\Selectors\WithValues) and
- * @class(Medas\EntityManager\Selector\Selectors\AllEntities) are Selectors marked with this interface. Selectors are
- *   cached by default, but these specific implementations should not be.
+ *   @class(Medas\EntityManager\Selector\Selectors\AllEntities) are selectors marked with this interface. Selectors are
+ *   cached by default, but these specific ones shouldn't be.
  */
 interface NotCacheable
 {

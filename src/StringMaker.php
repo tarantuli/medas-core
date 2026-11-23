@@ -5,32 +5,36 @@ declare(strict_types=1);
 namespace Medas\Core;
 
 /**
- * This class should not be a service; keep it as independent and low-level as possible, so it can be used reliably in
- * core processes like exception handling.
+ * Turns any value into readable text, for messages, logs and error reports. Exception messages are made with
+ * `fromPattern()`.
+ *
+ * Nested values are followed to a depth of 100 steps, each nested array or object taking two. Deeper values are
+ * written as `�`.
+ *
+ * It isn't a service, on purpose: it has to work anywhere, including while an exception is being handled, so it
+ * depends on nothing else. For the same reason, its limits are fixed instead of configurable, since reading the
+ * configuration would need services. Get it with `StringMaker::instance()`, or create one.
  */
 class StringMaker
 {
     use AsSingleton;
 
-    /*
-     * Fixed instead of configurable: reading config would make this class depend on services, and it must be possible
-     * to create it anywhere, including while handling an exception.
-     */
     /** The recursion depth at which a placeholder is returned instead. Every nested array or object takes two steps. */
     private const int MAX_DEPTH = 100;
 
     /** The default maximum number of characters of each argument in `fromPattern()`. */
     private const int MAX_STRING_LENGTH = 1000;
 
-    /*
-     * Public, unlike the constructor of AsSingleton, so a StringMaker can also be created directly.
+    /**
+     * Public, unlike the constructor `AsSingleton` provides, so a `StringMaker` can also be created directly.
      */
     public function __construct()
     {
     }
 
     /**
-     * Turns the given array into a human-readable single string.
+     * Writes an array as `[1, 2]`. A key is only written, as `key: value`, where it differs from the item's position:
+     * `['x' => 1, 2]` becomes `["x": 1, 0: 2]`.
      */
     public function fromArray(array $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
@@ -63,7 +67,16 @@ class StringMaker
     }
 
     /**
-     * Turns the given variable into a human-readable single string.
+     * Writes any value on a single line:
+     *
+     * - A string as it is, in quotes. With `Settings::$quotesOnlyAroundWhitespace`, only an empty string or one
+     *   containing whitespace gets quotes.
+     * - `null`, `true` and `false` as words, and other scalars as PHP casts them to a string.
+     * - Arrays as `fromArray()` writes them, and objects as `fromObject()` writes them.
+     * - A resource as `resource:type(id)`.
+     *
+     * With `Settings::$forceUtf8`, the result is passed through `forceUtf8()`. A string that comes out as a
+     * hexadecimal dump isn't put in quotes.
      */
     public function fromVariable(mixed $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
@@ -116,7 +129,12 @@ class StringMaker
     }
 
     /**
-     * Turns the given object into a human-readable single string.
+     * Writes an object as its class, its ID and its data: `Foo[12](a: 1, id: 7)`.
+     *
+     * The data is what `__serialize()` returns, or else the public properties. The properties `id` and `name` are
+     * always added, even when they're not public, or `�` when they aren't initialised yet. A `\Stringable` object is
+     * written as its string instead, with its class and ID in front only with `Settings::$alwaysAddClass`, like
+     * `Foo[12]<text>`.
      */
     public function fromObject(object $argument, StringMaker\Settings|null $settings = null, int $depth = 0): string
     {
@@ -189,8 +207,10 @@ class StringMaker
     }
 
     /**
-     * Turns the given string into a human-readable single string that's valid UTF-8 by replacing non-valid bytes by a
-     * "▪" followed by a hexadecimal representation of the byte value.
+     * Makes a string valid UTF-8 by replacing each invalid byte with `▪` and its value in hexadecimal, like `▪ff`.
+     *
+     * When more than a tenth of the characters are invalid, the whole string is written in hexadecimal instead, like
+     * `0xfffe6162`.
      */
     public function forceUtf8(string $string, int $depth = 0): string
     {
@@ -242,6 +262,13 @@ class StringMaker
         return $matches[0];
     }
 
+    /**
+     * Fills the values into `$pattern` with `vsprintf()`. Each value is first written as `fromVariable()` writes it,
+     * with quotes only where needed and only valid UTF-8, and cut to `$maxStringLength` characters, 1000 by default.
+     * A value that can't be written becomes `�`.
+     *
+     * @throws \ValueError When `$pattern` isn't a valid format, or has more placeholders than there are values.
+     */
     public function fromPattern(
         string   $pattern,
         array    $arguments,

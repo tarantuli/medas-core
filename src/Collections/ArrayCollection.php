@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace Medas\Core\Collections;
 
+/**
+ * Groups values by an index, like values by date or by score, and returns the group at the highest or lowest index,
+ * or the largest or smallest group.
+ *
+ * Indexes keep the order in which they were first added. When two groups are equally large, `atMaxCount()` and
+ * `atMinCount()` return the first one.
+ *
+ * @notFor A list of values; despite its name it doesn't implement @class(Medas\Core\Interfaces\Collection).
+ */
 class ArrayCollection
 {
     private array $perIndex = [];
@@ -19,11 +28,19 @@ class ArrayCollection
         $this->perIndex[$index][] = $value;
     }
 
+    /**
+     * Returns the values added under `$index`, or `null` when there are none.
+     */
     public function atIndex(mixed $index): array|null
     {
         return $this->perIndex[$index] ?? null;
     }
 
+    /**
+     * Returns the values under the highest index, or `null` when the collection is empty.
+     *
+     * @assumes The indexes can be compared with `max()`, like numbers or dates written the same way.
+     */
     public function atMaxIndex(): array|null
     {
         if (empty($this->indexes)) {
@@ -33,6 +50,11 @@ class ArrayCollection
         return $this->perIndex[max($this->indexes)];
     }
 
+    /**
+     * Returns the values under the lowest index, or `null` when the collection is empty.
+     *
+     * @assumes The indexes can be compared with `min()`.
+     */
     public function atMinIndex(): array|null
     {
         if (empty($this->indexes)) {
@@ -42,6 +64,9 @@ class ArrayCollection
         return $this->perIndex[min($this->indexes)];
     }
 
+    /**
+     * Returns the largest group, or `null` when the collection is empty.
+     */
     public function atMaxCount(): array|null
     {
         $maxCount = null;
@@ -59,6 +84,9 @@ class ArrayCollection
         return $atMaxCount;
     }
 
+    /**
+     * Returns the smallest group, or `null` when the collection is empty.
+     */
     public function atMinCount(): array|null
     {
         $minCount = null;
@@ -76,6 +104,9 @@ class ArrayCollection
         return $atMinCount;
     }
 
+    /**
+     * The indexes, in the order in which they were first added.
+     */
     public function indexes(): array
     {
         return $this->indexes;

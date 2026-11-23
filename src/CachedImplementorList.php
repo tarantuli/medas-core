@@ -5,16 +5,24 @@ declare(strict_types=1);
 namespace Medas\Core;
 
 /**
- * Use this when a service needs to discover and cache all implementors of an interface — for example, a registry of
- * pluggable handlers, drawers, or modifiers that other packages register via #[Service].
+ * The services that implement an interface, for a service that keeps a registry of pluggable handlers, drawers or
+ * modifiers that other packages provide.
  *
- * On the first call to get(), it will discover all implementors of the given interface, cache them by class name, and
- * sort them by priority if requested.
+ * The first `get()` finds the implementing services with @class(Medas\Core\Interfaces\ImplementorFinder), sorts them
+ * by priority when asked to, and keeps their class names in the `'default'` cache.
+ *
+ * @assumes With a sort order, every implementor implements @class(Medas\Core\Interfaces\DeclaresPriority).
+ * @cache The class names are kept in the `'default'` cache, under this class's name and the interface. Until the
+ *        application registers a cache, they're found again in every process.
+ * @state Keeps the services after the first `get()`, for the lifetime of this object.
  */
 class CachedImplementorList
 {
     private array|null $instances = null;
 
+    /**
+     * @param string $interface The interface, or class, whose implementing services to list.
+     */
     public function __construct(
         private readonly string               $interface,
         private readonly Lists\SortByPriority $sortByPriority = Lists\SortByPriority::No,
@@ -22,7 +30,11 @@ class CachedImplementorList
     {
     }
 
-    /** @return object[] */
+    /**
+     * Returns the implementing services, in the requested order.
+     *
+     * @return object[]
+     */
     public function get(): array
     {
         if ($this->instances === null) {

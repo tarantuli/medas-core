@@ -20,13 +20,13 @@ class MultipleImplementorsFoundForParameter extends BaseException implements Sug
 
     public function pattern(): string
     {
-        return 'Found multiple services implementing %s for parameter %s of %s:%s(): %s';
+        return 'found multiple services implementing %s for parameter %s of %s::%s(): %s';
     }
 
     public function suggestions(): array
     {
         return [
-            'bind the one you want to use using sm()->bindImplementation()',
+            'bind the one you want to use with ServiceConfigBuilder::addTypeBinding()',
         ];
     }
 

@@ -13,6 +13,6 @@ class NoCharactersAvailableToGenerateACodeFrom extends BaseException
 
     public function pattern(): string
     {
-        return 'No characters available to generate a code from.';
+        return 'no characters available to generate a code from';
     }
 }

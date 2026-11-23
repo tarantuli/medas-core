@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace Medas\Core\Types;
 
 /**
- * A property typed as a #[DataHolder]-annotated value object. Serialized to an
- * array (see ObjectToArraySerializer) and, in string-only backends like
- * pdo-storage, stored as a JSON varchar. Carries the value object's class name
- * so it can be reconstructed on the way back.
+ * A value object whose class is marked with @class(Medas\Core\Attributes\DataHolder). It's converted to an array to
+ * be stored, and back into an object of `$className` when it's loaded. Backends that only store strings, like
+ * pdo-storage, keep the array as JSON, in a text of at most 65535 characters.
+ *
+ * Used for properties typed as such a class that have no type attribute.
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class DataHolder extends Text
 {
+    /**
+     * @param string $className The class of the value object.
+     */
     public function __construct(
         public string $className,
     )

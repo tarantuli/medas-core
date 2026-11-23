@@ -4,13 +4,25 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+/**
+ * A duration in years, months, days, hours, minutes and seconds, written as an ISO 8601 duration like `'P1DT2H'`.
+ *
+ * Only whole numbers are supported, and no weeks: `'P1W'` and `'P1.5D'` aren't accepted.
+ */
 #[Attributes\DataHolder]
 class Period
 {
+    /**
+     * Reads an ISO 8601 duration like `'P1Y2M3DT4H5M6S'`. Parts can be left out, but there has to be at least one,
+     * and a `T` has to be followed by at least one of the hours, minutes and seconds.
+     *
+     * @throws Exceptions\InvalidIso8601Duration When `$string` isn't such a duration, like `'P'`, `'PT'` or `'P1DT'`.
+     */
     public static function fromString(string $string): self
     {
         if (!preg_match(
-            '/^P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/',
+            // The lookaheads require at least one part, and at least one after a T
+            '/^P(?=\d|T\d)(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)D)?(?:T(?=\d)(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/',
             $string,
             $match
         )) {
@@ -43,6 +55,10 @@ class Period
         return $this->toString();
     }
 
+    /**
+     * Returns the ISO 8601 duration, leaving out the parts that are `0`, or `'PT0S'` when all are. Negative parts are
+     * left out too.
+     */
     public function toString(): string
     {
         $string = 'P';

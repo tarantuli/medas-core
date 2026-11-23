@@ -4,9 +4,18 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+/**
+ * A calendar date without a time, in the proleptic Gregorian calendar.
+ *
+ * Only existing dates can be created, from 1 January of the year 1 to 31 December 32767, the range of PHP's
+ * `checkdate()`.
+ */
 #[Attributes\DataHolder]
 readonly class Date
 {
+    /**
+     * Returns today's date, in PHP's default time zone.
+     */
     public static function today(): self
     {
         $now = new \DateTimeImmutable();
@@ -18,13 +27,15 @@ readonly class Date
         );
     }
 
-    // The date for a Julian Day Number - the inverse of toJulianDayNumber(), so a
-    // shifted number round-trips back to a calendar date. Together the two turn
-    // "add N days" into fromJulianDayNumber(toJulianDayNumber() + N).
-    //
-    // JDN-to-Gregorian (Richards), per en.wikipedia.org/wiki/Julian_day
+    /**
+     * Returns the date of a Julian Day Number, the inverse of `toJulianDayNumber()`. Together, the two make day
+     * arithmetic simple: adding `$n` days is `Date::fromJulianDayNumber($date->toJulianDayNumber() + $n)`.
+     *
+     * @throws Exceptions\InvalidDate When the date falls outside the years 1 to 32767.
+     */
     public static function fromJulianDayNumber(int $julianDayNumber): self
     {
+        // JDN-to-Gregorian (Richards), per en.wikipedia.org/wiki/Julian_day
         $a = $julianDayNumber + 32044;
         $b = intdiv(4 * $a + 3, 146097);
         $c = $a - intdiv(146097 * $b, 4);
@@ -39,23 +50,29 @@ readonly class Date
         );
     }
 
+    /**
+     * @throws Exceptions\InvalidDate When the date doesn't exist, like 30 February.
+     */
     public function __construct(
         public int $year,
         public int $month,
         public int $day,
     )
     {
+        if (!checkdate($month, $day, $year)) {
+            throw new Exceptions\InvalidDate($year, $month, $day);
+        }
     }
 
-    // The Julian Day Number for this (proleptic Gregorian) date: a running day count
-    // where consecutive dates differ by exactly one. That makes day arithmetic and
-    // day-differences plain integer operations, and it preserves order - an earlier
-    // date has a smaller number. The divisions truncate toward zero as the algorithm
-    // requires, which is what intdiv() does.
-    //
-    // Gregorian-to-JDN, per en.wikipedia.org/wiki/Julian_day
+    /**
+     * Returns the Julian Day Number of this date: a running count of days, so consecutive dates differ by exactly one,
+     * and an earlier date has a smaller number. Adding days and counting the days between dates become plain integer
+     * arithmetic.
+     */
     public function toJulianDayNumber(): int
     {
+        // Gregorian-to-JDN, per en.wikipedia.org/wiki/Julian_day. The divisions truncate toward zero, as the
+        // algorithm requires, which is what intdiv() does.
         $a = intdiv($this->month - 14, 12);
 
         return intdiv(1461 * ($this->year + 4800 + $a), 4)

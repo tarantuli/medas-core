@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+/**
+ * The package of medas core itself.
+ */
 class CorePackage extends BasePackage
 {
     use AsSingleton;
@@ -27,6 +30,10 @@ class CorePackage extends BasePackage
         $config->addManualBinding(Today::class, 'isDev', $config->isDev);
     }
 
+    /**
+     * Loads the global functions, like `service()` and `dispatch()`. The service manager calls this when it starts, so
+     * they're available from then on.
+     */
     public function loadGlobalFunctions(): void
     {
         require_once __DIR__ . '/GlobalFunctions.php';

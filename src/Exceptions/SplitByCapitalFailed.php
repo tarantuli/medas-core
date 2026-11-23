@@ -13,6 +13,6 @@ class SplitByCapitalFailed extends BaseException
 
     public function pattern(): string
     {
-        return 'Split by capital failed on %s: %s';
+        return 'split by capital failed on %s: %s';
     }
 }

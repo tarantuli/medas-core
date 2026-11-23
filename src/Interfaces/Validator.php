@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * A validator checks whether a given value is valid.
+ * Checks whether a value is valid.
+ *
+ * A @class(Medas\Core\Interfaces\ConfigOption) that implements it has its configured values checked before they're
+ * used.
  */
 interface Validator
 {

@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+/**
+ * The defaults for a @class(Medas\Core\Interfaces\Package): priority `0`, no development dependencies, not a test
+ * package, nothing to do when it's initialised, ready or installed, and no Markdown documentation. When a package
+ * turns the documentation on, it's looked for in `../documentation`, next to the source directory.
+ *
+ * A package still provides `dependencies()`, `sourceDirectory()` and `instance()`, usually with
+ * @class(Medas\Core\AsSingleton).
+ */
 abstract class BasePackage implements Interfaces\Package
 {
     public function priority(): int

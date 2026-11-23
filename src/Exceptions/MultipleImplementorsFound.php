@@ -22,7 +22,7 @@ class MultipleImplementorsFound extends BaseException implements Suggestions
     public function suggestions(): array
     {
         return [
-            'bind the one you want to use using medas()->serviceManager()->bindImplementation()',
+            'bind the one you want to use with ServiceConfigBuilder::addTypeBinding()',
         ];
     }
 }

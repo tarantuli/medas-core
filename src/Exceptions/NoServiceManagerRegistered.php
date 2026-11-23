@@ -14,7 +14,7 @@ class NoServiceManagerRegistered extends BaseException implements Suggestions
     public function suggestions(): array
     {
         return [
-            'create a new Medas\Core\Interfaces\ServiceManager, and register it with Medas\Core\GlobalRepository\setServiceManager()',
+            'create a new Medas\Core\Interfaces\ServiceManager, and register it with medas()->setServiceManager()',
         ];
     }
 }

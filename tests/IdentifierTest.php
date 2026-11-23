@@ -102,6 +102,17 @@ class IdentifierTest extends BaseTestClass
         self::assertEquals('compound name', new Identifier('compound name')->toPhrase());
     }
 
+    public function testSpaceCaseIgnoresOuterWhitespace(): void
+    {
+        self::assertEquals('compound-name', new Identifier('  compound name ')->toKebabCase());
+    }
+
+    public function testAcronymSplitPerLetter(): void
+    {
+        self::assertEquals('parse-h-t-t-p-request', new Identifier('parseHTTPRequest')->toKebabCase());
+        self::assertEquals('parse-http-request', new Identifier('parseHttpRequest')->toKebabCase());
+    }
+
     public function testSingleWord(): void
     {
         self::assertEquals('word', new Identifier('word')->toPhrase());

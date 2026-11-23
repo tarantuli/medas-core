@@ -8,7 +8,8 @@ namespace Medas\Core;
  * Fetches the body of a URL with a plain `GET` request, following redirects.
  *
  * @state Reuses one cURL handle for all requests, so cURL can keep connections open between calls.
- * @performance Blocks until the whole response has arrived, for at most `core.url-reader-transfer-timeout` seconds.
+ * @performance Blocks until the whole response has arrived, for at most `core.url-reader-transfer-timeout` seconds,
+ *              unless it's `0`.
  * @notFor Other methods, request headers or bodies, or reading response headers; use the http-client package for
  *         those.
  */

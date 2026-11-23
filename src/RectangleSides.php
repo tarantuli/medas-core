@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Medas\Core;
 
 /**
- * Represents the four sides of a rectangle
+ * A value for each of the four sides of a rectangle, like margins. As in CSS, sides that are left out repeat others:
+ * the right side defaults to the top, the bottom to the top, and the left to the right. So `new RectangleSides(1, 2)`
+ * gives `1` for the top and bottom, and `2` for the left and right.
  */
 readonly class RectangleSides
 {

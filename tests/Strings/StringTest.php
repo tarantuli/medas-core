@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Medas\CoreTest\Strings;
 
-use Medas\Core\{CaseInsensitiveString, CaseSensitiveString};
+use Medas\Core\{
+    CaseInsensitiveString,
+    CaseSensitiveString,
+    Exceptions\ChopStringCannotBeEmpty,
+    Exceptions\TruncationLengthTooShort
+};
 use Medas\CoreTest\BaseTestClass;
 
 class StringTest extends BaseTestClass
@@ -40,6 +45,46 @@ class StringTest extends BaseTestClass
         $string = $string->chopFromStart('aaaB');
 
         self::assertEquals('bbccc', (string) $string);
+    }
+
+    public function testChopFromStartWithEmptyString(): void
+    {
+        $this->expectException(ChopStringCannotBeEmpty::class);
+
+        $this->getCaseSensitiveString()->chopFromStart('');
+    }
+
+    public function testChopFromEndWithEmptyString(): void
+    {
+        $this->expectException(ChopStringCannotBeEmpty::class);
+
+        $this->getCaseSensitiveString()->chopFromEnd('');
+    }
+
+    public function testTruncateToByteLength(): void
+    {
+        self::assertSame('a…', (string) $this->getCaseSensitiveString()->truncateToByteLength(4));
+        self::assertSame(self::TEST_STRING, (string) $this->getCaseSensitiveString()->truncateToByteLength(9));
+    }
+
+    public function testTruncateToByteLengthTooShort(): void
+    {
+        $this->expectException(TruncationLengthTooShort::class);
+
+        $this->getCaseSensitiveString()->truncateToByteLength(3);
+    }
+
+    public function testTruncateToCharLength(): void
+    {
+        self::assertSame('aaa…', (string) $this->getCaseSensitiveString()->truncateToCharLength(4));
+        self::assertSame(self::TEST_STRING, (string) $this->getCaseSensitiveString()->truncateToCharLength(9));
+    }
+
+    public function testTruncateToCharLengthTooShort(): void
+    {
+        $this->expectException(TruncationLengthTooShort::class);
+
+        $this->getCaseSensitiveString()->truncateToCharLength(3);
     }
 
     private function getCaseSensitiveString(): CaseSensitiveString

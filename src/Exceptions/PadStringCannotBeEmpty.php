@@ -13,6 +13,6 @@ class PadStringCannotBeEmpty extends BaseException
 
     public function pattern(): string
     {
-        return 'The pad string cannot be empty';
+        return 'the pad string cannot be empty';
     }
 }

@@ -7,14 +7,17 @@ namespace Medas\Core\Caching;
 use Medas\Core\Interfaces\{Cache, NonPersistentCache};
 
 /**
- * A cache implementation that does nothing. If ```get()``` is called, it returns the result of the getter. ```set()```
- * and ```remove()``` have no effect.
+ * A cache that remembers nothing: `get()` calls the getter every time, `set()` and `remove()` do nothing, and
+ * `contains()` is always `false`. `$ttl` is ignored.
  *
- * Used as a default cache, which allows other code to pass code through:
+ * @class(Medas\ServiceManager\Cache\CacheManager) uses one as the `'default'` cache until the application registers
+ * another, so code can always go through a cache without checking whether one was registered:
+ *
  * ```php
- * $value = service(CacheManager::class)->get()->get($keyName, fn() => ...)
- * ````
- * ... without having to check whether a cache was explicitly registered or not.
+ * $value = service(CacheManager::class)->get()->get($keyName, fn() => ...);
+ * ```
+ *
+ * @notFor Values that have to be kept, even for the rest of the process; use the `'memory'` cache for those.
  */
 class NoopCache implements Cache, NonPersistentCache
 {

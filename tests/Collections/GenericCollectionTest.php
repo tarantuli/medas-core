@@ -7,6 +7,10 @@ namespace Medas\CoreTest\Collections;
 use Medas\Core\Collections\GenericCollection;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * The collections are filled with `setData()`, as storage does, so their content is the baseline the changes are
+ * measured against. Data given to the constructor would count as new instead.
+ */
 class GenericCollectionTest extends TestCase
 {
     public function testAdditions(): void
@@ -14,7 +18,8 @@ class GenericCollectionTest extends TestCase
         $a = new \stdClass();
         $b = new \stdClass();
         $c = new \stdClass();
-        $collection = new GenericCollection([$a, $b]);
+        $collection = new GenericCollection();
+        $collection->setData([$a, $b]);
         $collection[] = $c;
 
         self::assertEquals([2 => $c], iterator_to_array($collection->getAdditions()));
@@ -27,7 +32,8 @@ class GenericCollectionTest extends TestCase
         $a = new \stdClass();
         $b = new \stdClass();
         $c = new \stdClass();
-        $collection = new GenericCollection([$a, $b, $c]);
+        $collection = new GenericCollection();
+        $collection->setData([$a, $b, $c]);
 
         unset($collection[1]);
 
@@ -41,7 +47,8 @@ class GenericCollectionTest extends TestCase
         $a = new \stdClass();
         $b = new \stdClass();
         $c = new \stdClass();
-        $collection = new GenericCollection([$a, $b, $c]);
+        $collection = new GenericCollection();
+        $collection->setData([$a, $b, $c]);
         $collection[0] = $b;
         $collection[1] = $c;
         $collection[2] = $a;
@@ -56,7 +63,8 @@ class GenericCollectionTest extends TestCase
         $a = new \stdClass();
         $b = new \stdClass();
         $c = new \stdClass();
-        $collection = new GenericCollection([$a, $b, $c]);
+        $collection = new GenericCollection();
+        $collection->setData([$a, $b, $c]);
         $collection[1] = $c;
         $collection[2] = $b;
 

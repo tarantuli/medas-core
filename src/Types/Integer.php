@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 namespace Medas\Core\Types;
 
+/**
+ * A whole number between `$minValue` and `$maxValue`.
+ *
+ * `$minValue` is `0` by default, by design: a property is unsigned unless it says otherwise. Without a `$maxValue`, the
+ * migration builder uses `storage.type-defaults.default-max-integer-value`, which is `UNSIGNED_4_BYTE_MAX` by default.
+ * The storage backend picks the smallest column that fits the range; the constants are the limits of integers of 1
+ * to 8 bytes.
+ *
+ * Used for properties typed as `int` that have no type attribute.
+ */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class Integer extends BaseType
 {

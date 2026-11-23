@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+/**
+ * Checks on the PHP environment.
+ */
 class System
 {
+    /**
+     * Returns `true` when the function exists and isn't turned off with the `disable_functions` setting.
+     */
     public static function isFunctionAvailable(string $name): bool
     {
         static $disabled = null;

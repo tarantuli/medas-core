@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+/**
+ * A @class(Medas\Core\CaseSensitiveString) whose `startsWith()`, `endsWith()`, `contains()` and `equals()` ignore
+ * case, and with them `surroundedBy()`, `chopFromStart()` and `chopFromEnd()`.
+ *
+ * Only ASCII letters are compared without case: `'É'` and `'é'` still differ.
+ */
 readonly class CaseInsensitiveString extends CaseSensitiveString
 {
     public function startsWith(string $needle): bool

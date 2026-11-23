@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Medas\Core\Attributes;
 
 /**
- * Apply this attribute to methods of Type classes. This method can be used to validate values of this type
+ * Marks the method of a type class, like `Types\EmailAddress`, that checks whether a value is valid for that type.
+ *
+ * The method takes the value and returns whether it's valid.
  */
 #[\Attribute(\Attribute::TARGET_METHOD)]
 class ValueValidator

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Medas\Core\Attributes;
 
 /**
- * Indicates that a method parameter is required due to interface or abstract method signatures, but not used by this
- * particular implementation.
+ * Marks a parameter that's required by the signature of an interface or abstract method, but not used by this
+ * particular implementation, so readers and tools that look for unused parameters know it's left out on purpose.
  */
 #[\Attribute(\Attribute::TARGET_PARAMETER)]
 class RequiredButUnused

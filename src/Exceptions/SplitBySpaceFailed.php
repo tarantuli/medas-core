@@ -13,6 +13,6 @@ class SplitBySpaceFailed extends BaseException
 
     public function pattern(): string
     {
-        return 'Split by space failed on %s: %s';
+        return 'split by space failed on %s: %s';
     }
 }

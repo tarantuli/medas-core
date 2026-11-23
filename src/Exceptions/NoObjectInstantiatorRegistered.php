@@ -14,7 +14,8 @@ class NoObjectInstantiatorRegistered extends BaseException implements Suggestion
     public function suggestions(): array
     {
         return [
-            'create a new Medas\Core\Interfaces\ObjectInstantiator, and register it with Medas\Core\GlobalRepository\setObjectInstantiator()',
+            'create a new Medas\Core\Interfaces\ObjectInstantiator, '
+                . 'and register it with medas()->setObjectInstantiator()',
         ];
     }
 }

@@ -4,23 +4,30 @@ declare(strict_types=1);
 
 namespace Medas\Core\Exceptions;
 
+/**
+ * The kind of error a @class(Medas\Core\Interfaces\StorageException) reports. Storage drivers translate their own
+ * error codes into these cases, so other packages can react to them without knowing the driver.
+ */
 enum StorageExceptionType
 {
-    /** Unique constraint violation — a record with these values already exists. */
+    /** A unique constraint was violated: a record with these values already exists. */
     case DuplicateKey;
 
-    /** Foreign key constraint violation — referenced record does not exist, or parent record still has children. */
+    /**
+     * A foreign key constraint was violated: the referenced record doesn't exist, or a record that's referenced still
+     * has records referring to it.
+     */
     case ForeignKeyViolation;
 
-    /** The storage engine detected a deadlock and rolled back this transaction so the other could proceed. */
+    /** The storage engine found a deadlock, and rolled back this transaction so the other one could go on. */
     case DeadlockDetected;
 
-    /** A lock could not be acquired within the configured wait timeout. */
+    /** A lock couldn't be acquired within the configured waiting time. */
     case LockWaitTimeout;
 
-    /** The storage connection was lost mid-request. */
+    /** The connection to the storage was lost during the request. */
     case ConnectionLost;
 
-    /** The exception type could not be determined from the driver-specific error. */
+    /** The driver couldn't tell which kind of error its own error is. */
     case Unknown;
 }

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Medas\Core;
 
+/**
+ * Lengths of time in seconds, for calculating with timestamps. Months and years have no fixed length, so those
+ * constants name the number of days they assume.
+ */
 class DateConstants
 {
     /** The number of seconds in one day */

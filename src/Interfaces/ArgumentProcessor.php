@@ -5,22 +5,32 @@ declare(strict_types=1);
 namespace Medas\Core\Interfaces;
 
 /**
- * Argument processors are called after a parameter to a method has been resolved. It should apply necessary
- * post-processing to the value.
+ * Post-processes an argument after it has been resolved or given, for the
+ * @class(Medas\Core\Interfaces\ObjectInstantiator), like converting a string into the object the parameter expects.
+ * Packages register their processors with `ServiceConfigBuilder::addArgumentProcessor()`.
+ *
+ * Every processor is applied in turn, in order of priority, highest first, and gets the result of the one before it.
+ * Medas packages themselves use priorities below zero.
  *
  * Examples:
  *
- * - @class(Medas\RestRequestHandler\Serializers\ArgumentDeserializer) is a processor that deserializes input from
- *   REST requests, replacing datetime strings by \DateTime objects.
+ * - @class(Medas\RestRequestHandler\Serializers\ArgumentDeserializer) deserialises input from REST requests, like
+ *   date-time strings into `\DateTime` objects.
+ * - @class(Medas\TypedDataArguments\TypedDataArgumentProcessor) turns arrays into instances of data objects, setting
+ *   their properties from the array keys.
  *
- * - @class(Medas\TypedDataArguments\TypedDataArgumentProcessor) is a processor that casts array values to instances
- *   of data objects, translating the array keys to object properties.
- *
- * Processors are applied in order of highest to lowest priority. Medas packages themselves have priorities lower than
- * zero.
+ * @assumes The object instantiator creates processors itself, with `new` and without arguments, so they can't have
+ *          dependencies injected.
+ * @state One instance may be used for the whole process, so a processor mustn't keep anything that differs per
+ *        request.
+ * @notFor Resolving a parameter that has no value yet; use a @class(Medas\Core\Interfaces\ParameterResolver).
+ * @see CompilableArgumentProcessor
  */
 interface ArgumentProcessor extends DeclaresPriority
 {
+    /**
+     * Returns the processed argument, or `$argument` itself when this processor doesn't apply to it.
+     */
     public function process(\ReflectionParameter|\ReflectionProperty $parameter, mixed $argument): mixed;
 
     public function priority(): int;

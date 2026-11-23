@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace Medas\Core;
 
 /**
- * Prefer to use a ServiceManager implementation or apply AsSingleton to get a singleton instance of a class.
+ * Keeps one instance per class, for readonly data objects that aren't services and can't use
+ * @class(Medas\Core\AsSingleton), whose static property a readonly class can't have. `singleton()` calls it.
  *
- * This store should be used when you want to have singleton instances of a readonly data object, which don't fit
- * service characteristics, nor cannot be used with AsSingleton (due to a readonly nature).
+ * For anything else, prefer a service or `AsSingleton`.
+ *
+ * @state Keeps the instances for the lifetime of the process.
  */
 class SingletonStore
 {
     private static array $objects = [];
 
     /**
-     * The return value is an object of type `$class`.
+     * Returns the instance of `$class`, created without arguments the first time.
+     *
+     * @throws Exceptions\CannotInstantiateClassWithParameters When the constructor has required parameters.
      */
     /*
      * The return value is specified for PhpStorm using .phpstorm.meta.php
@@ -26,7 +30,7 @@ class SingletonStore
             $reflection = new \ReflectionClass($class);
             $constructor = $reflection->getConstructor();
 
-            if ($constructor && $constructor->getNumberOfParameters() > 0) {
+            if ($constructor && $constructor->getNumberOfRequiredParameters() > 0) {
                 throw new Exceptions\CannotInstantiateClassWithParameters($reflection);
             }
 

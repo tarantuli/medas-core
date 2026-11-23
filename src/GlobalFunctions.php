@@ -5,6 +5,9 @@ declare(strict_types=1);
 use Medas\Core\{
     Events\AllowedAccess,
     Events\BasicVote,
+    Exceptions\CannotInstantiateClassWithParameters,
+    Exceptions\NoServiceManagerRegistered,
+    Exceptions\ServiceNotFoundByType,
     FloatingNumber,
     Interfaces\CacheManager,
     Interfaces\ConfigManager,
@@ -16,12 +19,13 @@ use Medas\Core\{
 };
 
 // This file should be in the global namespace
-/**
- * This global function holds the reference to the active @class(Medas\Core\MedasRepository), which holds the
- * active @class(Medas\Core\ServiceManager) and @class(Medas\Core\ObjectInstantiator). Set ```$initialize``` to true
- * to reset the repository to a new instance.
- */
 if (!function_exists('medas')) {
+    /**
+     * Returns the active @class(Medas\Core\MedasRepository), which holds the active service manager and object
+     * instantiator.
+     *
+     * @param bool $initialize Replaces the repository with a new, empty one first.
+     */
     function medas(bool $initialize = false): MedasRepository
     {
         static $repository;
@@ -34,8 +38,8 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This global function calls the @class(Medas\Core\Interfaces\ConfigManager) service and requests the config value for
-     * the given value.
+     * Returns the configuration value at `$path`, like `'core.trace-argument-max-length'`, from the
+     * @class(Medas\Core\Interfaces\ConfigManager) service.
      */
     function config(string $path): mixed
     {
@@ -45,7 +49,9 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This global function returns the active @class(Medas\Core\Interfaces\ServiceManager) instance.
+     * Returns the active @class(Medas\Core\Interfaces\ServiceManager).
+     *
+     * @throws NoServiceManagerRegistered When none has been created yet.
      */
     function sm(): ServiceManager
     {
@@ -53,10 +59,11 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This global function calls the active @class(Medas\Core\Interfaces\ServiceManager) instance and asks it to resolve
-     * $type to its service instance.
+     * Returns the service for `$type`, a class or interface, from the active
+     * @class(Medas\Core\Interfaces\ServiceManager). The object is of type `$type`.
      *
-     * The return value is an object of type `$type`.
+     * @throws ServiceNotFoundByType When no service provides `$type`.
+     * @throws NoServiceManagerRegistered When no service manager has been created yet.
      */
     /*
      * The return value is specified for PhpStorm using .phpstorm.meta.php
@@ -68,7 +75,9 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This global function turns an array of service objects into an array of class names.
+     * Returns the class names of the given objects, keeping their keys. The inverse of `namesToServices()`.
+     *
+     * @return class-string[]
      */
     function servicesToNames(array $services): array
     {
@@ -76,7 +85,9 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This global function turns an array of class names into an array of service objects by calling service() on each name
+     * Returns the service for each class name, keeping their keys, as `service()` returns it.
+     *
+     * @return object[]
      */
     function namesToServices(array $names): array
     {
@@ -84,10 +95,8 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This global function asks the given reflection object if it has an attribute that's of the given type. If so, it
-     * returns an instance of the attribute class.
-     *
-     * The return value is null or an object of type `$type`.
+     * Returns the first attribute of type `$type` on `$reflector`, as an object, or `null` when there's none.
+     * Subclasses of `$type`, and classes implementing it, count too.
      */
     /*
      * The return value is specified for PhpStorm using .phpstorm.meta.php
@@ -105,25 +114,24 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This global function returns the value of the given property of the given object using reflection.
+     * Returns the value of a property, even a private or protected one.
+     *
+     * @throws ReflectionException When the object has no property of that name.
      */
     function propertyValue(object $object, string $propertyName): mixed
     {
         return new ReflectionClass($object)->getProperty($propertyName)->getValue($object);
     }
 
-    /*
-     * Don't combine the next two functions or try to consolidate the content into one function and call it
-     * from the function.
-     *
-     * The parameter signature should be tight, so users are not seduced to use the wrong method, leading
-     * to unclear code (e.g., $parameterTypes = propertyTypes($parameter)).
-     */
+    // Don't combine the next two functions or try to consolidate the content into one function and call it
+    // from the function.
+    //
+    // The parameter signature should be tight, so users are not seduced to use the wrong method, leading
+    // to unclear code (e.g., $parameterTypes = propertyTypes($parameter)).
     /**
-     * This method returns the types declared on the given ReflectionParameter as a normalized array
-     * of ReflectionNamedType instances.
+     * Returns the types declared for a parameter, as `normalizeType()` returns them.
      *
-     * @return ReflectionNamedType[]
+     * @return array<ReflectionNamedType|ReflectionIntersectionType>
      */
     function parameterTypes(ReflectionParameter $parameter): array
     {
@@ -131,27 +139,37 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This method returns the types declared on the given ReflectionProperty as a normalized
-     * array of ReflectionNamedType instances.
+     * Returns the types declared for a property, as `normalizeType()` returns them.
      *
-     * @return ReflectionNamedType[]
+     * @return array<ReflectionNamedType|ReflectionIntersectionType>
      */
     function propertyTypes(ReflectionProperty $parameter): array
     {
         return normalizeType($parameter->getType());
     }
 
+    /**
+     * Returns the parts of a union type, a single type as the only item, or `[]` when there's no type.
+     *
+     * An intersection type stays together as one item, also inside a union: `(A&B)|null` gives the intersection
+     * `A&B`, and `null`. Code that can only handle named types checks for a `ReflectionIntersectionType`, and throws
+     * @class(Medas\Core\Exceptions\IntersectionTypeNotSupported) for one.
+     *
+     * @return array<ReflectionNamedType|ReflectionIntersectionType>
+     */
     function normalizeType(ReflectionIntersectionType|ReflectionNamedType|ReflectionUnionType|null $type): array
     {
         if ($type === null) {
             return [];
         }
 
-        return ($type instanceof ReflectionUnionType || $type instanceof ReflectionIntersectionType)
-            ? $type->getTypes()
-            : [$type];
+        return $type instanceof ReflectionUnionType ? $type->getTypes() : [$type];
     }
 
+    /**
+     * Calls `$callable` until it returns something falsy, but at most `$maxCount` times. Reaching that limit isn't
+     * reported.
+     */
     function whileTrue(callable $callable, int $maxCount = 256): void
     {
         $counter = 0;
@@ -161,16 +179,22 @@ if (!function_exists('medas')) {
         }
     }
 
+    /**
+     * Returns `true` when `$value` is so close to zero that it counts as zero: less than `0.0000000001` away from it.
+     *
+     * @see FloatingNumber
+     */
     function is_nihil(float $value): bool
     {
         return FloatingNumber::SMALL_NEGATIVE < $value && $value < FloatingNumber::SMALL_POSITIVE;
     }
 
     /**
-     * Whether two entities are the same, compared on their ids rather than object
-     * identity - so two instances of the same entity loaded in different units of
-     * work still count as equal. Ids are globally unique (uuids, or hashes derived
-     * from the class), so no cross-type check is needed.
+     * Returns `true` when two entities have the same ID, so two objects for the same entity, loaded separately, count
+     * as equal.
+     *
+     * @assumes IDs are unique across all entity classes, like UUIDs or hashes that include the class, so the classes
+     *          aren't compared.
      */
     function equalIds(HasId $first, HasId $second): bool
     {
@@ -178,12 +202,11 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * The return value is an object of type `$class`.
+     * Returns the one instance of `$class`, from @class(Medas\Core\SingletonStore). It's for readonly data objects
+     * that aren't services and can't use @class(Medas\Core\AsSingleton); for anything else, prefer one of those.
      *
-     * Prefer to use a ServiceManager implementation or apply the AsSingleton trait to get a singleton instance of a class.
-     *
-     * This function should be used when you want to have singleton instances of readonly data objects, which don't fit
-     * service characteristics, nor cannot be used with AsSingleton (due to a readonly nature).
+     * @throws CannotInstantiateClassWithParameters When the constructor has required
+     *                                                                     parameters.
      */
     /*
      * The return value is specified for PhpStorm using .phpstorm.meta.php
@@ -194,7 +217,7 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This function resolves the EventDispatcher and then dispatches the event
+     * Dispatches `$event` with the @class(Medas\Core\Interfaces\EventDispatcher) service, and returns it.
      */
     /*
      * The return value is specified for PhpStorm using .phpstorm.meta.php
@@ -205,8 +228,10 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This function resolves the EventDispatcher and then dispatches the vote object. If allowedAccess is not true, it
-     * throws the exception, otherwise it does nothing.
+     * Dispatches the vote, and throws `$exception` unless the outcome is `AllowedAccess::Allowed`. A callable is only
+     * called then, to create the exception.
+     *
+     * @see BasicVote
      */
     function allowElseThrow(BasicVote $vote, Throwable|callable $exception): void
     {
@@ -218,9 +243,11 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This function resolves the CacheManager and then fetches the results of the given key
+     * Returns the value of `$key` from a cache, calling `$getter` and storing its result when the cache doesn't have
+     * it. See @class(Medas\Core\Interfaces\Cache).
      *
      * @param string|string[] $key
+     * @param string|null     $cache The name of the cache, or `null` for `'default'`.
      */
     function cache(string|array $key, callable $getter, string|null $cache = null, int $ttl = 0): mixed
     {
@@ -228,9 +255,10 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This function resolves the CacheManager and then sets the given value
+     * Stores a value in a cache.
      *
      * @param string|string[] $key
+     * @param string|null     $cache The name of the cache, or `null` for `'default'`.
      */
     function cacheSet(string|array $key, mixed $value, string|null $cache = null, int $ttl = 0): void
     {
@@ -238,9 +266,10 @@ if (!function_exists('medas')) {
     }
 
     /**
-     * This function resolves the CacheManager and then removes the value of the given key
+     * Removes the value of `$key` from a cache.
      *
      * @param string|string[] $key
+     * @param string|null     $cache The name of the cache, or `null` for `'default'`.
      */
     function cacheUnset(string|array $key, string|null $cache = null): void
     {

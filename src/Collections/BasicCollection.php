@@ -6,7 +6,16 @@ namespace Medas\Core\Collections;
 
 use Medas\Core\Interfaces\Collection;
 
-/** @template T */
+/**
+ * A plain @class(Medas\Core\Interfaces\Collection) on top of an array, without change tracking.
+ *
+ * Values keep the key they were added under. Removing one leaves a gap, so the keys aren't renumbered.
+ *
+ * @state Iterates with the internal pointer of its array, so two loops over the same collection at the same time,
+ *        like a `foreach` inside another one, interfere with each other. Use `values()` for the inner loop.
+ * @see GenericCollection
+ * @template T
+ */
 class BasicCollection implements Collection
 {
     public function __construct(
@@ -26,6 +35,9 @@ class BasicCollection implements Collection
         $this->data = $data;
     }
 
+    /**
+     * Yields the keys and values, without moving the collection's own pointer.
+     */
     public function values(): iterable
     {
         foreach ($this->data as $key => $value) {
@@ -42,6 +54,8 @@ class BasicCollection implements Collection
     }
 
     /**
+     * @assumes The key exists. For a missing key, PHP warns and `null` is returned.
+     *
      * @param int $offset
      *
      * @return T
